@@ -48,4 +48,7 @@ dependencies {
 
     //Blurry
     implementation 'jp.wasabeef:blurry:3.0.0'
+
+    //BottomNavigationView
+    implementation 'com.google.android.material:material:1.1.0'
 }

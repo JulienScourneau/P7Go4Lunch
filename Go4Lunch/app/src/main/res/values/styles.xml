@@ -11,7 +11,7 @@
     <!-- STYLE SIGN-IN ACTIVITY -->
     <style name="LoginTheme" parent="AppTheme">
         <item name="colorPrimary">@color/fui_transparent</item>
-        <item name="android:windowBackground">@android:color/holo_blue_dark</item>
+        <item name="android:windowBackground">@color/com_smart_login_code</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">Go4Lunch</string>
 
+    <!-- USER FRAGMENT RESOURCES -->
+    <string name="user_name">User name is eating/not decided yet (Restaurant)</string>
+
+    <!-- NAVIGATION MENU RESOURCES -->
+    <string name="map_title">Map View</string>
+    <string name="restaurant_list_title">List View</string>
+    <string name="workmates_title">Workmates</string>
+    
     <!-- FACEBOOK RESOURCES -->
     <string name="facebook_app_id">278485476780989</string>
     <string name="fb_login_protocol_scheme">fb278485476780989</string>
