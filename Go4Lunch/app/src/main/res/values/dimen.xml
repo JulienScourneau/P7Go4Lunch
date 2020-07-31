@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="size_title"> 60sp </dimen>
+
+    <!-- RESTAURANT ITEM FRAGMENT RESOURCES -->
+    <dimen name="text_restaurant_name"> 14sp </dimen>
+    <dimen name="text_restaurant_location"> 12sp</dimen>
+    <dimen name="text_restaurant_schedule"> 12sp</dimen>
+    <dimen name="image_restaurant_size"> 80dp</dimen>
 </resources>

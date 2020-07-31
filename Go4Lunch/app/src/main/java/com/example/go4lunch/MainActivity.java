@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initView();
-        //signInActivity();
+        signInActivity();
     }
 
     private void initView(){
@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
-
                     switch (item.getItemId()){
                         case R.id.nav_map:
                             selectedFragment = new MapviewFragment();
