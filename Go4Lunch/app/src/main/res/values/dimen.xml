@@ -7,4 +7,11 @@
     <dimen name="text_restaurant_location"> 12sp</dimen>
     <dimen name="text_restaurant_schedule"> 12sp</dimen>
     <dimen name="image_restaurant_size"> 80dp</dimen>
+
+    <!-- NAVIGATION DRAWER RESOURCES -->
+    <dimen name="linear_layout_height">176dp</dimen>
+    <dimen name="linear_layout_padding">16dp</dimen>
+    <dimen name="app_icon_width_size">220dp</dimen>
+    <dimen name="app_icon_height_size">75dp</dimen>
+
 </resources>

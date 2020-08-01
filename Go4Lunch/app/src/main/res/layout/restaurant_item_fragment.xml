@@ -82,7 +82,7 @@
             android:layout_marginEnd="20dp"
             android:layout_toStartOf="@+id/restaurant_fragment_picture"
             android:layout_below="@+id/restaurant_fragment_workmates"
-            android:src="@drawable/ic_star_black_24dp"
+            android:src="@drawable/ic_star_icon_24dp"
             android:layout_alignBottom="@+id/restaurant_fragment_picture"
             />
 

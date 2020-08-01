@@ -15,8 +15,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Arrays;
 
-import jp.wasabeef.blurry.Blurry;
-
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 123;
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setTheme(R.style.LoginTheme)
-                        .setLogo(R.drawable.icon1)
+                        .setLogo(R.drawable.go4lunch_icon)
                         .setAvailableProviders(Arrays.asList(
                                 new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
                                 new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))

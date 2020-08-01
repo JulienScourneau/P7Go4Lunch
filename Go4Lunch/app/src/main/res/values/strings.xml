@@ -2,7 +2,7 @@
     <string name="app_name">Go4Lunch</string>
 
     <!-- WORKMATES ITEM FRAGMENT RESOURCES -->
-    <string name="user_name">User name is eating/not decided yet (Restaurant)</string>
+    <string name="user_status">User name is eating/not decided yet (Restaurant)</string>
 
     <!-- RESTAURANT ITEM FRAGMENT RESOURCES -->
     <string name="restaurant_name">Restaurant name</string>
@@ -15,7 +15,14 @@
     <string name="map_title">Map View</string>
     <string name="restaurant_list_title">List View</string>
     <string name="workmates_title">Workmates</string>
-    
+
+    <!-- DRAWER MENU RESOURCES -->
+    <string name="lunch_text">YOUR LUNCH</string>
+    <string name="settings_text">SETTINGS</string>
+    <string name="logout_text">LOGOUT</string>
+    <string name="user_name_drawer">User NAME</string>
+    <string name="user_mail_drawer">usermail@gmail.com</string>
+
     <!-- FACEBOOK RESOURCES -->
     <string name="facebook_app_id">278485476780989</string>
     <string name="fb_login_protocol_scheme">fb278485476780989</string>
