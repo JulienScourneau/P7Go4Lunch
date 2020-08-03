@@ -2,6 +2,8 @@ package com.example.go4lunch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
@@ -17,6 +19,8 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
+    private DrawerLayout drawer;
+    private Toolbar toolbar;
     private static final int RC_SIGN_IN = 123;
 
     @Override
@@ -32,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapviewFragment()).commit();
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_view);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+        drawer = findViewById(R.id.drawer_layout);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
