@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <Switch
+        android:id="@+id/notification_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:checked="true"
+        android:gravity="start"
+        android:text="@string/notifications_setting"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/distance_settings_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notification_switch"
+        android:layout_margin="6dp"
+        android:text="@string/distance_setting"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notification_switch"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="6dp"
+        android:text="@string/distance_txt"
+        android:textColor="@android:color/black" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/distance_settings_text"
+        android:layout_margin="6dp"
+        android:max="150"
+        android:progress="10" />
+
+    <View
+        android:id="@+id/divider_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/seekBar"
+        android:layout_margin="46dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/remove_account_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider_line"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/remove_setting"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/remove_account_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/remove_account_text"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="12dp"
+        android:background="@drawable/btn_shape_round"
+        android:text="@string/remove_account_btn"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>
