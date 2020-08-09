@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.go4lunch.View.ListviewFragment;
-import com.example.go4lunch.View.MapviewFragment;
+import com.example.go4lunch.View.ListViewFragment;
+import com.example.go4lunch.View.MapViewFragment;
 import com.example.go4lunch.View.WorkmatesFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView(){
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapviewFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapViewFragment()).commit();
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_view);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         drawer = findViewById(R.id.drawer_layout);
@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
                     Fragment selectedFragment = null;
                     switch (item.getItemId()){
                         case R.id.nav_map:
-                            selectedFragment = new MapviewFragment();
+                            selectedFragment = new MapViewFragment();
                             break;
                         case R.id.nav_restaurant_list:
-                            selectedFragment = new ListviewFragment();
+                            selectedFragment = new ListViewFragment();
                             break;
                         case R.id.nav_workmates_list:
                             selectedFragment = new WorkmatesFragment();

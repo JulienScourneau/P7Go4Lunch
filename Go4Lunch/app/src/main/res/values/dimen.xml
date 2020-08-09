@@ -13,4 +13,7 @@
     <dimen name="app_icon_width_size">220dp</dimen>
     <dimen name="app_icon_height_size">75dp</dimen>
 
+    <!-- RESTAURANT ACTIVITY RESOURCES -->
+    <dimen name="restaurant_name"> 22sp</dimen>
+
 </resources>

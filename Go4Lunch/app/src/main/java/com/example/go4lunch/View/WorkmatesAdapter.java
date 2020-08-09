@@ -1,0 +1,56 @@
+package com.example.go4lunch.View;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.go4lunch.R;
+import com.example.go4lunch.models.User;
+
+import java.util.ArrayList;
+
+public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.WorkmatesViewHolder> {
+    private ArrayList<User> mUserlist;
+
+    public static class WorkmatesViewHolder extends RecyclerView.ViewHolder{
+
+        public ImageView mUserAvatar;
+        public TextView mUserStatus;
+
+        public WorkmatesViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mUserAvatar = itemView.findViewById(R.id.user_fragment_avatar);
+            mUserStatus = itemView.findViewById(R.id.user_fragment_status);
+        }
+    }
+
+    public WorkmatesAdapter(ArrayList<User> userList){
+        mUserlist = userList;
+    }
+
+    @NonNull
+    @Override
+    public WorkmatesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workmates_item_fragment,parent, false);
+        WorkmatesViewHolder wvh = new WorkmatesViewHolder(view);
+        return wvh;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull WorkmatesViewHolder holder, int position) {
+        User currentUser = mUserlist.get(position);
+
+        holder.mUserAvatar.setImageResource(R.mipmap.ic_launcher_round);
+        holder.mUserStatus.setText(R.string.user_status);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mUserlist.size();
+    }
+}

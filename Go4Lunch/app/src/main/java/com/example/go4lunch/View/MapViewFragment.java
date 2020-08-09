@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.go4lunch.R;
 
-public class ListviewFragment extends Fragment {
+public class MapViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.listview_fragment,container,false);
+        return inflater.inflate(R.layout.mapview_fragment,container,false);
     }
 }
