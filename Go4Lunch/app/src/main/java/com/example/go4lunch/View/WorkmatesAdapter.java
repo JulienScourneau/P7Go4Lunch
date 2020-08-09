@@ -15,12 +15,12 @@ import com.example.go4lunch.models.User;
 import java.util.ArrayList;
 
 public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.WorkmatesViewHolder> {
-    private ArrayList<User> mUserlist;
+    private ArrayList<User> mUserList;
 
     public static class WorkmatesViewHolder extends RecyclerView.ViewHolder{
 
-        public ImageView mUserAvatar;
-        public TextView mUserStatus;
+        private ImageView mUserAvatar;
+        private TextView mUserStatus;
 
         public WorkmatesViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -30,20 +30,19 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
     }
 
     public WorkmatesAdapter(ArrayList<User> userList){
-        mUserlist = userList;
+        this.mUserList = userList;
     }
 
     @NonNull
     @Override
     public WorkmatesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workmates_item_fragment,parent, false);
-        WorkmatesViewHolder wvh = new WorkmatesViewHolder(view);
-        return wvh;
+        return new WorkmatesViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull WorkmatesViewHolder holder, int position) {
-        User currentUser = mUserlist.get(position);
+        User currentUser = mUserList.get(position);
 
         holder.mUserAvatar.setImageResource(R.mipmap.ic_launcher_round);
         holder.mUserStatus.setText(R.string.user_status);
@@ -51,6 +50,6 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
 
     @Override
     public int getItemCount() {
-        return mUserlist.size();
+        return mUserList.size();
     }
 }

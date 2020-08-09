@@ -12,12 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go4lunch.R;
-import com.example.go4lunch.TestUserList;
+import com.example.go4lunch.TestList;
 
 public class WorkmatesFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     @Nullable
     @Override
@@ -26,7 +25,7 @@ public class WorkmatesFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.workmates_recyclerview);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        mRecyclerView.setAdapter(new WorkmatesAdapter(TestUserList.getFakeUserList()));
+        mRecyclerView.setAdapter(new WorkmatesAdapter(TestList.getFakeUserList()));
         return view;
     }
 }
