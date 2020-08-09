@@ -1,5 +1,6 @@
 package com.example.go4lunch.View;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go4lunch.R;
+import com.example.go4lunch.RestaurantActivity;
 import com.example.go4lunch.models.Restaurant;
 
 import java.util.ArrayList;
@@ -59,6 +61,14 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.mRestaurantPictures.setImageResource(currentRestaurant.getRestaurantPictures());
         holder.mRestaurantDistance.setText("00m");
         holder.mWorkmateNumber.setText("2");
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RestaurantActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
