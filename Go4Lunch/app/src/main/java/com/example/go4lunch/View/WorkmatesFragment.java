@@ -15,13 +15,13 @@ import com.example.go4lunch.R;
 import com.example.go4lunch.TestList;
 
 public class WorkmatesFragment extends Fragment {
-
     private RecyclerView mRecyclerView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.workmates_fragment,container,false);
+
         mRecyclerView = view.findViewById(R.id.workmates_recyclerview);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

@@ -13,7 +13,6 @@ import com.example.go4lunch.R;
 
 public class MapViewFragment extends Fragment {
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
