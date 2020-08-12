@@ -24,12 +24,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity{
 
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private static final int RC_SIGN_IN = 123;
-    private GoogleMap mMap;
     private SupportMapFragment mapFragment;
 
     @Override
@@ -44,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void initView(){
         mapFragment = SupportMapFragment.newInstance();
-        mapFragment.getMapAsync(this);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapViewFragment()).commit();
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_view);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -60,19 +58,28 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
                     FragmentManager fm = getSupportFragmentManager();
+                    if(mapFragment.isAdded())
+                        fm.beginTransaction().hide(mapFragment).commit();
                     switch (item.getItemId()){
                         case R.id.nav_map:
-                            selectedFragment = new MapViewFragment();
-                            fm.beginTransaction().add(R.id.map,mapFragment).commit();
+
+                            if(!mapFragment.isAdded()){
+                                fm.beginTransaction().add(R.id.map,mapFragment).commit();
+                            } else{
+                                fm.beginTransaction().show(mapFragment).commit();
+                            }
+                            //selectedFragment = new MapViewFragment();
                             break;
                         case R.id.nav_restaurant_list:
                             selectedFragment = new ListViewFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
                             break;
                         case R.id.nav_workmates_list:
                             selectedFragment = new WorkmatesFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
                             break;
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
+
                     return true;
                 }
             };
@@ -89,15 +96,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         .setIsSmartLockEnabled(false, true)
                         .build(),
                 RC_SIGN_IN);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
