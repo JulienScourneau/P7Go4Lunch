@@ -80,10 +80,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/fui_transparent"
                 android:drawableTop="@drawable/ic_call_icon_24dp"
-                android:drawableTint="@color/colorAccent"
                 android:padding="16dp"
-                android:text="CALL"
-                android:textColor="@color/colorAccent" />
+                android:text="@string/restaurant_call"
+                android:textColor="@color/colorAccent"
+                app:drawableTint="@color/colorAccent" />
 
             <Button
                 android:id="@+id/restaurant_like"
@@ -91,11 +91,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/fui_transparent"
                 android:drawableTop="@drawable/ic_star_icon_24dp"
-                android:drawableTint="@color/colorAccent"
-
                 android:padding="16dp"
-                android:text="LIKE"
-                android:textColor="@color/colorAccent" />
+                android:text="@string/restaurant_like"
+                android:textColor="@color/colorAccent"
+                app:drawableTint="@color/colorAccent" />
 
             <Button
                 android:id="@+id/restaurant_website"
@@ -104,17 +103,14 @@
                 android:layout_height="wrap_content"
                 android:background="@color/fui_transparent"
                 android:drawableTop="@drawable/ic_website_icon_24dp"
-                android:drawableTint="@color/colorAccent"
                 android:padding="16dp"
-                android:text="WEBSITE"
+                android:text="@string/restaurant_website"
                 android:textColor="@color/colorAccent"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                app:drawableTint="@color/colorAccent" />
 
         </LinearLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
@@ -123,5 +119,18 @@
 
     </RelativeLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_fav_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220dp"
+        android:layout_marginEnd="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_add_icon_24dp"
+        android:tint="@color/colorAccent"
+        app:backgroundTint="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

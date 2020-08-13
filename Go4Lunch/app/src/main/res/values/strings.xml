@@ -11,6 +11,11 @@
     <string name="user_distance">000</string>
     <string name="workmate_number">(0)</string>
 
+    <!-- RESTAURANT ITEM FRAGMENT RESOURCES -->
+    <string name="restaurant_call">CALL</string>
+    <string name="restaurant_like">LIKE</string>
+    <string name="restaurant_website">WEBSITE</string>
+
     <!-- NAVIGATION MENU RESOURCES -->
     <string name="map_title">Map View</string>
     <string name="restaurant_list_title">List View</string>
