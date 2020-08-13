@@ -1,85 +1,106 @@
 package com.example.go4lunch;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.go4lunch.View.ListViewFragment;
 import com.example.go4lunch.View.MapViewFragment;
 import com.example.go4lunch.View.WorkmatesFragment;
+import com.example.go4lunch.models.Restaurant;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DrawerLayout drawer;
-    private Toolbar toolbar;
+    private DrawerLayout mDrawer;
+    private Toolbar mToolbar;
+    private BottomNavigationView mBottomNav;
+    private NavigationView mNavigationView;
     private static final int RC_SIGN_IN = 123;
-    private SupportMapFragment mapFragment;
+    private boolean mLocationPermissionGranted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
         initView();
         signInActivity();
+
     }
 
     private void initView(){
-        mapFragment = SupportMapFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapViewFragment()).commit();
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_view);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-        drawer = findViewById(R.id.drawer_layout);
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mBottomNav = findViewById(R.id.bottom_navigation_view);
+        mBottomNav.setOnNavigationItemSelectedListener(navListener);
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mDrawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.addDrawerListener(toggle);
+        toggle.syncState();
+        mNavigationView = findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (mDrawer.isDrawerOpen(GravityCompat.START)){
+            mDrawer.closeDrawer(GravityCompat.START);
+        } else {
+        super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.drawer_lunch_icon:
+                Toast.makeText(this,"a",Toast.LENGTH_SHORT).show();
+                Intent restaurantIntent = new Intent(this, RestaurantActivity.class);
+                startActivity(restaurantIntent);
+                break;
+            case R.id.drawer_settings_icon:
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
+            case R.id.drawer_logout_icon:
+                finish();
+                break;
+        }
+        return true;
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
-                    FragmentManager fm = getSupportFragmentManager();
-                    if(mapFragment.isAdded())
-                        fm.beginTransaction().hide(mapFragment).commit();
+                    Fragment selectedFragment = null;;
                     switch (item.getItemId()){
                         case R.id.nav_map:
-
-                            if(!mapFragment.isAdded()){
-                                fm.beginTransaction().add(R.id.map,mapFragment).commit();
-                            } else{
-                                fm.beginTransaction().show(mapFragment).commit();
-                            }
-                            //selectedFragment = new MapViewFragment();
+                            selectedFragment = new MapViewFragment();
                             break;
                         case R.id.nav_restaurant_list:
                             selectedFragment = new ListViewFragment();
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
                             break;
                         case R.id.nav_workmates_list:
                             selectedFragment = new WorkmatesFragment();
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
                             break;
                     }
-
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
                     return true;
                 }
             };

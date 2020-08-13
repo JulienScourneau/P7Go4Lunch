@@ -39,11 +39,11 @@
         android:id="@+id/user_mail_drawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
         android:layout_below="@+id/user_name_drawer"
+        android:layout_marginStart="15dp"
         android:text="@string/user_mail_drawer"
+        app:layout_constraintBottom_toBottomOf="@id/user_avatar_drawer"
         app:layout_constraintStart_toEndOf="@+id/user_avatar_drawer"
-        app:layout_constraintTop_toBottomOf="@+id/user_name_drawer"
-        app:layout_constraintBottom_toBottomOf="@id/user_avatar_drawer"/>
+        app:layout_constraintTop_toBottomOf="@+id/user_name_drawer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
