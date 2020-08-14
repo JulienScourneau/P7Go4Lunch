@@ -6,7 +6,8 @@ public class User {
     private String mUserStatus;
 
     public User(int userAvatar, String userStatus){
-
+        this.mUserAvatar = userAvatar;
+        this.mUserStatus = userStatus;
     }
 
     public int getUserAvatar() {

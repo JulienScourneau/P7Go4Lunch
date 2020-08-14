@@ -45,7 +45,7 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
         User currentUser = mUserList.get(position);
 
         holder.mUserAvatar.setImageResource(R.mipmap.ic_launcher_round);
-        holder.mUserStatus.setText(R.string.user_status);
+        holder.mUserStatus.setText(currentUser.getUserStatus());
     }
 
     @Override

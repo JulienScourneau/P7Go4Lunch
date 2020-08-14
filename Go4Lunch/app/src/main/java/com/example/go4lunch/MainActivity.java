@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.drawer_lunch_icon:
-                Toast.makeText(this,"a",Toast.LENGTH_SHORT).show();
                 Intent restaurantIntent = new Intent(this, RestaurantActivity.class);
                 startActivity(restaurantIntent);
                 break;
