@@ -30,14 +30,10 @@ public abstract class TestList {
             new Restaurant("King of Kebab","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
             new Restaurant("Le Blablabla","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
             new Restaurant("Super Sushi","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Super Sushi","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Super Sushi","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Super Sushi","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Super Sushi","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Super Sushi","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Super Sushi","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Super Sushi","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Super Sushi","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
+            new Restaurant("Bufa","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
+            new Restaurant("Cozna","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
+            new Restaurant("Le Balcon","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
+            new Restaurant("Sarment","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
             new Restaurant("Pizza Express","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background)
     );
 
