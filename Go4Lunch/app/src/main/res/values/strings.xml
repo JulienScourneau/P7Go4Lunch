@@ -36,8 +36,9 @@
     <string name="notifications_setting">Notifications:</string>
     <string name="distance_setting">Distance from your location:</string>
     <string name="remove_setting">Remove your account</string>
-    <string name="remove_account_btn">Remove</string>
-    <string name="distance_txt">000 m</string>
+    <string name="delete_account_btn">Delete</string>
+    <string name="distance_txt">50 m</string>
+    <string name="distance_settings_activity_txt"> m</string>
 
     <!-- FACEBOOK RESOURCES -->
     <string name="facebook_app_id">278485476780989</string>

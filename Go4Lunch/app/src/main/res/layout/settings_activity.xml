@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <Switch
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/notification_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,6 +27,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/distance_settings_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/notification_switch"
@@ -37,12 +38,15 @@
 
     <SeekBar
         android:id="@+id/seekBar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/distance_settings_text"
         android:layout_margin="6dp"
-        android:max="150"
-        android:progress="10" />
+        android:indeterminate="false"
+        android:max="200"
+        android:progress="10"
+        />
 
     <View
         android:id="@+id/divider_line"
@@ -64,14 +68,14 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/remove_account_btn"
+        android:id="@+id/delete_account_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/remove_account_text"
         android:layout_centerHorizontal="true"
         android:layout_margin="12dp"
         android:background="@drawable/btn_shape_round"
-        android:text="@string/remove_account_btn"
+        android:text="@string/delete_account_btn"
         android:textColor="@android:color/white" />
 
 </RelativeLayout>

@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView mBottomNav;
     private NavigationView mNavigationView;
     private static final int RC_SIGN_IN = 123;
-    private boolean mLocationPermissionGranted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +38,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initView();
         signInActivity();
+    }
+
+    private void signInActivity() {
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setTheme(R.style.LoginTheme)
+                        .setLogo(R.drawable.go4lunch_icon)
+                        .setAvailableProviders(Arrays.asList(
+                                new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
+                                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
+                        .setIsSmartLockEnabled(false, true)
+                        .build(),
+                RC_SIGN_IN);
 
     }
 
@@ -104,17 +117,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             };
 
-    private void signInActivity(){
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setTheme(R.style.LoginTheme)
-                        .setLogo(R.drawable.go4lunch_icon)
-                        .setAvailableProviders(Arrays.asList(
-                                new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
-                                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
-                        .setIsSmartLockEnabled(false, true)
-                        .build(),
-                RC_SIGN_IN);
-    }
 }
