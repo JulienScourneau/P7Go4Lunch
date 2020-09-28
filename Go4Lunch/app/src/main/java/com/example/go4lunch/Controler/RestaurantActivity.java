@@ -1,4 +1,4 @@
-package com.example.go4lunch;
+package com.example.go4lunch.Controler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.go4lunch.View.WorkmatesAdapter;
+import com.example.go4lunch.R;
+import com.example.go4lunch.Utils.TestList;
+import com.example.go4lunch.View.Adapter.WorkmatesAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class RestaurantActivity extends AppCompatActivity {

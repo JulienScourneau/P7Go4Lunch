@@ -1,4 +1,8 @@
-package com.example.go4lunch;
+package com.example.go4lunch.Controler;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -8,16 +12,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.example.go4lunch.View.ListViewFragment;
-import com.example.go4lunch.View.MapViewFragment;
-import com.example.go4lunch.View.WorkmatesFragment;
-import com.example.go4lunch.models.Restaurant;
+import com.example.go4lunch.R;
+import com.example.go4lunch.View.Fragment.ListViewFragment;
+import com.example.go4lunch.View.Fragment.MapViewFragment;
+import com.example.go4lunch.View.Fragment.WorkmatesFragment;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -40,21 +41,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         signInActivity();
     }
 
-    private void signInActivity() {
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setTheme(R.style.LoginTheme)
-                        .setLogo(R.drawable.go4lunch_icon)
-                        .setAvailableProviders(Arrays.asList(
-                                new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
-                                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
-                        .setIsSmartLockEnabled(false, true)
-                        .build(),
-                RC_SIGN_IN);
-
-    }
-
     private void initView(){
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapViewFragment()).commit();
         mBottomNav = findViewById(R.id.bottom_navigation_view);
@@ -67,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        Places.initialize(getApplicationContext(), getApplicationContext().getString(R.string.api_key));
+        PlacesClient placesClient = Places.createClient(this);
     }
 
     @Override
@@ -100,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;;
+                    Fragment selectedFragment = new MapViewFragment();
                     switch (item.getItemId()){
                         case R.id.nav_map:
                             selectedFragment = new MapViewFragment();
@@ -116,5 +105,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return true;
                 }
             };
+
+
+    private void signInActivity() {
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setTheme(R.style.LoginTheme)
+                        .setLogo(R.drawable.go4lunch_icon)
+                        .setAvailableProviders(Arrays.asList(
+                                new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
+                                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
+                        .setIsSmartLockEnabled(false, true)
+                        .build(),
+                RC_SIGN_IN);
+
+    }
 
 }

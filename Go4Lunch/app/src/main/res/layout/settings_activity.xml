@@ -37,7 +37,7 @@
         android:textColor="@android:color/black" />
 
     <SeekBar
-        android:id="@+id/seekBar"
+        android:id="@+id/settings_seekBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         android:id="@+id/divider_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/seekBar"
+        android:layout_below="@id/settings_seekBar"
         android:layout_margin="46dp"
         android:background="@android:color/darker_gray" />
 

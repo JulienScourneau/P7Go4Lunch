@@ -46,5 +46,6 @@
 
     <!-- GOOGLE RESOURCES -->
     <string name="title_activity_maps">Map</string>
+    <string name="api_key">AIzaSyDAQ_HNAn9zAnR4n3v2x3QOlF58EnO_mH0</string>
 
 </resources>

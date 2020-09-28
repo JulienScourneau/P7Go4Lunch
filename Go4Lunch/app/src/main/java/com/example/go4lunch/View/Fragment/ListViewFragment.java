@@ -1,4 +1,4 @@
-package com.example.go4lunch.View;
+package com.example.go4lunch.View.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go4lunch.R;
-import com.example.go4lunch.TestList;
+import com.example.go4lunch.Utils.TestList;
+import com.example.go4lunch.View.Adapter.RestaurantAdapter;
 
 public class ListViewFragment extends Fragment {
     private RecyclerView mRecyclerView;

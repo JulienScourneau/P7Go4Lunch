@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.go4lunch">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".Controler.SplashscreenActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,12 +26,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".Controler.SettingsActivity" />
         <activity
-            android:name=".RestaurantActivity"
+            android:name=".Controler.RestaurantActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Controler.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>

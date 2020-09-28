@@ -1,20 +1,15 @@
-package com.example.go4lunch;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.go4lunch.Controler;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.go4lunch.R;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class SettingsActivity extends AppCompatActivity {
     private SwitchMaterial mNotificationSwitch;
@@ -34,7 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mSeekBar.findViewById(R.id.seekBar);
+        mSeekBar = findViewById(R.id.settings_seekBar);
         mNotificationSwitch = findViewById(R.id.notification_switch);
         mNotificationSwitch.setOnClickListener(new View.OnClickListener() {
             @Override

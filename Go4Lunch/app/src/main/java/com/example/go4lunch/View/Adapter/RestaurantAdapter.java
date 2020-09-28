@@ -1,4 +1,4 @@
-package com.example.go4lunch.View;
+package com.example.go4lunch.View.Adapter;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go4lunch.R;
-import com.example.go4lunch.RestaurantActivity;
-import com.example.go4lunch.models.Restaurant;
+import com.example.go4lunch.Controler.RestaurantActivity;
+import com.example.go4lunch.Models.Restaurant;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,8 @@
-package com.example.go4lunch;
+package com.example.go4lunch.Utils;
 
-import com.example.go4lunch.models.Restaurant;
-import com.example.go4lunch.models.User;
+import com.example.go4lunch.Models.Restaurant;
+import com.example.go4lunch.Models.User;
+import com.example.go4lunch.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

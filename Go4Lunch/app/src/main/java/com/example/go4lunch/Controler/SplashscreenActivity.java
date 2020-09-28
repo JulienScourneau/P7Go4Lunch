@@ -1,6 +1,4 @@
-package com.example.go4lunch;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.go4lunch.Controler;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,22 +6,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.go4lunch.R;
 
 import gr.net.maroulis.library.EasySplashScreen;
 
-public class LoginActivity extends AppCompatActivity {
-
+public class SplashscreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loginActivity();
+        launchSplashScreen();
     }
-
-    private void loginActivity() {
+    private void launchSplashScreen() {
         Thread thread = new Thread() {
             public void run() {
                 try {
@@ -35,10 +32,10 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("LoginException", "Login exception catch");
 
                 } finally {
-
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(SplashscreenActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
+
                 }
             }
         };
@@ -46,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setUpSplashScreen() {
-        EasySplashScreen config = new EasySplashScreen(LoginActivity.this)
+        EasySplashScreen config = new EasySplashScreen(SplashscreenActivity.this)
                 .withFullScreen()
                 .withSplashTimeOut(2000)
                 .withBackgroundColor(Color.parseColor("#353535"))
@@ -60,12 +57,4 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(easySplashScreen);
     }
 
-
-    protected FirebaseUser getCurrentUser() {
-        return FirebaseAuth.getInstance().getCurrentUser();
-    }
-
-    protected Boolean isCurrentUserLogged() {
-        return (this.getCurrentUser() != null);
-    }
 }

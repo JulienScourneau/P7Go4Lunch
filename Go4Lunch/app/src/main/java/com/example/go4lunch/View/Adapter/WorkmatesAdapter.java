@@ -1,4 +1,4 @@
-package com.example.go4lunch.View;
+package com.example.go4lunch.View.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go4lunch.R;
-import com.example.go4lunch.models.User;
+import com.example.go4lunch.Models.User;
 
 import java.util.ArrayList;
 
