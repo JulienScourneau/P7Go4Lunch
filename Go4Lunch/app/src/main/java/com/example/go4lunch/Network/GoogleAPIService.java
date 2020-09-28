@@ -9,3 +9,4 @@ public interface GoogleAPIService {
     @GET
     Call<MyPlaces> getPlaces();
 }
+
