@@ -11,11 +11,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.example.go4lunch.Models.MyPlaces;
 import com.example.go4lunch.R;
 import com.example.go4lunch.View.Fragment.ListViewFragment;
 import com.example.go4lunch.View.Fragment.MapViewFragment;
 import com.example.go4lunch.View.Fragment.WorkmatesFragment;
+import com.example.go4lunch.ViewModel.MyPlacesViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView mBottomNav;
     private NavigationView mNavigationView;
     private static final int RC_SIGN_IN = 123;
+    private MyPlacesViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initView(){
+        configureViewModel();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapViewFragment()).commit();
         mBottomNav = findViewById(R.id.bottom_navigation_view);
         mBottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -56,6 +63,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Places.initialize(getApplicationContext(), getApplicationContext().getString(R.string.api_key));
         PlacesClient placesClient = Places.createClient(this);
+    }
+
+    private void configureViewModel() {
+        this.viewModel = new ViewModelProvider(this).get(MyPlacesViewModel.class);
+        viewModel.getAllPlaces().observe(this,this::updateMyPlace);
+    }
+
+    private void updateMyPlace(MyPlaces myPlaces) {
+
     }
 
     @Override

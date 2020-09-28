@@ -6,6 +6,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface GoogleAPIService {
-    @GET
+    @GET("nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc")
     Call<MyPlaces> getPlaces();
 }
