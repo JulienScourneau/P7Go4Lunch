@@ -15,7 +15,7 @@ import com.example.go4lunch.R;
 import com.example.go4lunch.Utils.TestList;
 import com.example.go4lunch.View.Adapter.WorkmatesAdapter;
 
-public class WorkmatesFragment extends Fragment {
+public class WorkmatesFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
 
     @Nullable

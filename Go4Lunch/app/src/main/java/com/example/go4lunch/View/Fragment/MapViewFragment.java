@@ -25,11 +25,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapViewFragment extends Fragment implements OnMapReadyCallback {
+public class MapViewFragment extends BaseFragment implements OnMapReadyCallback {
 
     private static final int MY_PERMISSION_CODE = 1000;
     private GoogleMap mMap;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
 
     @Nullable
     @Override

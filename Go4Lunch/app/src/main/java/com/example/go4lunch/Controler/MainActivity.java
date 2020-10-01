@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView mBottomNav;
     private NavigationView mNavigationView;
     private static final int RC_SIGN_IN = 123;
-    private MyPlacesViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initView(){
-        configureViewModel();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapViewFragment()).commit();
         mBottomNav = findViewById(R.id.bottom_navigation_view);
         mBottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -63,15 +61,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Places.initialize(getApplicationContext(), getApplicationContext().getString(R.string.api_key));
         PlacesClient placesClient = Places.createClient(this);
-    }
-
-    private void configureViewModel() {
-        this.viewModel = new ViewModelProvider(this).get(MyPlacesViewModel.class);
-        viewModel.getAllPlaces().observe(this,this::updateMyPlace);
-    }
-
-    private void updateMyPlace(MyPlaces myPlaces) {
-
     }
 
     @Override

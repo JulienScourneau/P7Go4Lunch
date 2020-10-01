@@ -21,7 +21,7 @@ public class PlacesRepository {
 
     public MutableLiveData<MyPlaces> getMutableLiveData() {
         GoogleAPIService apiService = RetrofitInstance.getApiService();
-        Call<MyPlaces> call = apiService.getPlaces();
+        Call<MyPlaces> call = apiService.getPlaces("nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc");
         call.enqueue(new Callback<MyPlaces>() {
             @Override
             public void onResponse(Call<MyPlaces> call, Response<MyPlaces> response) {

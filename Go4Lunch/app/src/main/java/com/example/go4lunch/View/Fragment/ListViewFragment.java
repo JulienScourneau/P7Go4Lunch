@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +14,7 @@ import com.example.go4lunch.R;
 import com.example.go4lunch.Utils.TestList;
 import com.example.go4lunch.View.Adapter.RestaurantAdapter;
 
-public class ListViewFragment extends Fragment {
+public class ListViewFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
 
     @Nullable

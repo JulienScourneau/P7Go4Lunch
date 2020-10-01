@@ -9,8 +9,6 @@ import androidx.lifecycle.LiveData;
 import com.example.go4lunch.Models.MyPlaces;
 import com.example.go4lunch.Repository.PlacesRepository;
 
-import java.util.List;
-
 public class MyPlacesViewModel extends AndroidViewModel {
     private PlacesRepository repository;
 
