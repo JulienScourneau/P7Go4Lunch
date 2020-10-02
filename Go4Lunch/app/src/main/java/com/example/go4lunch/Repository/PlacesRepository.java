@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.go4lunch.Controler.BaseFragment;
 import com.example.go4lunch.Models.MyPlaces;
 import com.example.go4lunch.Models.Restaurant;
 import com.example.go4lunch.Network.GoogleAPIService;
@@ -21,7 +22,7 @@ public class PlacesRepository {
 
     public MutableLiveData<MyPlaces> getMutableLiveData() {
         GoogleAPIService apiService = RetrofitInstance.getApiService();
-        Call<MyPlaces> call = apiService.getPlaces("nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc");
+        Call<MyPlaces> call = apiService.getPlaces(BaseFragment.getUrl());
         call.enqueue(new Callback<MyPlaces>() {
             @Override
             public void onResponse(Call<MyPlaces> call, Response<MyPlaces> response) {

@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.go4lunch.Controler.BaseFragment;
 import com.example.go4lunch.R;
 import com.example.go4lunch.Utils.TestList;
 import com.example.go4lunch.View.Adapter.RestaurantAdapter;

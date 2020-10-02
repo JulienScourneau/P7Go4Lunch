@@ -1,5 +1,6 @@
 package com.example.go4lunch.Controler;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView mDistanceSettings;
     private SeekBar mSeekBar;
     private Button mDeleteBtn;
+    private int mRadius;
     private final int MIN = 50, MAX = 200, STEP = 10;
 
     @Override
@@ -55,8 +57,8 @@ public class SettingsActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
                 float value = Math.round((progress * (MAX - MIN)) / 100);
-                int displayValue = (((int) value + MIN) / STEP) * STEP;
-                mDistanceSettings.setText(displayValue + getResources().getString(R.string.distance_settings_activity_txt));
+                mRadius = (((int) value + MIN) / STEP) * STEP;
+                mDistanceSettings.setText(mRadius + "\""+ getResources().getString(R.string.distance_settings_activity_txt));
             }
 
             @Override
@@ -67,6 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+                saveData();
             }
         });
     }
@@ -74,6 +77,13 @@ public class SettingsActivity extends AppCompatActivity {
     private int calculateProgress(int value, int MIN, int MAX) {
         return (200 * (value - MIN)) / (MAX - MIN);
     }
+
+    public void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("SettingsSharedPrefs",MODE_PRIVATE);
+        sharedPreferences.edit().putInt("RadiusSettings",mRadius).apply();
+    }
+
+
 
     //private void deleteUserFromFirebase() {
     //    if (this.getCurrentUser() != null) {
