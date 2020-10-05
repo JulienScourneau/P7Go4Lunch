@@ -1,29 +1,31 @@
 package com.example.go4lunch.Models;
 
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Location {
-    private String lng;
 
-    private String lat;
+    @SerializedName("lat")
+    @Expose
+    private Double lat;
+    @SerializedName("lng")
+    @Expose
+    private Double lng;
 
-    public String getLng() {
-        return lng;
-    }
-
-    public void setLng(String lng) {
-        this.lng = lng;
-    }
-
-    public String getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(String lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    @Override
-    public String toString() {
-        return "ClassPojo [lng = " + lng + ", lat = " + lat + "]";
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
     }
 }

@@ -1,35 +1,31 @@
 package com.example.go4lunch.Models;
 
 
-public class Viewport
-{
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+public class Viewport {
+
+    @SerializedName("northeast")
+    @Expose
+    private Northeast northeast;
+    @SerializedName("southwest")
+    @Expose
     private Southwest southwest;
 
-    private Northeast northeast;
-
-    public Southwest getSouthwest ()
-    {
-        return southwest;
-    }
-
-    public void setSouthwest (Southwest southwest)
-    {
-        this.southwest = southwest;
-    }
-
-    public Northeast getNortheast ()
-    {
+    public Northeast getNortheast() {
         return northeast;
     }
 
-    public void setNortheast (Northeast northeast)
-    {
+    public void setNortheast(Northeast northeast) {
         this.northeast = northeast;
     }
 
-    @Override
-    public String toString()
-    {
-        return "ClassPojo [southwest = "+southwest+", northeast = "+northeast+"]";
+    public Southwest getSouthwest() {
+        return southwest;
+    }
+
+    public void setSouthwest(Southwest southwest) {
+        this.southwest = southwest;
     }
 }

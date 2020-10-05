@@ -1,18 +1,17 @@
 package com.example.go4lunch.Models;
 
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Geometry {
-    private Viewport viewport;
 
+    @SerializedName("location")
+    @Expose
     private Location location;
-
-    public Viewport getViewport() {
-        return viewport;
-    }
-
-    public void setViewport(Viewport viewport) {
-        this.viewport = viewport;
-    }
+    @SerializedName("viewport")
+    @Expose
+    private Viewport viewport;
 
     public Location getLocation() {
         return location;
@@ -22,8 +21,11 @@ public class Geometry {
         this.location = location;
     }
 
-    @Override
-    public String toString() {
-        return "ClassPojo [viewport = " + viewport + ", location = " + location + "]";
+    public Viewport getViewport() {
+        return viewport;
+    }
+
+    public void setViewport(Viewport viewport) {
+        this.viewport = viewport;
     }
 }

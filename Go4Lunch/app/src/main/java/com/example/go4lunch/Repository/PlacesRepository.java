@@ -17,7 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PlacesRepository {
-    private ArrayList<Restaurant> restaurants = new ArrayList<>();
+    private ArrayList<MyPlaces> myPlacesList = new ArrayList<>();
     private MutableLiveData<MyPlaces> mutableLiveData = new MutableLiveData<>();
 
     public MutableLiveData<MyPlaces> getMutableLiveData() {
@@ -27,13 +27,14 @@ public class PlacesRepository {
             @Override
             public void onResponse(Call<MyPlaces> call, Response<MyPlaces> response) {
                 MyPlaces myPlaces = response.body();
-                mutableLiveData.setValue(myPlaces);
-
+                if (myPlaces != null && myPlaces.getResults() != null) {
+                    mutableLiveData.setValue(myPlaces);
+                }
             }
 
             @Override
             public void onFailure(Call<MyPlaces> call, Throwable t) {
-                Log.d("ListSize","Error "+ "");
+                Log.d("ListSize", "Error " + "");
             }
         });
         return mutableLiveData;

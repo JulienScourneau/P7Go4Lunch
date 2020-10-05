@@ -1,35 +1,45 @@
 package com.example.go4lunch.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class MyPlaces {
-    private String next_page_token;
-
-    private String[] html_attributions;
-
-    private Results[] results;
-
+    @SerializedName("html_attributions")
+    @Expose
+    private List<Object> htmlAttributions = null;
+    @SerializedName("next_page_token")
+    @Expose
+    private String nextPageToken;
+    @SerializedName("results")
+    @Expose
+    private List<Result> results = null;
+    @SerializedName("status")
+    @Expose
     private String status;
 
-    public String getNext_page_token() {
-        return next_page_token;
+    public List<Object> getHtmlAttributions() {
+        return htmlAttributions;
     }
 
-    public void setNext_page_token(String next_page_token) {
-        this.next_page_token = next_page_token;
+    public void setHtmlAttributions(List<Object> htmlAttributions) {
+        this.htmlAttributions = htmlAttributions;
     }
 
-    public String[] getHtml_attributions() {
-        return html_attributions;
+    public String getNextPageToken() {
+        return nextPageToken;
     }
 
-    public void setHtml_attributions(String[] html_attributions) {
-        this.html_attributions = html_attributions;
+    public void setNextPageToken(String nextPageToken) {
+        this.nextPageToken = nextPageToken;
     }
 
-    public Results[] getResults() {
+    public List<Result> getResults() {
         return results;
     }
 
-    public void setResults(Results[] results) {
+    public void setResults(List<Result> results) {
         this.results = results;
     }
 
@@ -41,8 +51,4 @@ public class MyPlaces {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "ClassPojo [next_page_token = " + next_page_token + ", html_attributions = " + html_attributions + ", results = " + results + ", status = " + status + "]";
-    }
 }

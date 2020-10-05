@@ -1,18 +1,27 @@
 package com.example.go4lunch.Controler;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.go4lunch.Models.MyPlaces;
-import com.example.go4lunch.R;
+import com.example.go4lunch.Utils.TestList;
 import com.example.go4lunch.ViewModel.MyPlacesViewModel;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+import java.util.List;
 
 public abstract class BaseFragment extends Fragment {
 
-    private String Url;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private List<MyPlaces> myPlacesList;
     private MyPlacesViewModel viewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,7 +32,16 @@ public abstract class BaseFragment extends Fragment {
 
     private void configureViewModel() {
         this.viewModel = new ViewModelProvider(this).get(MyPlacesViewModel.class);
-        viewModel.getAllPlaces().observe(this,this::updateMyPlace);
+
+    }
+
+    public void getMyPlace() {
+        viewModel.getAllPlaces().observe(this, new Observer<MyPlaces>() {
+            @Override
+            public void onChanged(MyPlaces myPlaces) {
+                updateMyPlace(myPlaces);
+            }
+        });
     }
 
     public static String getUrl(){
@@ -38,7 +56,18 @@ public abstract class BaseFragment extends Fragment {
     }
 
     private void updateMyPlace(MyPlaces myPlaces) {
+        for (int i =0 ; i <myPlaces.getResults().length; i++);
 
     }
+
+    //private void getDeviceLocation() {
+    //    mFusedLocationProviderClient.getLastLocation()
+    //            .addOnCompleteListener(new OnCompleteListener<Location>() {
+    //                @Override
+    //                public void onComplete(@NonNull Task<Location> task) {
+//
+    //                }
+    //            });
+    //}
 
 }
