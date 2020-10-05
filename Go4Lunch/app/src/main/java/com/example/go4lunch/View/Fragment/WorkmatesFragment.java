@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go4lunch.Controler.BaseFragment;
+import com.example.go4lunch.Models.MyPlaces;
 import com.example.go4lunch.R;
 import com.example.go4lunch.Utils.TestList;
 import com.example.go4lunch.View.Adapter.WorkmatesAdapter;
@@ -28,5 +29,9 @@ public class WorkmatesFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         mRecyclerView.setAdapter(new WorkmatesAdapter(TestList.getFakeUserList()));
         return view;
+    }
+
+    public void updateMyPlace(MyPlaces myPlaces) {
+
     }
 }

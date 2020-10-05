@@ -10,21 +10,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.go4lunch.R;
 import com.example.go4lunch.Controler.RestaurantActivity;
-import com.example.go4lunch.Models.Restaurant;
+import com.example.go4lunch.Models.Photo;
+import com.example.go4lunch.Models.Result;
+import com.example.go4lunch.R;
 
 import java.util.ArrayList;
 
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
-    private ArrayList<Restaurant> mRestaurantList;
+    private ArrayList<Result> mRestaurantList;
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder{
         private TextView mRestaurantName;
         private TextView mRestaurantLocation;
         private TextView mRestaurantSchedule;
-        private ImageView mRestaurantPictures;
+        private TextView mRestaurantPictures;
         private TextView mRestaurantDistance;
         private TextView mWorkmateNumber;
 
@@ -40,7 +41,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         }
     }
 
-    public RestaurantAdapter(ArrayList<Restaurant> restaurantList) {
+    public RestaurantAdapter(ArrayList<Result> restaurantList) {
         this.mRestaurantList = restaurantList;
     }
 
@@ -53,12 +54,12 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-        Restaurant currentRestaurant = mRestaurantList.get(position);
+        Result currentRestaurant = mRestaurantList.get(position);
 
-        holder.mRestaurantName.setText(currentRestaurant.getRestaurantName());
-        holder.mRestaurantLocation.setText(currentRestaurant.getRestaurantLocation());
-        holder.mRestaurantSchedule.setText(currentRestaurant.getRestaurantSchedule());
-        holder.mRestaurantPictures.setImageResource(currentRestaurant.getRestaurantPictures());
+        holder.mRestaurantName.setText(currentRestaurant.getName());
+        holder.mRestaurantLocation.setText(currentRestaurant.getVicinity());
+        //holder.mRestaurantSchedule.setText(currentRestaurant.getName());
+        holder.mRestaurantPictures.set(currentRestaurant.getPhotos());
         holder.mRestaurantDistance.setText("00m");
         holder.mWorkmateNumber.setText("2");
 
@@ -74,5 +75,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @Override
     public int getItemCount() {
         return mRestaurantList.size();
+    }
+
+    public void updatePlace(final ArrayList<Result> restaurantList){
+        this.mRestaurantList = restaurantList;
+        notifyDataSetChanged();
     }
 }

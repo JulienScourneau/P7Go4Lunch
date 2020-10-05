@@ -20,9 +20,9 @@ public class PlacesRepository {
     private ArrayList<MyPlaces> myPlacesList = new ArrayList<>();
     private MutableLiveData<MyPlaces> mutableLiveData = new MutableLiveData<>();
 
-    public MutableLiveData<MyPlaces> getMutableLiveData() {
+    public MutableLiveData<MyPlaces> getMutableLiveData(String url) {
         GoogleAPIService apiService = RetrofitInstance.getApiService();
-        Call<MyPlaces> call = apiService.getPlaces(BaseFragment.getUrl());
+        Call<MyPlaces> call = apiService.getPlaces(url);
         call.enqueue(new Callback<MyPlaces>() {
             @Override
             public void onResponse(Call<MyPlaces> call, Response<MyPlaces> response) {

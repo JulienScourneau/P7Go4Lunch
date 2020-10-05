@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.go4lunch.Controler.BaseFragment;
+import com.example.go4lunch.Models.MyPlaces;
 import com.example.go4lunch.R;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,6 +43,10 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
         SupportMapFragment fragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         assert fragment != null;
         fragment.getMapAsync(this);
+
+    }
+
+    public void updateMyPlace(MyPlaces myPlaces) {
 
     }
 

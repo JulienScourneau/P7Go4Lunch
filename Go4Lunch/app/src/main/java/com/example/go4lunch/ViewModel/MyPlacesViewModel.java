@@ -16,7 +16,7 @@ public class MyPlacesViewModel extends AndroidViewModel {
         super(application);
         repository = new PlacesRepository();
     }
-    public LiveData<MyPlaces> getAllPlaces() {
-        return repository.getMutableLiveData();
+    public LiveData<MyPlaces> getAllPlaces(String url) {
+        return repository.getMutableLiveData(url);
     }
 }
