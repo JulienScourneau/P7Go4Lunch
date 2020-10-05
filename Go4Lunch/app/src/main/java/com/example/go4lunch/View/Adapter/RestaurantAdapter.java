@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.go4lunch.Controler.RestaurantActivity;
 import com.example.go4lunch.Models.Photo;
 import com.example.go4lunch.Models.Result;
@@ -25,7 +27,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         private TextView mRestaurantName;
         private TextView mRestaurantLocation;
         private TextView mRestaurantSchedule;
-        private TextView mRestaurantPictures;
+        private ImageView mRestaurantPictures;
         private TextView mRestaurantDistance;
         private TextView mWorkmateNumber;
 
@@ -58,8 +60,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         holder.mRestaurantName.setText(currentRestaurant.getName());
         holder.mRestaurantLocation.setText(currentRestaurant.getVicinity());
-        //holder.mRestaurantSchedule.setText(currentRestaurant.getName());
-        holder.mRestaurantPictures.set(currentRestaurant.getPhotos());
+        holder.mRestaurantSchedule.setText(currentRestaurant.getName());
+        Glide.with(holder.mRestaurantPictures.getContext())
+                .load(currentRestaurant.getPhotos().get(0))
+                .apply(RequestOptions.circleCropTransform())
+                .into(holder.mRestaurantPictures);
         holder.mRestaurantDistance.setText("00m");
         holder.mWorkmateNumber.setText("2");
 
