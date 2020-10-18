@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.example.go4lunch.View.Adapter.WorkmatesAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class RestaurantActivity extends AppCompatActivity {
+    private String mPlaceId;
     private RecyclerView mRecyclerView;
     private Button mCallButton, mLikeButton, mWebsiteButton;
     private FloatingActionButton mLunchButton;
@@ -25,6 +27,9 @@ public class RestaurantActivity extends AppCompatActivity {
         setContentView(R.layout.restaurant_activity);
         initView();
 
+        Bundle bundle = getIntent().getExtras();
+        mPlaceId = bundle.getString("PLACE_ID");
+
         mRecyclerView = findViewById(R.id.restaurant_activity_recyclerview);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -32,25 +37,27 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     private void initView() {
+
+
         mCallButton = findViewById(R.id.restaurant_call);
         mCallButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Call",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Call", Toast.LENGTH_SHORT).show();
             }
         });
         mLikeButton = findViewById(R.id.restaurant_like);
         mLikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Like",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Like", Toast.LENGTH_SHORT).show();
             }
         });
         mWebsiteButton = findViewById(R.id.restaurant_website);
         mWebsiteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Website",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Website", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -58,8 +65,17 @@ public class RestaurantActivity extends AppCompatActivity {
         mLunchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Lunch",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Lunch", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public String getUrl() {
+        StringBuilder url = new StringBuilder();
+        url.append("details/json?");
+        url.append("place_id="+mPlaceId);
+        url.append("&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc");
+
+        return url.toString();
     }
 }

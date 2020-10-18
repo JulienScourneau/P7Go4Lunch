@@ -19,4 +19,8 @@ public class MyPlacesViewModel extends AndroidViewModel {
     public LiveData<MyPlaces> getAllPlaces(String url) {
         return repository.getMutableLiveData(url);
     }
+
+    //public LiveData<Details> getDetailPlaces(String url) {
+    //    return null;
+    //}
 }

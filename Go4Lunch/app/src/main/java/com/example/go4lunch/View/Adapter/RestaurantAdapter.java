@@ -56,6 +56,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
         Result currentRestaurant = mRestaurantList.get(position);
+        String placeId = currentRestaurant.getPlaceId();
 
         holder.mRestaurantName.setText(currentRestaurant.getName());
         holder.mRestaurantLocation.setText(currentRestaurant.getVicinity());
@@ -73,7 +74,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), RestaurantActivity.class);
-            intent.putExtra("PlaceId",currentRestaurant.getPlaceId());
+            intent.putExtra("PLACE_ID",placeId);
             v.getContext().startActivity(intent);
         });
     }
