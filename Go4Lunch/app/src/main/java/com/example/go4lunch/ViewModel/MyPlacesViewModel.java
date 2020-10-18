@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.go4lunch.Models.MyPlaces;
+import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.Repository.PlacesRepository;
 
 public class MyPlacesViewModel extends AndroidViewModel {

@@ -7,24 +7,19 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go4lunch.Controler.BaseFragment;
-import com.example.go4lunch.Models.MyPlaces;
-import com.example.go4lunch.Models.Result;
+import com.example.go4lunch.Models.NearbySearch.MyPlaces;
+import com.example.go4lunch.Models.NearbySearch.Result;
 import com.example.go4lunch.R;
-import com.example.go4lunch.Utils.TestList;
 import com.example.go4lunch.View.Adapter.RestaurantAdapter;
-import com.example.go4lunch.ViewModel.MyPlacesViewModel;
 
 import java.util.ArrayList;
 
 public class ListViewFragment extends BaseFragment {
 
-    private MyPlacesViewModel viewModel;
     private RestaurantAdapter restaurantAdapter;
     private RecyclerView mRecyclerView;
     private ArrayList<Result> myPlaceList = new ArrayList<>();
@@ -40,7 +35,7 @@ public class ListViewFragment extends BaseFragment {
         return view;
     }
 
-    public void updateMyPlace(MyPlaces myPlaces) {
+    public void getPlaces(MyPlaces myPlaces) {
         myPlaceList.clear();
         myPlaceList.addAll(myPlaces.getResults());
         updatePlaceList();

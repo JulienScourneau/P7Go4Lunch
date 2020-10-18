@@ -11,16 +11,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.example.go4lunch.Models.MyPlaces;
 import com.example.go4lunch.R;
 import com.example.go4lunch.View.Fragment.ListViewFragment;
 import com.example.go4lunch.View.Fragment.MapViewFragment;
 import com.example.go4lunch.View.Fragment.WorkmatesFragment;
-import com.example.go4lunch.ViewModel.MyPlacesViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;

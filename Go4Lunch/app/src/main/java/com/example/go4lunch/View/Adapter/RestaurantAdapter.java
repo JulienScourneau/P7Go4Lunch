@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.go4lunch.Controler.RestaurantActivity;
-import com.example.go4lunch.Models.Photo;
-import com.example.go4lunch.Models.Result;
+import com.example.go4lunch.Models.NearbySearch.Result;
 import com.example.go4lunch.R;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private ArrayList<Result> mRestaurantList;
 
-    public static class RestaurantViewHolder extends RecyclerView.ViewHolder{
+    public static class RestaurantViewHolder extends RecyclerView.ViewHolder {
         private TextView mRestaurantName;
         private TextView mRestaurantLocation;
         private TextView mRestaurantSchedule;
@@ -50,7 +49,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @NonNull
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_item_fragment,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_item_fragment, parent, false);
         return new RestaurantViewHolder(view);
     }
 
@@ -61,19 +60,21 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.mRestaurantName.setText(currentRestaurant.getName());
         holder.mRestaurantLocation.setText(currentRestaurant.getVicinity());
         holder.mRestaurantSchedule.setText(currentRestaurant.getName());
-        Glide.with(holder.mRestaurantPictures.getContext())
-                .load(currentRestaurant.getPhotos().get(0))
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.mRestaurantPictures);
         holder.mRestaurantDistance.setText("00m");
         holder.mWorkmateNumber.setText("2");
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), RestaurantActivity.class);
-                v.getContext().startActivity(intent);
-            }
+        if (currentRestaurant.getPhotos() != null && currentRestaurant.getPhotos().size() > 0) {
+
+            Glide.with(holder.mRestaurantPictures.getContext())
+                    .load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=400&photoreference="+currentRestaurant.getPhotos().get(0).getPhotoReference()+"&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc")
+                    //.apply(RequestOptions.circleCropTransform())
+                    .into(holder.mRestaurantPictures);
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), RestaurantActivity.class);
+            intent.putExtra("PlaceId",currentRestaurant.getPlaceId());
+            v.getContext().startActivity(intent);
         });
     }
 
@@ -82,7 +83,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         return mRestaurantList.size();
     }
 
-    public void updatePlace(final ArrayList<Result> restaurantList){
+    public void updatePlace(final ArrayList<Result> restaurantList) {
         this.mRestaurantList = restaurantList;
         notifyDataSetChanged();
     }

@@ -4,9 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.go4lunch.Controler.BaseFragment;
-import com.example.go4lunch.Models.MyPlaces;
-import com.example.go4lunch.Models.Restaurant;
+import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.Network.GoogleAPIService;
 import com.example.go4lunch.Network.RetrofitInstance;
 
@@ -17,7 +15,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PlacesRepository {
-    private ArrayList<MyPlaces> myPlacesList = new ArrayList<>();
     private MutableLiveData<MyPlaces> mutableLiveData = new MutableLiveData<>();
 
     public MutableLiveData<MyPlaces> getMutableLiveData(String url) {

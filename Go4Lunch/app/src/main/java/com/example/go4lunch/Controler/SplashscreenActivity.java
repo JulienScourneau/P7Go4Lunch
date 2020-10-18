@@ -1,12 +1,17 @@
 package com.example.go4lunch.Controler;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.go4lunch.R;
 
@@ -14,12 +19,15 @@ import gr.net.maroulis.library.EasySplashScreen;
 
 public class SplashscreenActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE_LOCATION = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         launchSplashScreen();
     }
+
     private void launchSplashScreen() {
         Thread thread = new Thread() {
             public void run() {
@@ -55,6 +63,16 @@ public class SplashscreenActivity extends AppCompatActivity {
 
         View easySplashScreen = config.create();
         setContentView(easySplashScreen);
+    }
+
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            }, REQUEST_CODE_LOCATION);
+        } else {
+            Log.e("PermissionCheck", "PERMISSION GRANTED");
+        }
     }
 
 }
