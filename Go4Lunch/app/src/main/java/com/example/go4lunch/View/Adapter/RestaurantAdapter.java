@@ -65,9 +65,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.mWorkmateNumber.setText("2");
 
         if (currentRestaurant.getPhotos() != null && currentRestaurant.getPhotos().size() > 0) {
-
             Glide.with(holder.mRestaurantPictures.getContext())
-                    .load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=400&photoreference="+currentRestaurant.getPhotos().get(0).getPhotoReference()+"&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc")
+                    .load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&maxheight=200&photoreference="+currentRestaurant.getPhotos().get(0).getPhotoReference()+"&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc")
                     //.apply(RequestOptions.circleCropTransform())
                     .into(holder.mRestaurantPictures);
         }

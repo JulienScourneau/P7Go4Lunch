@@ -3,6 +3,7 @@ package com.example.go4lunch.Controler;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -71,8 +72,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.drawer_lunch_icon:
-                Intent restaurantIntent = new Intent(this, RestaurantActivity.class);
-                startActivity(restaurantIntent);
+                Toast.makeText(this,"Select your lunch",Toast.LENGTH_SHORT).show();
+                //Intent restaurantIntent = new Intent(this, RestaurantActivity.class);
+                //startActivity(restaurantIntent);
                 break;
             case R.id.drawer_settings_icon:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);

@@ -9,8 +9,7 @@
         android:id="@+id/restaurant_activity_picture"
         android:layout_width="match_parent"
         android:layout_height="225dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/go4lunch_background"
+        android:src="@drawable/image_unavailable"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
