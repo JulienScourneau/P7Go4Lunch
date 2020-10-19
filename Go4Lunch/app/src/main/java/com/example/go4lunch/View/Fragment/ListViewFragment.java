@@ -35,7 +35,7 @@ public class ListViewFragment extends BaseFragment {
         return view;
     }
 
-    public void getPlaces(MyPlaces myPlaces) {
+    public void getNearbyPlaces(MyPlaces myPlaces) {
         myPlaceList.clear();
         myPlaceList.addAll(myPlaces.getResults());
         updatePlaceList();

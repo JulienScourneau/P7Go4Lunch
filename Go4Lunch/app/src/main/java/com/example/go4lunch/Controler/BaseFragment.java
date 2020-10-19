@@ -7,12 +7,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.go4lunch.Models.NearbySearch.MyPlaces;
-import com.example.go4lunch.ViewModel.MyPlacesViewModel;
+import com.example.go4lunch.ViewModel.PlacesViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
 public abstract class BaseFragment extends Fragment {
 
-    private MyPlacesViewModel viewModel;
+    private PlacesViewModel viewModel;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
     @Override
@@ -24,15 +24,15 @@ public abstract class BaseFragment extends Fragment {
     }
 
     private void configureViewModel() {
-        this.viewModel = new ViewModelProvider(this).get(MyPlacesViewModel.class);
+        this.viewModel = new ViewModelProvider(this).get(PlacesViewModel.class);
 
     }
 
     public void getMyPlace() {
-        this.viewModel.getNearbyPlaces(getUrl()).observe(this, this::getPlaces);
+        this.viewModel.getNearbyPlaces(getUrl()).observe(this, this::getNearbyPlaces);
     }
 
-    public abstract void getPlaces(MyPlaces myPlaces);
+    public abstract void getNearbyPlaces(MyPlaces myPlaces);
 
 
     public String getUrl() {

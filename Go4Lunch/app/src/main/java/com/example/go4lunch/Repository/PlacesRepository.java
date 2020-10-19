@@ -32,7 +32,7 @@ public class PlacesRepository {
 
             @Override
             public void onFailure(Call<MyPlaces> call, Throwable t) {
-                Log.d("ListSize", "Error " + t);
+                Log.d("NearbyPlace", "Error " + t);
             }
         });
         return mNearbyPlaceMutableLiveData;
@@ -41,7 +41,21 @@ public class PlacesRepository {
     public MutableLiveData<PlaceDetails> getDetailsMutableLiveData(String url) {
         GoogleAPIService apiService = RetrofitInstance.getApiService();
 
+        Call<PlaceDetails> call = apiService.getPlacesDetails(url);
+        call.enqueue(new Callback<PlaceDetails>() {
+            @Override
+            public void onResponse(Call<PlaceDetails> call, Response<PlaceDetails> response) {
+                PlaceDetails placeDetails = response.body();
+                if (placeDetails != null && placeDetails.getResult() != null){
+                    mDetailsPlaceMutableLiveData.setValue(placeDetails);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<PlaceDetails> call, Throwable t) {
+                Log.d("DetailsPlace", "Error " + t);
+            }
+        });
         return mDetailsPlaceMutableLiveData;
     }
 }

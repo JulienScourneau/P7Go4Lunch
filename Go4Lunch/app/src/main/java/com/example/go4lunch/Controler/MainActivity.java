@@ -18,12 +18,12 @@ import com.example.go4lunch.View.Fragment.ListViewFragment;
 import com.example.go4lunch.View.Fragment.MapViewFragment;
 import com.example.go4lunch.View.Fragment.WorkmatesFragment;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Arrays;
+
+import static com.example.go4lunch.Utils.Constants.RC_SIGN_IN;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar mToolbar;
     private BottomNavigationView mBottomNav;
     private NavigationView mNavigationView;
-    private static final int RC_SIGN_IN = 123;
     private Boolean mLunchSelected = true;
 
     @Override

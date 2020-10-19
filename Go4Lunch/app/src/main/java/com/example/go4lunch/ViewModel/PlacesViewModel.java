@@ -10,10 +10,10 @@ import com.example.go4lunch.Models.Details.PlaceDetails;
 import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.Repository.PlacesRepository;
 
-public class MyPlacesViewModel extends AndroidViewModel {
+public class PlacesViewModel extends AndroidViewModel {
     private PlacesRepository repository;
 
-    public MyPlacesViewModel(@NonNull Application application) {
+    public PlacesViewModel(@NonNull Application application) {
         super(application);
         repository = new PlacesRepository();
     }

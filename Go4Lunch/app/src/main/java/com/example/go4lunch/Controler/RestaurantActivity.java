@@ -1,6 +1,7 @@
 package com.example.go4lunch.Controler;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,9 +12,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.go4lunch.Models.Details.PlaceDetails;
 import com.example.go4lunch.R;
 import com.example.go4lunch.Utils.TestList;
 import com.example.go4lunch.View.Adapter.WorkmatesAdapter;
+import com.example.go4lunch.ViewModel.PlacesViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class RestaurantActivity extends AppCompatActivity {
@@ -21,6 +24,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private Button mCallButton, mLikeButton, mWebsiteButton;
     private FloatingActionButton mLunchButton;
+    private PlacesViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +44,8 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
-
+        configureViewModel();
+        
         mCallButton = findViewById(R.id.restaurant_call);
         mCallButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +75,20 @@ public class RestaurantActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Lunch", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void configureViewModel() {
+        this.viewModel = new ViewModelProvider(this).get(PlacesViewModel.class);
+    }
+
+    public void getPlaceDetails() {
+        this.viewModel.getDetailPlaces(getUrl()).observe(this, this::upDatePlaceDetails);
+    }
+
+    private void upDatePlaceDetails(PlaceDetails placeDetails) {
+        PlaceDetails placeDetails1 = placeDetails;
+
+
     }
 
     public String getUrl() {

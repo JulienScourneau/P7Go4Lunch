@@ -1,11 +1,11 @@
 package com.example.go4lunch.View.Fragment;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -22,10 +23,6 @@ import com.example.go4lunch.Controler.RestaurantActivity;
 import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.Models.NearbySearch.Result;
 import com.example.go4lunch.R;
-
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -36,14 +33,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MapViewFragment extends BaseFragment implements OnMapReadyCallback {
 
     private static final int MY_PERMISSION_CODE = 1000;
     private GoogleMap mMap;
     private ArrayList<Result> myPlaceList = new ArrayList<>();
-    private Result actualPlace;
-    private Marker previousMarker = null;
 
     @Nullable
     @Override
@@ -70,7 +66,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
             checkLocationPermission();
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mMap.setMyLocationEnabled(true);
             }
         } else {
@@ -81,7 +77,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Intent intent = new Intent(getContext(), RestaurantActivity.class);
-                intent.putExtra("PLACE_ID",marker.getSnippet());
+                intent.putExtra("PLACE_ID", marker.getSnippet());
                 startActivity(intent);
                 return true;
             }
@@ -89,18 +85,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
 
     }
 
-
-    private void checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION
-            }, MY_PERMISSION_CODE);
-        } else {
-            Log.e("PermissionCheck", "PERMISSION GRANTED");
-        }
-    }
-
-    public void getPlaces(MyPlaces myPlaces) {
+    public void getNearbyPlaces(MyPlaces myPlaces) {
         myPlaceList.clear();
         myPlaceList.addAll(myPlaces.getResults());
         placeMarker();
@@ -110,7 +95,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
         mMap.clear();
         for (int i = 0; i < myPlaceList.size(); i++) {
             MarkerOptions markerOptions = new MarkerOptions();
-            actualPlace = myPlaceList.get(i);
+            Result actualPlace = myPlaceList.get(i);
             double lat = actualPlace.getGeometry().getLocation().getLat();
             double lng = actualPlace.getGeometry().getLocation().getLng();
             LatLng latLng = new LatLng(lat, lng);
@@ -125,37 +110,28 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == MY_PERMISSION_CODE && grantResults.length > 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocation();
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(Objects.requireNonNull(getActivity()), Manifest.permission.ACCESS_FINE_LOCATION)) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Location Permission Needed")
+                        .setMessage("This app needs the Location permission, please accept to use location functionality")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_CODE);
+
+                            }
+                        }).create().show();
+
             } else {
-                Toast.makeText(getContext(), "Permissions denied", Toast.LENGTH_SHORT).show();
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_CODE);
             }
         }
     }
 
-    private void getCurrentLocation() {
-
-        LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(3000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        LocationServices.getFusedLocationProviderClient(getActivity())
-                .requestLocationUpdates(locationRequest, new LocationCallback() {
-                }, Looper.getMainLooper());
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
