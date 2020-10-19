@@ -30,6 +30,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         mPlaceId = bundle.getString("PLACE_ID");
+        Log.d("PlaceId",mPlaceId);
         getUrl();
 
         mRecyclerView = findViewById(R.id.restaurant_activity_recyclerview);

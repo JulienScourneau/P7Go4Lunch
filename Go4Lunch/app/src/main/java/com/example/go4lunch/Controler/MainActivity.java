@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView mBottomNav;
     private NavigationView mNavigationView;
     private static final int RC_SIGN_IN = 123;
+    private Boolean mLunchSelected = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         signInActivity();
     }
 
-    private void initView(){
+    private void initView() {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapViewFragment()).commit();
         mBottomNav = findViewById(R.id.bottom_navigation_view);
         mBottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -55,26 +56,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        Places.initialize(getApplicationContext(), getApplicationContext().getString(R.string.api_key));
-        PlacesClient placesClient = Places.createClient(this);
     }
 
     @Override
     public void onBackPressed() {
-        if (mDrawer.isDrawerOpen(GravityCompat.START)){
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-        super.onBackPressed();
+            super.onBackPressed();
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.drawer_lunch_icon:
-                Toast.makeText(this,"Select your lunch",Toast.LENGTH_SHORT).show();
-                //Intent restaurantIntent = new Intent(this, RestaurantActivity.class);
-                //startActivity(restaurantIntent);
+                if (mLunchSelected) {
+                    Intent restaurantIntent = new Intent(this, RestaurantActivity.class);
+                    restaurantIntent.putExtra("PLACE_ID", "Add_ID");
+                    startActivity(restaurantIntent);
+                }
+                Toast.makeText(this, "Select your lunch", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.drawer_settings_icon:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
@@ -92,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = new MapViewFragment();
-                    switch (item.getItemId()){
+                    switch (item.getItemId()) {
                         case R.id.nav_map:
                             selectedFragment = new MapViewFragment();
                             break;
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             selectedFragment = new WorkmatesFragment();
                             break;
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     return true;
                 }
             };

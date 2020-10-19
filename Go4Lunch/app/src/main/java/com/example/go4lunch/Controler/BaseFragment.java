@@ -29,7 +29,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void getMyPlace() {
-        this.viewModel.getAllPlaces(getUrl()).observe(this, this::getPlaces);
+        this.viewModel.getNearbyPlaces(getUrl()).observe(this, this::getPlaces);
     }
 
     public abstract void getPlaces(MyPlaces myPlaces);

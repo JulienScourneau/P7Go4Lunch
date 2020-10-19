@@ -1,6 +1,7 @@
 package com.example.go4lunch.View.Fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.go4lunch.Controler.BaseFragment;
+import com.example.go4lunch.Controler.RestaurantActivity;
 import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.Models.NearbySearch.Result;
 import com.example.go4lunch.R;
@@ -30,6 +32,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -40,6 +43,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
     private GoogleMap mMap;
     private ArrayList<Result> myPlaceList = new ArrayList<>();
     private Result actualPlace;
+    private Marker previousMarker = null;
 
     @Nullable
     @Override
@@ -73,7 +77,18 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
             mMap.setMyLocationEnabled(true);
         }
 
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Intent intent = new Intent(getContext(), RestaurantActivity.class);
+                intent.putExtra("PLACE_ID",marker.getSnippet());
+                startActivity(intent);
+                return true;
+            }
+        });
+
     }
+
 
     private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -103,6 +118,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
             markerOptions.position(latLng);
             markerOptions.title(placeName);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker());
+            markerOptions.snippet(actualPlace.getPlaceId());
             mMap.addMarker(markerOptions);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
