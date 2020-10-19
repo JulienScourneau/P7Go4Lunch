@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         mPlaceId = bundle.getString("PLACE_ID");
+        getUrl();
 
         mRecyclerView = findViewById(R.id.restaurant_activity_recyclerview);
         mRecyclerView.setHasFixedSize(true);
@@ -75,6 +77,7 @@ public class RestaurantActivity extends AppCompatActivity {
         url.append("details/json?");
         url.append("place_id="+mPlaceId);
         url.append("&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc");
+        Log.d("getUrlDetails",url.toString());
 
         return url.toString();
     }

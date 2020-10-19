@@ -41,7 +41,7 @@ public abstract class BaseFragment extends Fragment {
         url.append("location=37.4067,-122.0813");
         url.append("&radius=500");
         url.append("&types=restaurant&sensor=true&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc");
-        Log.d("getUrl", url.toString());
+        Log.d("getUrlPlace", url.toString());
 
         return url.toString();
     }
