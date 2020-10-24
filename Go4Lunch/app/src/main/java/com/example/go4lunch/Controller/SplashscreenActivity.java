@@ -1,4 +1,4 @@
-package com.example.go4lunch.Controler;
+package com.example.go4lunch.Controller;
 
 import android.content.Intent;
 import android.graphics.Color;

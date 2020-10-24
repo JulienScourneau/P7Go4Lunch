@@ -11,8 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.go4lunch.Controler.RestaurantActivity;
+import com.example.go4lunch.Controller.RestaurantActivity;
 import com.example.go4lunch.Models.NearbySearch.Result;
 import com.example.go4lunch.R;
 
@@ -67,7 +66,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         if (currentRestaurant.getPhotos() != null && currentRestaurant.getPhotos().size() > 0) {
             Glide.with(holder.mRestaurantPictures.getContext())
                     .load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&maxheight=200&photoreference="+currentRestaurant.getPhotos().get(0).getPhotoReference()+"&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc")
-                    //.apply(RequestOptions.circleCropTransform())
                     .into(holder.mRestaurantPictures);
         }
 

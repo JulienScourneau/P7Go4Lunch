@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +16,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.go4lunch.Controler.BaseFragment;
-import com.example.go4lunch.Controler.RestaurantActivity;
+import com.example.go4lunch.Controller.BaseFragment;
+import com.example.go4lunch.Controller.RestaurantActivity;
 import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.Models.NearbySearch.Result;
 import com.example.go4lunch.R;

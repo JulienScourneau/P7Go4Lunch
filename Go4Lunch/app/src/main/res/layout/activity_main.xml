@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.go4lunch.Controler.MainActivity"
+    tools:context="com.example.go4lunch.Controller.MainActivity"
     tools:openDrawer="start">
 
     <RelativeLayout

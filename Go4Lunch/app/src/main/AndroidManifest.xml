@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Controler.SplashscreenActivity"
+            android:name=".Controller.SplashscreenActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,12 +26,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Controler.SettingsActivity" />
+        <activity android:name=".Controller.SettingsActivity" />
         <activity
-            android:name=".Controler.RestaurantActivity"
+            android:name=".Controller.RestaurantActivity"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
-            android:name=".Controler.MainActivity"
+            android:name=".Controller.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>

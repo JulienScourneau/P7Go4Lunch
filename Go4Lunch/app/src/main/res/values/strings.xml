@@ -32,6 +32,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!-- RESTAURANT ACTIVITY RESOURCES -->
+    <string name="call_btn_unavailable">Phone number unavailable</string>
+    <string name="website_btn_unavailable">Website unavailable</string>
+
     <!-- SETTINGS MENU RESOURCES -->
     <string name="notifications_setting">Notifications:</string>
     <string name="distance_setting">Distance from your location:</string>
