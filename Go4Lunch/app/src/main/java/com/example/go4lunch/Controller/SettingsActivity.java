@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,8 +18,10 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView mDistanceSettings;
     private SeekBar mSeekBar;
     private Button mDeleteBtn;
-    private int mRadius;
+    private int mRadius = 50;
     private final int MIN = 50, MAX = 200, STEP = 10;
+    private static final String SHARED_PREF = "SharedPrefs";
+    private boolean mNotification = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,13 @@ public class SettingsActivity extends AppCompatActivity {
         mNotificationSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!mNotification) {
+                    mNotification = true;
+                    Toast.makeText(getApplicationContext(), "Notification on", Toast.LENGTH_SHORT).show();
+                } else {
+                    mNotification = false;
+                    Toast.makeText(getApplicationContext(), "Notification off", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         mDistanceSettings = findViewById(R.id.distance_settings_number);
@@ -44,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
         mDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // deleteUserFromFirebase();
+                finish();
             }
         });
     }
@@ -58,7 +67,8 @@ public class SettingsActivity extends AppCompatActivity {
 
                 float value = Math.round((progress * (MAX - MIN)) / 100);
                 mRadius = (((int) value + MIN) / STEP) * STEP;
-                mDistanceSettings.setText(mRadius + "\""+ getResources().getString(R.string.distance_settings_activity_txt));
+                String radiusSettings = mRadius + " " + getResources().getString(R.string.distance_settings_activity_txt);
+                mDistanceSettings.setText(radiusSettings);
             }
 
             @Override
@@ -79,21 +89,11 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("SettingsSharedPrefs",MODE_PRIVATE);
-        sharedPreferences.edit().putInt("RadiusSettings",mRadius).apply();
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("RadiusSetting", mRadius);
+        editor.apply();
+        Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
     }
 
-
-
-    //private void deleteUserFromFirebase() {
-    //    if (this.getCurrentUser() != null) {
-    //        AuthUI.getInstance()
-    //                .delete(this);
-    //    }
-    //}
-
-    //@Nullable
-    //protected FirebaseUser getCurrentUser() {
-    //    return FirebaseAuth.getInstance().getCurrentUser();
-    //}
 }
