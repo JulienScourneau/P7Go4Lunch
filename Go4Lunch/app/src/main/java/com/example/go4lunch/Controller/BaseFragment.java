@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,7 +18,9 @@ import com.example.go4lunch.ViewModel.PlacesViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.Objects;
 
@@ -26,6 +29,7 @@ public abstract class BaseFragment extends Fragment {
     private PlacesViewModel viewModel;
     private int mRadius = 500;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+    protected LatLng latLng;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public abstract class BaseFragment extends Fragment {
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getActivity()));
         configureViewModel();
-        getMyPlace();
+        getLocation();
     }
 
     private void configureViewModel() {
@@ -51,40 +55,55 @@ public abstract class BaseFragment extends Fragment {
     public String getUrl() {
         StringBuilder url = new StringBuilder();
         url.append("nearbysearch/json?");
-        url.append("location=37.4067,-122.0813");
+        url.append("location=");
+        url.append(latLng.latitude);
+        url.append(",");
+        url.append(latLng.longitude);
         url.append("&radius=");
         url.append(mRadius);
         url.append("&types=restaurant&sensor=true&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc");
+
         Log.d("getUrlPlace", url.toString());
+        Log.d("getlatLngPLace", "LatLong =" + latLng);
 
         return url.toString();
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.d("OnResume", "Enter on resume method");
-        getLastKnowLocation();
+
         loadData();
     }
 
     private void loadData() {
         SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
-        mRadius = sharedPreferences.getInt("RadiusSetting", 500);
+        mRadius = sharedPreferences.getInt("RadiusSetting", 1000);
     }
 
-    private void getLastKnowLocation() {
-        Log.d("Location", "getLastKnowLocation");
-        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    private void getLocation() {
+        Log.d("GetLocation", "getLastKnowLocation");
+        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-
         mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
+
+            }
+        });
+
+        mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                Location location = task.getResult();
                 if (location != null) {
-                    LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+                    latLng = new LatLng(location.getLatitude(), location.getLongitude());
                     Log.d("Location", "LatLong" + latLng);
+                    getMyPlace();
                 }
             }
         });

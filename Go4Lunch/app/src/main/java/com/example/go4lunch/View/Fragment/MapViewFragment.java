@@ -90,7 +90,9 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
     }
 
     private void placeMarker() {
-        mMap.clear();
+        if (mMap != null) {
+            mMap.clear();
+        }
         for (int i = 0; i < myPlaceList.size(); i++) {
             MarkerOptions markerOptions = new MarkerOptions();
             Result actualPlace = myPlaceList.get(i);
@@ -103,9 +105,10 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker());
             markerOptions.snippet(actualPlace.getPlaceId());
             mMap.addMarker(markerOptions);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
         }
+        assert mMap != null;
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
     private void checkLocationPermission() {
