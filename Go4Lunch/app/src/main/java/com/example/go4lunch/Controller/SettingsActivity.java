@@ -59,15 +59,13 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setUpSeekBar() {
-        mSeekBar.setMax(200);
-        mSeekBar.setProgress(calculateProgress(50, 50, 200));
+
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                float value = Math.round((progress * (MAX - MIN)) / 100);
-                mRadius = (((int) value + MIN) / STEP) * STEP;
-                String radiusSettings = mRadius + " " + getResources().getString(R.string.distance_settings_activity_txt);
+                mRadius = (progress + 1) * 1000;
+                String radiusSettings = progress + " " + getResources().getString(R.string.distance_settings_activity_txt);
                 mDistanceSettings.setText(radiusSettings);
             }
 

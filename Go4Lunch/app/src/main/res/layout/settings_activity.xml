@@ -38,14 +38,13 @@
 
     <SeekBar
         android:id="@+id/settings_seekBar"
-        style="?android:attr/progressBarStyleHorizontal"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/distance_settings_text"
         android:layout_margin="6dp"
         android:indeterminate="false"
-        android:max="200"
-        android:progress="10"
+        android:max="9"
         />
 
     <View

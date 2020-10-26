@@ -41,8 +41,8 @@
     <string name="distance_setting">Distance from your location:</string>
     <string name="remove_setting">Remove your account</string>
     <string name="delete_account_btn">Delete</string>
-    <string name="distance_txt">50 m</string>
-    <string name="distance_settings_activity_txt"> m</string>
+    <string name="distance_txt">1 km</string>
+    <string name="distance_settings_activity_txt"> km</string>
 
     <!-- FACEBOOK RESOURCES -->
     <string name="facebook_app_id">278485476780989</string>
@@ -51,7 +51,5 @@
     <!-- GOOGLE RESOURCES -->
     <string name="title_activity_maps">Map</string>
     <string name="api_key">AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
