@@ -27,7 +27,7 @@ import java.util.Objects;
 public abstract class BaseFragment extends Fragment {
 
     private PlacesViewModel viewModel;
-    private int mRadius = 500;
+    private int mRadius = 50;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     protected LatLng latLng;
 
@@ -75,12 +75,12 @@ public abstract class BaseFragment extends Fragment {
         super.onResume();
         Log.d("OnResume", "Enter on resume method");
 
-        loadData();
+        // loadData();
     }
 
     private void loadData() {
         SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
-        mRadius = sharedPreferences.getInt("RadiusSetting", 1000);
+        mRadius = sharedPreferences.getInt("RadiusSetting", 50);
     }
 
     private void getLocation() {
@@ -89,12 +89,6 @@ public abstract class BaseFragment extends Fragment {
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-
-            }
-        });
 
         mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override

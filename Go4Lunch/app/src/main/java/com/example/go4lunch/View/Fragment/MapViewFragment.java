@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,13 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.setOnMarkerClickListener(marker -> {
+            Intent intent = new Intent(getContext(), RestaurantActivity.class);
+            intent.putExtra("PLACE_ID", marker.getSnippet());
+            startActivity(intent);
+            return true;
+        });
+
         //RequestPermission
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -70,17 +78,6 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
         } else {
             mMap.setMyLocationEnabled(true);
         }
-
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                Intent intent = new Intent(getContext(), RestaurantActivity.class);
-                intent.putExtra("PLACE_ID", marker.getSnippet());
-                startActivity(intent);
-                return true;
-            }
-        });
-
     }
 
     public void getNearbyPlaces(MyPlaces myPlaces) {
@@ -92,6 +89,8 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
     private void placeMarker() {
         if (mMap != null) {
             mMap.clear();
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
         }
         for (int i = 0; i < myPlaceList.size(); i++) {
             MarkerOptions markerOptions = new MarkerOptions();
@@ -105,10 +104,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker());
             markerOptions.snippet(actualPlace.getPlaceId());
             mMap.addMarker(markerOptions);
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
         }
-        assert mMap != null;
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
     private void checkLocationPermission() {
