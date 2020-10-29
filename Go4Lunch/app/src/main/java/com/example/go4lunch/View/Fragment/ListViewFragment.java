@@ -42,7 +42,7 @@ public class ListViewFragment extends BaseFragment {
     }
 
     private void updatePlaceList() {
-        restaurantAdapter.updatePlace(myPlaceList);
+        restaurantAdapter.updatePlace(myPlaceList, latLng);
     }
 
     private void setUpRecyclerView() {

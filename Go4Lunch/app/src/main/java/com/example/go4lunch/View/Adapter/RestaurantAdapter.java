@@ -1,6 +1,8 @@
 package com.example.go4lunch.View.Adapter;
 
 import android.content.Intent;
+import android.location.Location;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +16,15 @@ import com.bumptech.glide.Glide;
 import com.example.go4lunch.Controller.RestaurantActivity;
 import com.example.go4lunch.Models.NearbySearch.Result;
 import com.example.go4lunch.R;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private ArrayList<Result> mRestaurantList;
+    private LatLng mCurrentPosition;
+    private float[] result = new float[3];
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder {
         private TextView mRestaurantName;
@@ -57,21 +62,26 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         Result currentRestaurant = mRestaurantList.get(position);
         String placeId = currentRestaurant.getPlaceId();
 
+
         holder.mRestaurantName.setText(currentRestaurant.getName());
         holder.mRestaurantLocation.setText(currentRestaurant.getVicinity());
         holder.mRestaurantSchedule.setText(currentRestaurant.getName());
-        holder.mRestaurantDistance.setText("00m");
         holder.mWorkmateNumber.setText("2");
+
+        Location.distanceBetween(mCurrentPosition.latitude, mCurrentPosition.longitude, currentRestaurant.getGeometry().getLocation().getLat(), currentRestaurant.getGeometry().getLocation().getLng(),result);
+        int distance = (int) result[0];
+        String currentDistance = distance + "m";
+        holder.mRestaurantDistance.setText(currentDistance);
 
         if (currentRestaurant.getPhotos() != null && currentRestaurant.getPhotos().size() > 0) {
             Glide.with(holder.mRestaurantPictures.getContext())
-                    .load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&maxheight=200&photoreference="+currentRestaurant.getPhotos().get(0).getPhotoReference()+"&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc")
+                    .load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&maxheight=200&photoreference=" + currentRestaurant.getPhotos().get(0).getPhotoReference() + "&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc")
                     .into(holder.mRestaurantPictures);
         }
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), RestaurantActivity.class);
-            intent.putExtra("PLACE_ID",placeId);
+            intent.putExtra("PLACE_ID", placeId);
             v.getContext().startActivity(intent);
         });
     }
@@ -81,8 +91,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         return mRestaurantList.size();
     }
 
-    public void updatePlace(final ArrayList<Result> restaurantList) {
+    public void updatePlace(final ArrayList<Result> restaurantList, LatLng latLng) {
         this.mRestaurantList = restaurantList;
+        this.mCurrentPosition = latLng;
         notifyDataSetChanged();
+        Log.d("updatePlace", "currentPosition = " + mCurrentPosition + "Latlng =" + latLng);
     }
 }

@@ -19,7 +19,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.Objects;
@@ -27,7 +26,7 @@ import java.util.Objects;
 public abstract class BaseFragment extends Fragment {
 
     private PlacesViewModel viewModel;
-    private int mRadius = 50;
+    private int mRadius = 100;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     protected LatLng latLng;
 
@@ -50,7 +49,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public abstract void getNearbyPlaces(MyPlaces myPlaces);
-
 
     public String getUrl() {
         StringBuilder url = new StringBuilder();
