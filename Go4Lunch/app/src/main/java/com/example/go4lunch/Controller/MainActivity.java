@@ -29,8 +29,11 @@ import com.example.go4lunch.View.Fragment.WorkmatesFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 
@@ -54,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         initView();
-        signInActivity();
     }
 
     private void initView() {
@@ -97,7 +99,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(settingsIntent);
                 break;
             case R.id.drawer_logout_icon:
-                finish();
+                AuthUI.getInstance()
+                        .signOut(this)
+                        .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                finish();
+                            }
+                        });
                 break;
         }
         return true;
@@ -124,21 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             };
 
-
-    private void signInActivity() {
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setTheme(R.style.LoginTheme)
-                        .setLogo(R.drawable.go4lunch_icon)
-                        .setAvailableProviders(Arrays.asList(
-                                new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
-                                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
-                        .setIsSmartLockEnabled(false, true)
-                        .build(),
-                RC_SIGN_IN);
-
-    }
 
     @Override
     protected void onResume() {
