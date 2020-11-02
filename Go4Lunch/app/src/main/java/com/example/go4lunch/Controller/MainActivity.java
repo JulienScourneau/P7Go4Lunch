@@ -29,18 +29,12 @@ import com.example.go4lunch.View.Fragment.WorkmatesFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Arrays;
 
 import static com.example.go4lunch.Utils.Constants.ERROR_DIALOG_REQUEST;
 import static com.example.go4lunch.Utils.Constants.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
 import static com.example.go4lunch.Utils.Constants.PERMISSIONS_REQUEST_ENABLE_GPS;
-import static com.example.go4lunch.Utils.Constants.RC_SIGN_IN;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -101,11 +95,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.drawer_logout_icon:
                 AuthUI.getInstance()
                         .signOut(this)
-                        .addOnSuccessListener(this, new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                finish();
-                            }
+                        .addOnSuccessListener(this, aVoid -> {
+                            Intent intent = new Intent(this, SplashscreenActivity.class);
+                            startActivity(intent);
+                            finish();
                         });
                 break;
         }
@@ -113,24 +106,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = new MapViewFragment();
-                    switch (item.getItemId()) {
-                        case R.id.nav_map:
-                            selectedFragment = new MapViewFragment();
-                            break;
-                        case R.id.nav_restaurant_list:
-                            selectedFragment = new ListViewFragment();
-                            break;
-                        case R.id.nav_workmates_list:
-                            selectedFragment = new WorkmatesFragment();
-                            break;
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                    return true;
+            item -> {
+                Fragment selectedFragment = new MapViewFragment();
+                switch (item.getItemId()) {
+                    case R.id.nav_map:
+                        selectedFragment = new MapViewFragment();
+                        break;
+                    case R.id.nav_restaurant_list:
+                        selectedFragment = new ListViewFragment();
+                        break;
+                    case R.id.nav_workmates_list:
+                        selectedFragment = new WorkmatesFragment();
+                        break;
                 }
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+                return true;
             };
 
 

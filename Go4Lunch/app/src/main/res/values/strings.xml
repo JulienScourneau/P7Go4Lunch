@@ -43,6 +43,10 @@
     <string name="delete_account_btn">Delete</string>
     <string name="distance_txt">1 km</string>
     <string name="distance_settings_activity_txt"> km</string>
+    <string name="delete_account_dialog_warning">Warning !</string>
+    <string name="delete_account_dialog_message">are you sure to want delete your account ?</string>
+    <string name="delete_account_dialog_yes_btn">yes</string>
+    <string name="delete_account_dialog_no_btn">no</string>
 
     <!-- FACEBOOK RESOURCES -->
     <string name="facebook_app_id">278485476780989</string>

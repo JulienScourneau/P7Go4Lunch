@@ -1,16 +1,21 @@
 package com.example.go4lunch.Controller;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.go4lunch.R;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -50,11 +55,9 @@ public class SettingsActivity extends AppCompatActivity {
         });
         mDistanceSettings = findViewById(R.id.distance_settings_number);
         mDeleteBtn = findViewById(R.id.delete_account_btn);
-        mDeleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        mDeleteBtn.setOnClickListener(v -> {
+            deleteUserAccountDialog();
+            Log.d("deleteAccount", "Delete account listener");
         });
     }
 
@@ -82,8 +85,24 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    private int calculateProgress(int value, int MIN, int MAX) {
-        return (200 * (value - MIN)) / (MAX - MIN);
+
+    private void deleteUserAccountDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.delete_account_dialog_warning)
+                .setMessage(R.string.delete_account_dialog_message)
+                .setPositiveButton(R.string.delete_account_dialog_yes_btn, (dialog, which) -> {
+                    AuthUI.getInstance()
+                            .delete(this)
+                            .addOnSuccessListener(this, aVoid -> {
+                                Intent intent = new Intent(this, SplashscreenActivity.class);
+                                startActivity(intent);
+                                finish();
+                            });
+                })
+                .setNegativeButton(R.string.delete_account_dialog_no_btn, (dialog, which) -> {
+
+                })
+                .show();
     }
 
     public void saveData() {
