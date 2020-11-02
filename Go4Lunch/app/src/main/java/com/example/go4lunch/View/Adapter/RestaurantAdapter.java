@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         private ImageView mRestaurantPictures;
         private TextView mRestaurantDistance;
         private TextView mWorkmateNumber;
+        private RatingBar mRestaurantRatingBar;
 
         public RestaurantViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -42,6 +44,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             mRestaurantPictures = itemView.findViewById(R.id.restaurant_fragment_picture);
             mRestaurantDistance = itemView.findViewById(R.id.restaurant_fragment_distance);
             mWorkmateNumber = itemView.findViewById(R.id.restaurant_fragment_workmates_number);
+            mRestaurantRatingBar = itemView.findViewById(R.id.restaurant_fragment_ratingBar);
 
         }
     }
@@ -68,10 +71,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.mRestaurantSchedule.setText(currentRestaurant.getName());
         holder.mWorkmateNumber.setText("2");
 
-        Location.distanceBetween(mCurrentPosition.latitude, mCurrentPosition.longitude, currentRestaurant.getGeometry().getLocation().getLat(), currentRestaurant.getGeometry().getLocation().getLng(),result);
+        Location.distanceBetween(mCurrentPosition.latitude, mCurrentPosition.longitude, currentRestaurant.getGeometry().getLocation().getLat(), currentRestaurant.getGeometry().getLocation().getLng(), result);
         int distance = (int) result[0];
         String currentDistance = distance + "m";
         holder.mRestaurantDistance.setText(currentDistance);
+
+        float mRating = (float) (currentRestaurant.getRating() / 5) * 3;
+        holder.mRestaurantRatingBar.setRating(mRating);
 
         if (currentRestaurant.getPhotos() != null && currentRestaurant.getPhotos().size() > 0) {
             Glide.with(holder.mRestaurantPictures.getContext())

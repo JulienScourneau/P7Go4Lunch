@@ -26,7 +26,7 @@ import java.util.Objects;
 public abstract class BaseFragment extends Fragment {
 
     private PlacesViewModel viewModel;
-    private int mRadius = 100;
+    private int mRadius = 50;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     protected LatLng latLng;
 

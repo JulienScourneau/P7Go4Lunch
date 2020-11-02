@@ -72,11 +72,21 @@
             android:id="@+id/restaurant_fragment_note"
             android:layout_width="15dp"
             android:layout_height="15dp"
+
+            />
+
+        <RatingBar
+            android:id="@+id/restaurant_fragment_ratingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/restaurant_fragment_workmates"
             android:layout_alignBottom="@+id/restaurant_fragment_picture"
             android:layout_marginEnd="20dp"
             android:layout_toStartOf="@+id/restaurant_fragment_picture"
-            android:src="@drawable/ic_star_icon_24dp" />
+            android:isIndicator="true"
+            android:numStars="3"
+            android:stepSize="0.5" />
 
         <ImageView
             android:id="@+id/restaurant_fragment_picture"

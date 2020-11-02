@@ -70,31 +70,34 @@ public class RestaurantActivity extends AppCompatActivity {
         mLunchButton = findViewById(R.id.add_lunch_button);
 
         mCallButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_DIAL);
 
-            if (placeDetails.getResult().getInternationalPhoneNumber() != null) {
-                intent.setData(Uri.parse("tel:" + placeDetails.getResult().getInternationalPhoneNumber()));
-                startActivity(intent);
-                Log.d("CallBtn", "InternationalPhoneNumber");
+            if (placeDetails != null) {
+                if (placeDetails.getResult().getInternationalPhoneNumber() != null) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + placeDetails.getResult().getInternationalPhoneNumber()));
+                    startActivity(intent);
+                    Log.d("CallBtn", "InternationalPhoneNumber");
 
-            } else if (placeDetails.getResult().getFormattedPhoneNumber() != null) {
-                intent.setData(Uri.parse("tel:" + placeDetails.getResult().getFormattedPhoneNumber()));
-                startActivity(intent);
-                Log.d("CallBtn", "FormattedPhoneNumber");
+                } else if (placeDetails.getResult().getFormattedPhoneNumber() != null) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + placeDetails.getResult().getFormattedPhoneNumber()));
+                    startActivity(intent);
+                    Log.d("CallBtn", "FormattedPhoneNumber");
 
-            } else {
-                Toast.makeText(getApplicationContext(), getResources().getText(R.string.call_btn_unavailable), Toast.LENGTH_SHORT).show();
-                Log.d("CallBtn", "NoPhoneNumber");
+                }
             }
+            Toast.makeText(getApplicationContext(), getResources().getText(R.string.call_btn_unavailable), Toast.LENGTH_SHORT).show();
+            Log.d("CallBtn", "NoPhoneNumber");
 
         });
 
         mLikeButton.setOnClickListener(v -> Toast.makeText(getApplicationContext(), "Like", Toast.LENGTH_SHORT).show());
 
         mWebsiteButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
 
-            if (placeDetails.getResult().getWebsite() != null){
+
+            if (placeDetails.getResult().getWebsite() != null) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
                 intent.setData(Uri.parse(placeDetails.getResult().getWebsite()));
                 startActivity(intent);

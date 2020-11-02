@@ -65,7 +65,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
                 mRadius = (progress + 1) * 1000;
-                String radiusSettings = progress + " " + getResources().getString(R.string.distance_settings_activity_txt);
+                String radiusSettings = progress + 1 + " " + getResources().getString(R.string.distance_settings_activity_txt);
                 mDistanceSettings.setText(radiusSettings);
             }
 
