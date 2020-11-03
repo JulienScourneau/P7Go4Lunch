@@ -9,6 +9,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.go4lunch.R;
+import com.example.go4lunch.Utils.UserHelper;
 import com.example.go4lunch.View.Fragment.ListViewFragment;
 import com.example.go4lunch.View.Fragment.MapViewFragment;
 import com.example.go4lunch.View.Fragment.WorkmatesFragment;
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView mNavigationView;
     private Boolean mLunchSelected = true;
     private boolean mLocationPermissionGranted = false;
+    private ImageView mUserIcon;
+    private TextView mUserName, mUserMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+        mUserIcon = findViewById(R.id.user_icon_drawer);
+        mUserName = findViewById(R.id.user_name_drawer);
+        mUserName = findViewById(R.id.user_mail_drawer);
 
     }
 
@@ -127,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        
         if (checkMapServices()) {
             getLocationPermission();
         }

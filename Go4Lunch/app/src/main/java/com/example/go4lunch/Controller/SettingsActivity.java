@@ -100,7 +100,6 @@ public class SettingsActivity extends AppCompatActivity {
                             });
                 })
                 .setNegativeButton(R.string.delete_account_dialog_no_btn, (dialog, which) -> {
-
                 })
                 .show();
     }

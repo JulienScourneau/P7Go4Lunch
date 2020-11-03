@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,10 +23,13 @@ import static com.example.go4lunch.Utils.Constants.RC_SIGN_IN;
 
 public class SplashscreenActivity extends AppCompatActivity {
 
+    private LinearLayout linearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        linearLayout = findViewById(R.id.background_splashscreen);
         launchSplashScreen();
     }
 
@@ -40,6 +45,7 @@ public class SplashscreenActivity extends AppCompatActivity {
                     Log.d("SplashScreenException", "SplashScreen exception catch");
 
                 } finally {
+                    setContentView(R.layout.background);
                     if (UserHelper.isCurrentUserLogged()) {
                         startMainActivity();
                     } else {
@@ -89,14 +95,16 @@ public class SplashscreenActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        startMainActivity();
+        if (resultCode == -1) {
+            startMainActivity();
+            Log.d("OnResult", "MainActivity");
+        } else {
+            signInActivity();
+            Toast.makeText(this,"Please login",Toast.LENGTH_SHORT).show();
+            Log.d("OnResult", "SignIn");
+        }
+        Log.d("OnResult", "Resultcode =" + resultCode);
     }
 }
