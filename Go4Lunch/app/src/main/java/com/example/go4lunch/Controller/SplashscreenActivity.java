@@ -12,8 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.go4lunch.R;
-import com.example.go4lunch.Utils.UserHelper;
+import com.example.go4lunch.Network.UserHelper;
 import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
 
 import java.util.Arrays;
 
@@ -94,17 +96,59 @@ public class SplashscreenActivity extends AppCompatActivity {
 
     }
 
+    private void createUserInFireStore() {
+        if (UserHelper.getCurrentUser() != null) {
+
+            String urlPicture = (UserHelper.getCurrentUser().getPhotoUrl() != null) ?
+                    UserHelper.getCurrentUser().getPhotoUrl().toString() : null;
+            String userName = UserHelper.getCurrentUser().getDisplayName();
+            String uid = UserHelper.getCurrentUser().getUid();
+            String userMail = UserHelper.getCurrentUser().getEmail();
+
+            UserHelper.createUser(uid, userName, userMail, urlPicture).addOnFailureListener(e -> {
+                Toast.makeText(getApplicationContext(), getString(R.string.error_unknown), Toast.LENGTH_LONG).show();
+            });
+        }
+        Log.d("CreateUser", "Create user in FireStore");
+    }
+
+    private void handleResponseAfterSignIn(int requestCode, int resultCode, Intent data) {
+
+        IdpResponse response = IdpResponse.fromResultIntent(data);
+
+        if (requestCode == RC_SIGN_IN) {
+
+            if (resultCode == RESULT_OK) {
+
+                 this.createUserInFireStore();
+                startMainActivity();
+
+                Log.d("handleResponse", "CreateUser");
+
+            } else {
+
+                signInActivity();
+                Toast.makeText(this, "Please login", Toast.LENGTH_SHORT).show();
+                Log.d("handleResponse", "SignIn");
+
+                if (response == null) {
+                    Toast.makeText(getApplicationContext(), R.string.error_authentication_canceled, Toast.LENGTH_SHORT).show();
+                } else if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
+                    Toast.makeText(getApplicationContext(), R.string.error_no_internet, Toast.LENGTH_SHORT).show();
+                } else if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
+                    Toast.makeText(getApplicationContext(), R.string.error_unknown, Toast.LENGTH_SHORT).show();
+                }
+            }
+            Log.d("handleResponse", "RequestCode " + requestCode);
+            Log.d("handleResponse", "ResultCode " + resultCode);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == -1) {
-            startMainActivity();
-            Log.d("OnResult", "MainActivity");
-        } else {
-            signInActivity();
-            Toast.makeText(this,"Please login",Toast.LENGTH_SHORT).show();
-            Log.d("OnResult", "SignIn");
-        }
-        Log.d("OnResult", "Resultcode =" + resultCode);
+
+        this.handleResponseAfterSignIn(requestCode, resultCode, data);
+        Log.d("OnActivityResult", "Resultcode =" + requestCode);
     }
 }

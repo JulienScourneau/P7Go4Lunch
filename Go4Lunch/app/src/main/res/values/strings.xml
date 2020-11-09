@@ -44,13 +44,18 @@
     <string name="distance_txt">1 km</string>
     <string name="distance_settings_activity_txt"> km</string>
     <string name="delete_account_dialog_warning">Warning !</string>
-    <string name="delete_account_dialog_message">are you sure to want delete your account ?</string>
-    <string name="delete_account_dialog_yes_btn">yes</string>
-    <string name="delete_account_dialog_no_btn">no</string>
+    <string name="delete_account_dialog_message">Are you sure to want delete your account ?</string>
+    <string name="delete_account_dialog_yes_btn">Yes</string>
+    <string name="delete_account_dialog_no_btn">No</string>
 
     <!-- FACEBOOK RESOURCES -->
     <string name="facebook_app_id">278485476780989</string>
     <string name="fb_login_protocol_scheme">fb278485476780989</string>
+
+    <!-- ERROR RESOURCES -->
+    <string name="error_unknown">An unknown error has occurred</string>
+    <string name="error_authentication_canceled">Authentication canceled</string>
+    <string name="error_no_internet">No internet connection</string>
 
     <!-- GOOGLE RESOURCES -->
     <string name="title_activity_maps">Map</string>

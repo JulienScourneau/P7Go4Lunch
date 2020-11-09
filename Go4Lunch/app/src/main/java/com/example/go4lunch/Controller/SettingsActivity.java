@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.go4lunch.Network.UserHelper;
 import com.example.go4lunch.R;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -91,6 +92,9 @@ public class SettingsActivity extends AppCompatActivity {
         builder.setTitle(R.string.delete_account_dialog_warning)
                 .setMessage(R.string.delete_account_dialog_message)
                 .setPositiveButton(R.string.delete_account_dialog_yes_btn, (dialog, which) -> {
+
+                    UserHelper.deleteUser(UserHelper.getCurrentUser().getUid());
+
                     AuthUI.getInstance()
                             .delete(this)
                             .addOnSuccessListener(this, aVoid -> {

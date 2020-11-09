@@ -1,4 +1,8 @@
-package com.example.go4lunch.Utils;
+package com.example.go4lunch.Network;
+
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.example.go4lunch.Models.User;
 import com.google.android.gms.tasks.Task;
@@ -12,7 +16,7 @@ import static com.example.go4lunch.Utils.Constants.COLLECTION_NAME;
 
 public class UserHelper {
 
-    protected static FirebaseUser getCurrentUser() {
+    public static FirebaseUser getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
     }
 

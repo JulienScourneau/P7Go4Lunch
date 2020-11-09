@@ -25,7 +25,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.go4lunch.R;
-import com.example.go4lunch.Utils.UserHelper;
 import com.example.go4lunch.View.Fragment.ListViewFragment;
 import com.example.go4lunch.View.Fragment.MapViewFragment;
 import com.example.go4lunch.View.Fragment.WorkmatesFragment;

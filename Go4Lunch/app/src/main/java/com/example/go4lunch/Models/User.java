@@ -4,16 +4,15 @@ public class User {
 
     private String mUid;
     private String mUserName;
-    private String mUserStatus;
     private String mUserMail;
     private String mUserPicture;
+    private Boolean mUserStatus;
 
     public User(String uid, String userName, String userMail, String userPicture) {
         this.mUid = uid;
         this.mUserName = userName;
         this.mUserMail = userMail;
         this.mUserPicture = userPicture;
-
     }
 
     public String getUid() {
@@ -24,7 +23,7 @@ public class User {
         return mUserName;
     }
 
-    public String getUserStatus() {
+    public Boolean getUserStatus() {
         return mUserStatus;
     }
 
@@ -44,7 +43,7 @@ public class User {
         this.mUserName = mUserName;
     }
 
-    public void setUserStatus(String mUserStatus) {
+    public void setUserStatus(Boolean mUserStatus) {
         this.mUserStatus = mUserStatus;
     }
 
