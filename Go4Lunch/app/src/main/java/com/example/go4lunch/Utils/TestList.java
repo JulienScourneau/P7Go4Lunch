@@ -1,8 +1,6 @@
 package com.example.go4lunch.Utils;
 
-import com.example.go4lunch.Models.Restaurant;
 import com.example.go4lunch.Models.User;
-import com.example.go4lunch.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,34 +9,20 @@ import java.util.List;
 public abstract class TestList {
 
     private static List<User> userList = Arrays.asList(
-            new User(R.mipmap.ic_launcher,"User 1"),
-            new User(R.mipmap.ic_launcher,"User 2"),
-            new User(R.mipmap.ic_launcher,"User 3"),
-            new User(R.mipmap.ic_launcher,"User 4"),
-            new User(R.mipmap.ic_launcher,"User 5"),
-            new User(R.mipmap.ic_launcher,"User 6"),
-            new User(R.mipmap.ic_launcher,"User 7"),
-            new User(R.mipmap.ic_launcher,"User 8"),
-            new User(R.mipmap.ic_launcher,"User 9"),
-            new User(R.mipmap.ic_launcher,"User 10")
+            new User("FakeId", "User 1", "Status", "https://api.adorable.io/AVATARS/512/1.png"),
+            new User("FakeId", "User 2", "Status", "https://api.adorable.io/AVATARS/512/1.png"),
+            new User("FakeId", "User 3", "Status", "https://api.adorable.io/AVATARS/512/1.png"),
+            new User("FakeId", "User 4", "Status", "https://api.adorable.io/AVATARS/512/1.png"),
+            new User("FakeId", "User 5", "Status", "https://api.adorable.io/AVATARS/512/1.png"),
+            new User("FakeId", "User 6", "Status", "https://api.adorable.io/AVATARS/512/1.png"),
+            new User("FakeId", "User 7", "Status", "https://api.adorable.io/AVATARS/512/1.png"),
+            new User("FakeId", "User 8", "Status", "https://api.adorable.io/AVATARS/512/1.png"),
+            new User("FakeId", "User 9", "Status", "https://api.adorable.io/AVATARS/512/1.png"),
+            new User("FakeId", "User 10", "Status", "https://api.adorable.io/AVATARS/512/1.png")
     );
 
-    public static ArrayList<User> getFakeUserList(){
+    public static ArrayList<User> getFakeUserList() {
         return new ArrayList<>(userList);
     }
 
-    private static List<Restaurant> restaurantList = Arrays.asList(
-            new Restaurant("King of Kebab","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Le Blablabla","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Super Sushi","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Bufa","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Cozna","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Le Balcon","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Sarment","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background),
-            new Restaurant("Pizza Express","00 rue du Faubourg Petites Écoles","ouvert jusqu\\'a",R.drawable.background)
-    );
-
-    public static ArrayList<Restaurant> getFakeRestaurantList(){
-        return new ArrayList<>(restaurantList);
-    }
 }

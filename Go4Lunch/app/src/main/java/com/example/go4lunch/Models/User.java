@@ -5,13 +5,15 @@ public class User {
     private String mUid;
     private String mUserName;
     private String mUserStatus;
-    private int mUserAvatar;
+    private String mUserMail;
+    private String mUserPicture;
 
-    public User(String uid, String userName, String userStatus, int userAvatar) {
+    public User(String uid, String userName, String userMail, String userPicture) {
         this.mUid = uid;
         this.mUserName = userName;
-        this.mUserAvatar = userAvatar;
-        this.mUserStatus = userStatus;
+        this.mUserMail = userMail;
+        this.mUserPicture = userPicture;
+
     }
 
     public String getUid() {
@@ -26,8 +28,12 @@ public class User {
         return mUserStatus;
     }
 
-    public int getUserAvatar() {
-        return mUserAvatar;
+    public String getUserMail() {
+        return mUserMail;
+    }
+
+    public String getUserPicture() {
+        return mUserPicture;
     }
 
     public void setUid(String mUid) {
@@ -42,7 +48,11 @@ public class User {
         this.mUserStatus = mUserStatus;
     }
 
-    public void setUserAvatar(int mUserAvatar) {
-        this.mUserAvatar = mUserAvatar;
+    public void setUserMail(String mUserMail) {
+        this.mUserMail = mUserMail;
+    }
+
+    public void setUserPicture(String mUserPicture) {
+        this.mUserPicture = mUserPicture;
     }
 }

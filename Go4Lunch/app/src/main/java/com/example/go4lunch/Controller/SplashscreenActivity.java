@@ -45,7 +45,7 @@ public class SplashscreenActivity extends AppCompatActivity {
                     Log.d("SplashScreenException", "SplashScreen exception catch");
 
                 } finally {
-                    setContentView(R.layout.background);
+                    //setContentView(R.layout.background);
                     if (UserHelper.isCurrentUserLogged()) {
                         startMainActivity();
                     } else {
