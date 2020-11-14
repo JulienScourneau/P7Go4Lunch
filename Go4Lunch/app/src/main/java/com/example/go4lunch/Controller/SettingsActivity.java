@@ -92,14 +92,17 @@ public class SettingsActivity extends AppCompatActivity {
         builder.setTitle(R.string.delete_account_dialog_warning)
                 .setMessage(R.string.delete_account_dialog_message)
                 .setPositiveButton(R.string.delete_account_dialog_yes_btn, (dialog, which) -> {
+                    Log.d("deleteAccount", "positiveBtn delete account");
 
-                    UserHelper.deleteUser(UserHelper.getCurrentUser().getUid());
+
 
                     AuthUI.getInstance()
                             .delete(this)
                             .addOnSuccessListener(this, aVoid -> {
+                                Log.d("deleteAccount", "onSuccess delete account");
                                 Intent intent = new Intent(this, SplashscreenActivity.class);
                                 startActivity(intent);
+                                UserHelper.deleteUser(UserHelper.getCurrentUser().getUid());
                                 finish();
                             });
                 })

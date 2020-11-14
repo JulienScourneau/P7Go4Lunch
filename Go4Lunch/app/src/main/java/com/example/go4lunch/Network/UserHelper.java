@@ -1,9 +1,5 @@
 package com.example.go4lunch.Network;
 
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
 import com.example.go4lunch.Models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,7 +33,7 @@ public class UserHelper {
         return UserHelper.getUsersCollection().document(uid).get();
     }
 
-    public static Task<Void> deleteUser(String uid) {
-        return UserHelper.getUsersCollection().document(uid).delete();
+    public static void deleteUser(String uid) {
+        UserHelper.getUsersCollection().document(uid).delete();
     }
 }
