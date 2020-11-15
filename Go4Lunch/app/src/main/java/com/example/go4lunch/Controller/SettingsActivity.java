@@ -86,25 +86,15 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-
     private void deleteUserAccountDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.delete_account_dialog_warning)
                 .setMessage(R.string.delete_account_dialog_message)
                 .setPositiveButton(R.string.delete_account_dialog_yes_btn, (dialog, which) -> {
+
                     Log.d("deleteAccount", "positiveBtn delete account");
+                    deleteUserAccount();
 
-
-
-                    AuthUI.getInstance()
-                            .delete(this)
-                            .addOnSuccessListener(this, aVoid -> {
-                                Log.d("deleteAccount", "onSuccess delete account");
-                                Intent intent = new Intent(this, SplashscreenActivity.class);
-                                startActivity(intent);
-                                UserHelper.deleteUser(UserHelper.getCurrentUser().getUid());
-                                finish();
-                            });
                 })
                 .setNegativeButton(R.string.delete_account_dialog_no_btn, (dialog, which) -> {
                 })
@@ -117,6 +107,22 @@ public class SettingsActivity extends AppCompatActivity {
         editor.putInt("RadiusSetting", mRadius);
         editor.apply();
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
+    }
+
+    public void deleteUserAccount() {
+        UserHelper.deleteUser(UserHelper.getCurrentUser().getUid());
+
+        AuthUI.getInstance()
+                .delete(this)
+                .addOnSuccessListener(this, aVoid -> {
+                    Log.d("deleteAccount", "onSuccess delete account");
+
+                    Intent intent = new Intent(this, SplashscreenActivity.class);
+                    startActivity(intent);
+                    finish();
+                });
+
+        Log.d("deleteAccount", "Delete user account Method");
     }
 
 }

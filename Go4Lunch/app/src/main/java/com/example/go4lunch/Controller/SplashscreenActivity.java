@@ -109,7 +109,7 @@ public class SplashscreenActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), getString(R.string.error_unknown), Toast.LENGTH_LONG).show();
             });
         }
-        Log.d("CreateUser", "Create user in FireStore");
+        Log.d("createUser", "Create user in FireStore");
     }
 
     private void handleResponseAfterSignIn(int requestCode, int resultCode, Intent data) {

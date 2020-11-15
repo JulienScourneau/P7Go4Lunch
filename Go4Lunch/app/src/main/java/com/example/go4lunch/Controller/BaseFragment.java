@@ -73,7 +73,7 @@ public abstract class BaseFragment extends Fragment {
         super.onResume();
         Log.d("OnResume", "Enter on resume method");
 
-        // loadData();
+        //loadData();
     }
 
     private void loadData() {

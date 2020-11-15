@@ -95,7 +95,6 @@ public class RestaurantActivity extends AppCompatActivity {
 
         mWebsiteButton.setOnClickListener(v -> {
 
-
             if (placeDetails.getResult().getWebsite() != null) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
