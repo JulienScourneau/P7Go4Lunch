@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.go4lunch.Network.UserHelper;
 import com.example.go4lunch.R;
 import com.example.go4lunch.View.Fragment.ListViewFragment;
 import com.example.go4lunch.View.Fragment.MapViewFragment;
@@ -46,8 +51,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView mNavigationView;
     private Boolean mLunchSelected = true;
     private boolean mLocationPermissionGranted = false;
-    private ImageView mUserIcon;
-    private TextView mUserName, mUserMail;
+    private ImageView mUserPicture;
+    private TextView mUserName;
+    private TextView mUserMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         initView();
+        updateUI();
     }
 
     private void initView() {
@@ -69,9 +76,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
-        mUserIcon = findViewById(R.id.user_icon_drawer);
-        mUserName = findViewById(R.id.user_name_drawer);
-        mUserName = findViewById(R.id.user_mail_drawer);
+        final View headerLayout = mNavigationView.getHeaderView(0);
+        mUserName = headerLayout.findViewById(R.id.user_name_drawer);
+        mUserMail = headerLayout.findViewById(R.id.user_mail_drawer);
+        mUserPicture = headerLayout.findViewById(R.id.user_picture_drawer);
 
     }
 
@@ -130,11 +138,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             };
 
+    private void updateUI() {
+
+        if (UserHelper.getCurrentUser() != null) {
+
+            if (UserHelper.getCurrentUser().getPhotoUrl() != null) {
+                Glide.with(this)
+                        .load(UserHelper.getCurrentUser().getPhotoUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(mUserPicture);
+            }
+
+            mUserName.setText(UserHelper.getCurrentUser().getDisplayName());
+            mUserMail.setText(UserHelper.getCurrentUser().getEmail());
+
+        }
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        
+
         if (checkMapServices()) {
             getLocationPermission();
         }

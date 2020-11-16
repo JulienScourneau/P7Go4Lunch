@@ -120,7 +120,7 @@ public class SplashscreenActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
 
-                 this.createUserInFireStore();
+                this.createUserInFireStore();
                 startMainActivity();
 
                 Log.d("handleResponse", "CreateUser");

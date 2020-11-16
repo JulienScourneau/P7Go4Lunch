@@ -1,12 +1,15 @@
 package com.example.go4lunch.Network;
 
 import com.example.go4lunch.Models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import static com.example.go4lunch.Utils.Constants.COLLECTION_NAME;
 
@@ -35,5 +38,9 @@ public class UserHelper {
 
     public static void deleteUser(String uid) {
         UserHelper.getUsersCollection().document(uid).delete();
+    }
+
+    public static void getUserList(OnCompleteListener<QuerySnapshot> listener) {
+        getUsersCollection().get().addOnCompleteListener(listener);
     }
 }

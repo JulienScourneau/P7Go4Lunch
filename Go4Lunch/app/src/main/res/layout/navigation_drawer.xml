@@ -17,9 +17,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/user_icon_drawer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/user_picture_drawer"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:src="@mipmap/ic_launcher_round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -32,8 +32,8 @@
         android:text="@string/user_name_drawer"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toTopOf="@+id/user_mail_drawer"
-        app:layout_constraintStart_toEndOf="@+id/user_icon_drawer"
-        app:layout_constraintTop_toTopOf="@+id/user_icon_drawer" />
+        app:layout_constraintStart_toEndOf="@+id/user_picture_drawer"
+        app:layout_constraintTop_toTopOf="@+id/user_picture_drawer" />
 
     <TextView
         android:id="@+id/user_mail_drawer"
@@ -42,8 +42,8 @@
         android:layout_below="@+id/user_name_drawer"
         android:layout_marginStart="15dp"
         android:text="@string/user_mail_drawer"
-        app:layout_constraintBottom_toBottomOf="@id/user_icon_drawer"
-        app:layout_constraintStart_toEndOf="@+id/user_icon_drawer"
+        app:layout_constraintBottom_toBottomOf="@id/user_picture_drawer"
+        app:layout_constraintStart_toEndOf="@+id/user_picture_drawer"
         app:layout_constraintTop_toBottomOf="@+id/user_name_drawer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
