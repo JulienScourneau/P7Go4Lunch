@@ -76,5 +76,4 @@ public class WorkmatesFragment extends Fragment {
         mRecyclerView.setAdapter(mWorkmatesAdapter);
 
     }
-
 }

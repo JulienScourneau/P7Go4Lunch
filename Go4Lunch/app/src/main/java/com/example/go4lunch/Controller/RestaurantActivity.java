@@ -137,6 +137,8 @@ public class RestaurantActivity extends AppCompatActivity {
 
         mLunchButton.setOnClickListener(v -> {
 
+            String uid = UserHelper.getCurrentUser().getUid();
+            
             Toast.makeText(getApplicationContext(), "Add Lunch", Toast.LENGTH_SHORT).show();
         });
 

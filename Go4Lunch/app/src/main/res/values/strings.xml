@@ -2,11 +2,11 @@
     <string name="app_name">Go4Lunch</string>
 
     <!-- WORKMATES ITEM FRAGMENT RESOURCES -->
-    <string name="user_status">User name is eating/not decided yet (Restaurant)</string>
+    <string name="user_selection">User name is eating/not decided yet (Restaurant)</string>
 
     <!-- RESTAURANT ITEM FRAGMENT RESOURCES -->
     <string name="restaurant_name">Restaurant name</string>
-    <string name="restaurant_location">00 rue du Faubourg Petites Écoles</string>
+    <string name="restaurant_location">Restaurant Location</string>
     <string name="restaurant_schedule">ouvert jusqu\'a</string>
     <string name="user_distance">000</string>
     <string name="workmate_number">(0)</string>

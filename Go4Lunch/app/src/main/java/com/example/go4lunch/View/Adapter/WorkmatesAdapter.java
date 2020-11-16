@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.go4lunch.R;
 import com.example.go4lunch.Models.User;
@@ -23,12 +22,12 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
     public static class WorkmatesViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView mUserPicture;
-        private TextView mUserStatus;
+        private TextView mUserText;
 
         public WorkmatesViewHolder(@NonNull View itemView) {
             super(itemView);
             mUserPicture = itemView.findViewById(R.id.user_fragment_picture);
-            mUserStatus = itemView.findViewById(R.id.user_fragment_status);
+            mUserText = itemView.findViewById(R.id.user_fragment_status);
         }
     }
 
@@ -47,7 +46,7 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
     public void onBindViewHolder(@NonNull WorkmatesViewHolder holder, int position) {
         User currentUser = mUserList.get(position);
 
-        holder.mUserStatus.setText(currentUser.getUserName());
+        holder.mUserText.setText(currentUser.getUserName());
 
         if (currentUser.getUserPicture() != null) {
             Glide.with(holder.mUserPicture.getContext())

@@ -6,7 +6,6 @@ public class User {
     private String mUserName;
     private String mUserMail;
     private String mUserPicture;
-    private Boolean mUserStatus;
     private String mUserRestaurantId;
 
     public User(String uid, String userName, String userMail, String userPicture) {
@@ -14,6 +13,7 @@ public class User {
         this.mUserName = userName;
         this.mUserMail = userMail;
         this.mUserPicture = userPicture;
+        this.mUserRestaurantId = null;
     }
 
     public User() {
@@ -25,10 +25,6 @@ public class User {
 
     public String getUserName() {
         return mUserName;
-    }
-
-    public Boolean getUserStatus() {
-        return mUserStatus;
     }
 
     public String getUserMail() {
@@ -49,10 +45,6 @@ public class User {
 
     public void setUserName(String mUserName) {
         this.mUserName = mUserName;
-    }
-
-    public void setUserStatus(Boolean mUserStatus) {
-        this.mUserStatus = mUserStatus;
     }
 
     public void setUserMail(String mUserMail) {
