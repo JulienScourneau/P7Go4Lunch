@@ -16,11 +16,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.go4lunch.Models.Details.PlaceDetails;
+import com.example.go4lunch.Models.User;
+import com.example.go4lunch.Network.UserHelper;
 import com.example.go4lunch.R;
 import com.example.go4lunch.Utils.TestList;
 import com.example.go4lunch.View.Adapter.WorkmatesAdapter;
 import com.example.go4lunch.ViewModel.PlacesViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
 
 public class RestaurantActivity extends AppCompatActivity {
     private String mPlaceId;
@@ -32,6 +37,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private TextView mRestaurantName;
     private TextView mRestaurantLocation;
     private ImageView mRestaurantPicture;
+    private ArrayList<User> mWorkMate = new ArrayList<>();
 
 
     @Override
@@ -62,6 +68,29 @@ public class RestaurantActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(new WorkmatesAdapter(TestList.getFakeUserList()));
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWorkmateList();
+    }
+
+    private void getWorkmateList() {
+        UserHelper.getUserList(queryDocumentSnapshots -> {
+            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+
+                if (!mPlaceId.isEmpty()) {
+                    User user = document.toObject(User.class);
+                    mWorkMate.add(user);
+
+                } else {
+                    Log.e("getWorkmateList", "Error getting document");
+                }
+            }
+            mRecyclerView.setAdapter(new WorkmatesAdapter(mWorkMate));
+        });
+    }
+
 
     private void setUpListener() {
         mCallButton = findViewById(R.id.restaurant_call);
@@ -106,7 +135,10 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
 
-        mLunchButton.setOnClickListener(v -> Toast.makeText(getApplicationContext(), "Lunch", Toast.LENGTH_SHORT).show());
+        mLunchButton.setOnClickListener(v -> {
+
+            Toast.makeText(getApplicationContext(), "Add Lunch", Toast.LENGTH_SHORT).show();
+        });
 
     }
 

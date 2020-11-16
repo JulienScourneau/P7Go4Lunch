@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar mToolbar;
     private BottomNavigationView mBottomNav;
     private NavigationView mNavigationView;
-    private Boolean mLunchSelected = true;
+    private Boolean mLunchSelected = false;
     private boolean mLocationPermissionGranted = false;
     private ImageView mUserPicture;
     private TextView mUserName;

@@ -40,7 +40,7 @@ public class UserHelper {
         UserHelper.getUsersCollection().document(uid).delete();
     }
 
-    public static void getUserList(OnCompleteListener<QuerySnapshot> listener) {
-        getUsersCollection().get().addOnCompleteListener(listener);
+    public static void getUserList(OnSuccessListener<QuerySnapshot> listener) {
+        getUsersCollection().get().addOnSuccessListener(listener);
     }
 }

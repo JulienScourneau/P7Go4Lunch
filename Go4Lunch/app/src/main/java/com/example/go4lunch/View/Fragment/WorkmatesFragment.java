@@ -19,6 +19,7 @@ import com.example.go4lunch.Utils.TestList;
 import com.example.go4lunch.View.Adapter.RestaurantAdapter;
 import com.example.go4lunch.View.Adapter.WorkmatesAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -43,34 +44,29 @@ public class WorkmatesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (!mWorkMate.isEmpty()) {
+            mWorkMate.clear();
+        }
         getWorkmateList();
     }
 
     private void getWorkmateList() {
         String currentUserUid = UserHelper.getCurrentUser().getUid();
-        UserHelper.getUserList(task -> {
-            if (task.isSuccessful()) {
-                for (QueryDocumentSnapshot document : task.getResult()) {
+        UserHelper.getUserList(queryDocumentSnapshots -> {
+            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                String UserId = (String) document.get("uid");
+                assert UserId != null;
 
-                    if (document.get("uid") != currentUserUid) {
+                if (!UserId.equals(currentUserUid)) {
 
-                        Log.d("getworkmate", "uid :" + document.get("uid") + " currentUser :" + currentUserUid);
+                    User user = document.toObject(User.class);
+                    mWorkMate.add(user);
 
-                        String uid = (String) document.get("uid");
-                        String userName = (String) document.get("userName");
-                        String userMail = (String) document.get("userMail");
-                        String userPicture = (String) document.get("userPicture");
-
-                        User user = new User(uid, userName, userMail, userPicture);
-                        mWorkMate.add(user);
-
-                    } else {
-                        Log.e("getWorkmateList", "Error getting document", task.getException());
-                    }
+                } else {
+                    Log.e("getWorkmateList", "Error getting document");
                 }
             }
             mRecyclerView.setAdapter(new WorkmatesAdapter(mWorkMate));
-
         });
     }
 

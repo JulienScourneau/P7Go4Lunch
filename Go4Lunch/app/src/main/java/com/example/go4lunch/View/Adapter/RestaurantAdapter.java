@@ -34,6 +34,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         private ImageView mRestaurantPictures;
         private TextView mRestaurantDistance;
         private TextView mWorkmateNumber;
+        private ImageView mWorkmateDisplay;
         private RatingBar mRestaurantRatingBar;
 
         public RestaurantViewHolder(@NonNull View itemView) {
@@ -43,8 +44,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             mRestaurantSchedule = itemView.findViewById(R.id.restaurant_fragment_schedule);
             mRestaurantPictures = itemView.findViewById(R.id.restaurant_fragment_picture);
             mRestaurantDistance = itemView.findViewById(R.id.restaurant_fragment_distance);
+            mWorkmateDisplay = itemView.findViewById(R.id.restaurant_fragment_workmates);
             mWorkmateNumber = itemView.findViewById(R.id.restaurant_fragment_workmates_number);
             mRestaurantRatingBar = itemView.findViewById(R.id.restaurant_fragment_ratingBar);
+
 
         }
     }
@@ -69,6 +72,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.mRestaurantName.setText(currentRestaurant.getName());
         holder.mRestaurantLocation.setText(currentRestaurant.getVicinity());
         holder.mRestaurantSchedule.setText(currentRestaurant.getName());
+        holder.mWorkmateDisplay.setVisibility(View.VISIBLE);
         holder.mWorkmateNumber.setText("2");
 
         Location.distanceBetween(mCurrentPosition.latitude, mCurrentPosition.longitude, currentRestaurant.getGeometry().getLocation().getLat(), currentRestaurant.getGeometry().getLocation().getLng(), result);
