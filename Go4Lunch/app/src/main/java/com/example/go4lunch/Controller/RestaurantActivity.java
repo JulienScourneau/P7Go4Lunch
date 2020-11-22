@@ -22,7 +22,9 @@ import com.example.go4lunch.R;
 import com.example.go4lunch.Utils.TestList;
 import com.example.go4lunch.View.Adapter.WorkmatesAdapter;
 import com.example.go4lunch.ViewModel.PlacesViewModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -74,6 +76,7 @@ public class RestaurantActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getWorkmateList();
+        updateUI();
     }
 
     private void getWorkmateList() {
@@ -92,6 +95,22 @@ public class RestaurantActivity extends AppCompatActivity {
         });
     }
 
+    private void updateUI() {
+        UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User currentUser = documentSnapshot.toObject(User.class);
+                if (currentUser != null) {
+                    if (currentUser.getUserRestaurantId() == null) {
+                        mLunchButton.setImageResource(R.drawable.ic_add_icon_24dp);
+                    } else {
+                        mLunchButton.setImageResource(R.drawable.ic_baseline_remove_circle_24);
+                    }
+                }
+            }
+        });
+
+    }
 
     private void setUpListener() {
         mCallButton = findViewById(R.id.restaurant_call);
@@ -138,14 +157,12 @@ public class RestaurantActivity extends AppCompatActivity {
 
         mLunchButton.setOnClickListener(v -> UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
 
-            Toast addLunch, removeLunch;
-
             User currentUser = documentSnapshot.toObject(User.class);
             if (currentUser != null) {
                 if (currentUser.getUserRestaurantId() == null) {
                     UserHelper.updateRestaurantId(mPlaceId, currentUser.getUid());
                     mLunchButton.setImageResource(R.drawable.ic_baseline_remove_circle_24);
-                     Toast.makeText(getApplicationContext(), getText(R.string.select_lunch_btn), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getText(R.string.select_lunch_btn), Toast.LENGTH_SHORT).show();
                 } else {
                     mLunchButton.setImageResource(R.drawable.ic_add_icon_24dp);
                     UserHelper.updateRestaurantId(null, currentUser.getUid());
@@ -163,10 +180,10 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     public void getPlaceDetails() {
-        this.viewModel.getDetailPlaces(getUrl()).observe(this, this::upDatePlaceDetails);
+        this.viewModel.getDetailPlaces(getUrl()).observe(this, this::updatePlaceDetails);
     }
 
-    private void upDatePlaceDetails(PlaceDetails placeDetails) {
+    private void updatePlaceDetails(PlaceDetails placeDetails) {
         this.placeDetails = placeDetails;
         mRestaurantName.setText(placeDetails.getResult().getName());
         mRestaurantLocation.setText(placeDetails.getResult().getVicinity());

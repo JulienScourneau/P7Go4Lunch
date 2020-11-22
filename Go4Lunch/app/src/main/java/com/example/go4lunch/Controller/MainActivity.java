@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +27,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.go4lunch.Models.User;
 import com.example.go4lunch.Network.UserHelper;
 import com.example.go4lunch.R;
 import com.example.go4lunch.View.Fragment.ListViewFragment;
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar mToolbar;
     private BottomNavigationView mBottomNav;
     private NavigationView mNavigationView;
-    private Boolean mLunchSelected = false;
     private boolean mLocationPermissionGranted = false;
     private ImageView mUserPicture;
     private TextView mUserName;
@@ -96,12 +95,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.drawer_lunch_icon:
-                if (mLunchSelected) {
-                    Intent restaurantIntent = new Intent(this, RestaurantActivity.class);
-                    restaurantIntent.putExtra("PLACE_ID", "Add_ID");
-                    startActivity(restaurantIntent);
-                }
-                Toast.makeText(this, "Select your lunch", Toast.LENGTH_SHORT).show();
+                UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
+                    User currentUser = documentSnapshot.toObject(User.class);
+
+                    if (currentUser != null) {
+                        if (currentUser.getUserRestaurantId() == null) {
+                            Toast.makeText(getApplicationContext(), "Select your lunch", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Intent restaurantIntent = new Intent(getApplicationContext(), RestaurantActivity.class);
+                            restaurantIntent.putExtra("PLACE_ID", currentUser.getUserRestaurantId());
+                            startActivity(restaurantIntent);
+                        }
+                    }
+
+                });
                 break;
             case R.id.drawer_settings_icon:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
