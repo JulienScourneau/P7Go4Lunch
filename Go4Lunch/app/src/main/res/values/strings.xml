@@ -35,6 +35,8 @@
     <!-- RESTAURANT ACTIVITY RESOURCES -->
     <string name="call_btn_unavailable">Phone number unavailable</string>
     <string name="website_btn_unavailable">Website unavailable</string>
+    <string name="select_lunch_btn">Lunch select</string>
+    <string name="remove_lunch_btn">Lunch remove</string>
 
     <!-- SETTINGS MENU RESOURCES -->
     <string name="notifications_setting">Notifications:</string>

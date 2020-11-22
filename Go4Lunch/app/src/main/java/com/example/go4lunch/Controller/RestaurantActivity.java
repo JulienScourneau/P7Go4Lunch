@@ -1,10 +1,5 @@
 package com.example.go4lunch.Controller;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +8,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.go4lunch.Models.Details.PlaceDetails;
@@ -45,8 +45,9 @@ public class RestaurantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.restaurant_activity);
         Bundle bundle = getIntent().getExtras();
-        mPlaceId = bundle.getString("PLACE_ID");
-
+        if (bundle != null) {
+            mPlaceId = bundle.getString("PLACE_ID");
+        }
         configureViewModel();
         getPlaceDetails();
         setUpRecyclerView();
@@ -135,12 +136,25 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
 
-        mLunchButton.setOnClickListener(v -> {
+        mLunchButton.setOnClickListener(v -> UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
 
-            String uid = UserHelper.getCurrentUser().getUid();
-            
-            Toast.makeText(getApplicationContext(), "Add Lunch", Toast.LENGTH_SHORT).show();
-        });
+            Toast addLunch, removeLunch;
+
+            User currentUser = documentSnapshot.toObject(User.class);
+            if (currentUser != null) {
+                if (currentUser.getUserRestaurantId() == null) {
+                    UserHelper.updateRestaurantId(mPlaceId, currentUser.getUid());
+                    mLunchButton.setImageResource(R.drawable.ic_baseline_remove_circle_24);
+                     Toast.makeText(getApplicationContext(), getText(R.string.select_lunch_btn), Toast.LENGTH_SHORT).show();
+                } else {
+                    mLunchButton.setImageResource(R.drawable.ic_add_icon_24dp);
+                    UserHelper.updateRestaurantId(null, currentUser.getUid());
+                    currentUser.setUserRestaurantId(null);
+                    Toast.makeText(getApplicationContext(), getText(R.string.remove_lunch_btn), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }));
 
     }
 
