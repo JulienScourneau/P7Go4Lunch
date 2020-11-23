@@ -16,10 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.go4lunch.Controller.RestaurantActivity;
 import com.example.go4lunch.Models.NearbySearch.Result;
+import com.example.go4lunch.Models.User;
 import com.example.go4lunch.Network.UserHelper;
 import com.example.go4lunch.R;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -73,8 +75,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.mRestaurantName.setText(currentRestaurant.getName());
         holder.mRestaurantLocation.setText(currentRestaurant.getVicinity());
         holder.mRestaurantSchedule.setText(currentRestaurant.getName());
-        holder.mWorkmateDisplay.setVisibility(View.VISIBLE);
-        holder.mWorkmateNumber.setText("2");
 
         Location.distanceBetween(mCurrentPosition.latitude, mCurrentPosition.longitude, currentRestaurant.getGeometry().getLocation().getLat(), currentRestaurant.getGeometry().getLocation().getLng(), result);
         int distance = (int) result[0];
@@ -90,11 +90,23 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                     .into(holder.mRestaurantPictures);
         }
 
-        UserHelper.getUserList(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                
+        UserHelper.getUserList(queryDocumentSnapshots -> {
+            int i = 0;
+            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                User mWorkmate = document.toObject(User.class);
+                Log.d("userNumber", "workmate: " + mWorkmate.getUserName() + " id: " + mWorkmate.getUserRestaurantId());
+
+                if (mWorkmate.getUserRestaurantId() != null && mWorkmate.getUserRestaurantId().equals(currentRestaurant.getPlaceId()))
+                    i++;
             }
+            if (i > 0) {
+                holder.mWorkmateNumber.setText(String.valueOf(i));
+                holder.mWorkmateDisplay.setVisibility(View.VISIBLE);
+            } else {
+                holder.mWorkmateNumber.setVisibility(View.INVISIBLE);
+                holder.mWorkmateDisplay.setVisibility(View.INVISIBLE);
+            }
+
         });
 
         holder.itemView.setOnClickListener(v -> {

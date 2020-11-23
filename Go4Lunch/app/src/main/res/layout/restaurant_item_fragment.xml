@@ -57,7 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/restaurant_fragment_distance"
             android:layout_toStartOf="@+id/restaurant_fragment_workmates_number"
-            android:src="@drawable/ic_workmate_icon_24dp" />
+            android:src="@drawable/ic_workmate_icon_24dp"
+            />
 
         <TextView
             android:id="@+id/restaurant_fragment_workmates_number"

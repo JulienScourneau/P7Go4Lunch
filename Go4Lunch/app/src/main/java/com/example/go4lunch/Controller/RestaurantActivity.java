@@ -83,13 +83,14 @@ public class RestaurantActivity extends AppCompatActivity {
     private void getWorkmateList() {
         UserHelper.getUserList(queryDocumentSnapshots -> {
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                Log.d("getWorkmateList", "try to get workmate");
+
                 if (Objects.equals(document.get("userRestaurantId"), mPlaceId)) {
                     User user = document.toObject(User.class);
                     mWorkMate.add(user);
-                    Log.d("getWorkmateList", "workmate: " + user.getUserName());
 
+                    Log.d("getWorkmateList", "workmate: " + user.getUserName());
                 } else {
+
                     Log.e("getWorkmateList", "Error getting document");
                 }
             }
