@@ -146,7 +146,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             };
 
     private void updateUI() {
-
         if (UserHelper.getCurrentUser() != null) {
 
             if (UserHelper.getCurrentUser().getPhotoUrl() != null) {

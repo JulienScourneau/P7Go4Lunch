@@ -16,8 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.go4lunch.Controller.RestaurantActivity;
 import com.example.go4lunch.Models.NearbySearch.Result;
+import com.example.go4lunch.Network.UserHelper;
 import com.example.go4lunch.R;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -66,8 +69,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
         Result currentRestaurant = mRestaurantList.get(position);
-        String placeId = currentRestaurant.getPlaceId();
-
 
         holder.mRestaurantName.setText(currentRestaurant.getName());
         holder.mRestaurantLocation.setText(currentRestaurant.getVicinity());
@@ -89,9 +90,16 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                     .into(holder.mRestaurantPictures);
         }
 
+        UserHelper.getUserList(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                
+            }
+        });
+
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), RestaurantActivity.class);
-            intent.putExtra("PLACE_ID", placeId);
+            intent.putExtra("PLACE_ID", currentRestaurant.getPlaceId());
             v.getContext().startActivity(intent);
         });
     }

@@ -1,5 +1,7 @@
 package com.example.go4lunch.View.Adapter;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.go4lunch.Controller.RestaurantActivity;
 import com.example.go4lunch.R;
 import com.example.go4lunch.Models.User;
 
@@ -46,7 +49,30 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
     public void onBindViewHolder(@NonNull WorkmatesViewHolder holder, int position) {
         User currentUser = mUserList.get(position);
 
-        holder.mUserText.setText(currentUser.getUserName());
+        StringBuilder userText = new StringBuilder();
+        userText.append(currentUser.getUserName());
+        userText.append(" ");
+
+        if (currentUser.getUserRestaurantId() != null) {
+            userText.append("is eating");
+            holder.mUserText.setHint("");
+            holder.mUserText.setText(userText);
+            holder.itemView.setClickable(true);
+            Log.d("workmateAdapter","UserName: " + currentUser.getUserName());
+        } else {
+            userText.append("hasn't decided yet");
+            holder.mUserText.setText("");
+            holder.mUserText.setHint(userText.toString());
+            holder.itemView.setClickable(false);
+        }
+
+        if (holder.itemView.isClickable()) {
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(v.getContext(), RestaurantActivity.class);
+                intent.putExtra("PLACE_ID", currentUser.getUserRestaurantId());
+                v.getContext().startActivity(intent);
+            });
+        }
 
         if (currentUser.getUserPicture() != null) {
             Glide.with(holder.mUserPicture.getContext())

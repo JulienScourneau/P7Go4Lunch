@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RestaurantActivity extends AppCompatActivity {
     private String mPlaceId;
@@ -49,6 +50,7 @@ public class RestaurantActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mPlaceId = bundle.getString("PLACE_ID");
+            Log.d("placeId", "Place id: " + mPlaceId);
         }
         configureViewModel();
         getPlaceDetails();
@@ -69,7 +71,6 @@ public class RestaurantActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.restaurant_activity_recyclerview);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(new WorkmatesAdapter(TestList.getFakeUserList()));
     }
 
     @Override
@@ -82,10 +83,11 @@ public class RestaurantActivity extends AppCompatActivity {
     private void getWorkmateList() {
         UserHelper.getUserList(queryDocumentSnapshots -> {
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-
-                if (!mPlaceId.isEmpty()) {
+                Log.d("getWorkmateList", "try to get workmate");
+                if (Objects.equals(document.get("userRestaurantId"), mPlaceId)) {
                     User user = document.toObject(User.class);
                     mWorkMate.add(user);
+                    Log.d("getWorkmateList", "workmate: " + user.getUserName());
 
                 } else {
                     Log.e("getWorkmateList", "Error getting document");

@@ -25,6 +25,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class WorkmatesFragment extends Fragment {
     private WorkmatesAdapter mWorkmatesAdapter;
@@ -54,10 +55,8 @@ public class WorkmatesFragment extends Fragment {
         String currentUserUid = UserHelper.getCurrentUser().getUid();
         UserHelper.getUserList(queryDocumentSnapshots -> {
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                String UserId = (String) document.get("uid");
-                assert UserId != null;
 
-                if (!UserId.equals(currentUserUid)) {
+                if (!Objects.equals(document.get("uid"), currentUserUid)) {
 
                     User user = document.toObject(User.class);
                     mWorkMate.add(user);
