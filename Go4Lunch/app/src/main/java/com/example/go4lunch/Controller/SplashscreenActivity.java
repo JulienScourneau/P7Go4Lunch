@@ -25,13 +25,10 @@ import static com.example.go4lunch.Utils.Constants.RC_SIGN_IN;
 
 public class SplashscreenActivity extends AppCompatActivity {
 
-    private LinearLayout linearLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        linearLayout = findViewById(R.id.background_splashscreen);
         launchSplashScreen();
     }
 
@@ -113,20 +110,16 @@ public class SplashscreenActivity extends AppCompatActivity {
     }
 
     private void handleResponseAfterSignIn(int requestCode, int resultCode, Intent data) {
-
         IdpResponse response = IdpResponse.fromResultIntent(data);
 
         if (requestCode == RC_SIGN_IN) {
-
             if (resultCode == RESULT_OK) {
-
                 this.createUserInFireStore();
                 startMainActivity();
 
                 Log.d("handleResponse", "CreateUser");
 
             } else {
-
                 signInActivity();
                 Toast.makeText(this, "Please login", Toast.LENGTH_SHORT).show();
                 Log.d("handleResponse", "SignIn");

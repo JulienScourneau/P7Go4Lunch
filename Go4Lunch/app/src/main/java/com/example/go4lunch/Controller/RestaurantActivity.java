@@ -1,15 +1,19 @@
 package com.example.go4lunch.Controller;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +32,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class RestaurantActivity extends AppCompatActivity {
@@ -41,6 +47,8 @@ public class RestaurantActivity extends AppCompatActivity {
     private TextView mRestaurantLocation;
     private ImageView mRestaurantPicture;
     private ArrayList<User> mWorkMate = new ArrayList<>();
+    private Boolean mRestaurantLike = false;
+    private Drawable mLikeDrawable;
 
 
     @Override
@@ -99,20 +107,32 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User currentUser = documentSnapshot.toObject(User.class);
-                if (currentUser != null) {
-                    if (currentUser.getUserRestaurantId() == null) {
-                        mLunchButton.setImageResource(R.drawable.ic_add_icon_24dp);
-                    } else {
-                        mLunchButton.setImageResource(R.drawable.ic_baseline_remove_circle_24);
-                    }
+        UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener((OnSuccessListener<DocumentSnapshot>) documentSnapshot -> {
+            User currentUser = documentSnapshot.toObject(User.class);
+
+            if (currentUser != null) {
+                if (currentUser.getUserRestaurantId().equals(mPlaceId)) {
+                    mLunchButton.setImageResource(R.drawable.ic_baseline_remove_circle_24);
+                } else {
+                    mLunchButton.setImageResource(R.drawable.ic_add_icon_24dp);
                 }
+                Map<String, Object> likeList = new HashMap<>();
+                UserHelper.getLike(currentUser.getUid(), mPlaceId).addOnSuccessListener((OnSuccessListener<DocumentSnapshot>) documentSnapshot1 -> {
+                    if (documentSnapshot1.get("like") == null) {
+                        likeList.put("like", mRestaurantLike);
+                        UserHelper.createLikeList((String) currentUser.getUid(), placeDetails.getResult().getName(), likeList);
+
+                        Log.d("updateUiLike", "User ID: " + currentUser.getUid() + " Restaurant name: " + placeDetails.getResult().getName() + " Restaurant Like: " + mRestaurantLike);
+                    } else {
+                        mRestaurantLike = (Boolean) documentSnapshot1.get("like");
+                        mLikeDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_restaurant_black_24, null);
+                        mLikeDrawable = DrawableCompat.wrap(mLikeDrawable);
+                        DrawableCompat.setTint(mLikeDrawable, getResources().getColor(R.color.colorAccent));
+                        mLikeButton.setCompoundDrawables(null, mLikeDrawable, null, null);
+                    }
+                });
             }
         });
-
     }
 
     private void setUpListener() {
@@ -143,7 +163,27 @@ public class RestaurantActivity extends AppCompatActivity {
 
         });
 
-        mLikeButton.setOnClickListener(v -> Toast.makeText(getApplicationContext(), "Like", Toast.LENGTH_SHORT).show());
+        mLikeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("LikeBtn", "OnClick");
+                if (mRestaurantLike) {
+                    UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), placeDetails.getResult().getName(), false);
+                    Toast.makeText(RestaurantActivity.this.getApplicationContext(), "Remove like", Toast.LENGTH_SHORT).show();
+                    mRestaurantLike = false;
+                    mLikeDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_restaurant_black_24, null);
+                    mLikeDrawable = DrawableCompat.wrap(mLikeDrawable);
+                    DrawableCompat.setTint(mLikeDrawable, getResources().getColor(R.color.colorAccent));
+                    mLikeButton.setCompoundDrawablesWithIntrinsicBounds(null, mLikeDrawable, null, null);
+                    Log.d("LikeBtn", "Remove like");
+                } else {
+                    UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), placeDetails.getResult().getName(), true);
+                    Toast.makeText(RestaurantActivity.this.getApplicationContext(), "Add like", Toast.LENGTH_SHORT).show();
+                    mRestaurantLike = true;
+                    Log.d("LikeBtn", "Add like");
+                }
+            }
+        });
 
         mWebsiteButton.setOnClickListener(v -> {
 
@@ -158,23 +198,28 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
 
-        mLunchButton.setOnClickListener(v -> UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
+        mLunchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
 
-            User currentUser = documentSnapshot.toObject(User.class);
-            if (currentUser != null) {
-                if (currentUser.getUserRestaurantId() == null) {
-                    UserHelper.updateRestaurantId(mPlaceId, currentUser.getUid());
-                    mLunchButton.setImageResource(R.drawable.ic_baseline_remove_circle_24);
-                    Toast.makeText(getApplicationContext(), getText(R.string.select_lunch_btn), Toast.LENGTH_SHORT).show();
-                } else {
-                    mLunchButton.setImageResource(R.drawable.ic_add_icon_24dp);
-                    UserHelper.updateRestaurantId(null, currentUser.getUid());
-                    currentUser.setUserRestaurantId(null);
-                    Toast.makeText(getApplicationContext(), getText(R.string.remove_lunch_btn), Toast.LENGTH_SHORT).show();
-                }
+                    User currentUser = documentSnapshot.toObject(User.class);
+                    if (currentUser != null) {
+                        if (currentUser.getUserRestaurantId() == null) {
+                            UserHelper.updateRestaurantId(mPlaceId, currentUser.getUid());
+                            mLunchButton.setImageResource(R.drawable.ic_baseline_remove_circle_24);
+                            Toast.makeText(RestaurantActivity.this.getApplicationContext(), RestaurantActivity.this.getText(R.string.select_lunch_btn), Toast.LENGTH_SHORT).show();
+                        } else {
+                            mLunchButton.setImageResource(R.drawable.ic_add_icon_24dp);
+                            UserHelper.updateRestaurantId(null, currentUser.getUid());
+                            currentUser.setUserRestaurantId(null);
+                            Toast.makeText(RestaurantActivity.this.getApplicationContext(), RestaurantActivity.this.getText(R.string.remove_lunch_btn), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                });
             }
-
-        }));
+        });
 
     }
 

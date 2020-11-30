@@ -10,7 +10,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import static com.example.go4lunch.Utils.Constants.COLLECTION_NAME;
+import java.util.Map;
+
+import static com.example.go4lunch.Utils.Constants.LIKE_COLLECTION;
+import static com.example.go4lunch.Utils.Constants.USERS_COLLECTION;
 
 public class UserHelper {
 
@@ -23,7 +26,11 @@ public class UserHelper {
     }
 
     public static CollectionReference getUsersCollection() {
-        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+        return FirebaseFirestore.getInstance().collection(USERS_COLLECTION);
+    }
+
+    public static CollectionReference getLikeCollection(String uid) {
+        return getUsersCollection().document(uid).collection(LIKE_COLLECTION);
     }
 
     public static Task<Void> createUser(String uid, String userName, String userMail, String urlPicture) {
@@ -31,12 +38,24 @@ public class UserHelper {
         return UserHelper.getUsersCollection().document(uid).set(userToCreate);
     }
 
+    public static Task<Void> createLikeList(String uid, String restaurantName, Map<String, Object> like) {
+        return UserHelper.getLikeCollection(uid).document(restaurantName).set(like);
+    }
+
     public static Task<DocumentSnapshot> getUser(String uid) {
         return UserHelper.getUsersCollection().document(uid).get();
     }
 
-    public static Task<Void> updateRestaurantId(String restaurantId, String uid) {
-        return UserHelper.getUsersCollection().document(uid).update("userRestaurantId", restaurantId);
+    public static Task<DocumentSnapshot> getLike(String uid, String restaurantName) {
+        return UserHelper.getLikeCollection(uid).document(restaurantName).get();
+    }
+
+    public static Task<Void> updateRestaurantId(String restaurantName, String uid) {
+        return UserHelper.getUsersCollection().document(uid).update("userRestaurantId", restaurantName);
+    }
+
+    public static Task<Void> updateRestaurantLike(String uid, String restaurantName, Boolean restaurantLike) {
+        return UserHelper.getLikeCollection(uid).document(restaurantName).update("like",restaurantLike);
     }
 
     public static void deleteUser(String uid) {

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import com.example.go4lunch.Controller.BaseFragment;
 import com.example.go4lunch.Controller.RestaurantActivity;
 import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.Models.NearbySearch.Result;
+import com.example.go4lunch.Models.User;
+import com.example.go4lunch.Network.UserHelper;
 import com.example.go4lunch.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,6 +31,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -37,6 +43,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
     private static final int MY_PERMISSION_CODE = 1000;
     private GoogleMap mMap;
     private ArrayList<Result> myPlaceList = new ArrayList<>();
+    private User mWorkmate = new User();
 
     @Nullable
     @Override
@@ -84,11 +91,13 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
     }
 
     private void placeMarker() {
+
         if (mMap != null) {
             mMap.clear();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
         }
+
         for (int i = 0; i < myPlaceList.size(); i++) {
             MarkerOptions markerOptions = new MarkerOptions();
             Result actualPlace = myPlaceList.get(i);
@@ -99,8 +108,29 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
             markerOptions.position(latLng);
             markerOptions.title(placeName);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker());
-            markerOptions.snippet(actualPlace.getPlaceId());
-            mMap.addMarker(markerOptions);
+            UserHelper.getUserList(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    Log.d("PlaceMarker", "OnSuccess");
+
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        mWorkmate = document.toObject(User.class);
+                        if (mWorkmate.getUserRestaurantId() != null)
+                            if (mWorkmate.getUserRestaurantId().equals(actualPlace.getPlaceId())) {
+                                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                                Log.d("PlaceMarker", "Green");
+                            }
+                        Log.d("PlaceMarker", "Workmate name: " + mWorkmate.getUserName() + " Workmate RestaurantId: " + mWorkmate.getUserRestaurantId() + " Place id: " + actualPlace.getPlaceId());
+
+                    }
+                    markerOptions.snippet(actualPlace.getPlaceId());
+                    mMap.addMarker(markerOptions);
+
+
+                }
+            });
+
+
         }
     }
 
