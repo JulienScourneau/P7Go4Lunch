@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -19,12 +20,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.go4lunch.Models.Details.PlaceDetails;
 import com.example.go4lunch.Models.User;
 import com.example.go4lunch.Network.UserHelper;
 import com.example.go4lunch.R;
 import com.example.go4lunch.View.Adapter.WorkmatesAdapter;
 import com.example.go4lunch.ViewModel.PlacesViewModel;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -115,24 +118,7 @@ public class RestaurantActivity extends AppCompatActivity {
                 } else {
                     mLunchButton.setImageResource(R.drawable.ic_add_icon_24dp);
                 }
-                Map<String, Object> likeList = new HashMap<>();
-                UserHelper.getLike(currentUser.getUid(), mPlaceId).addOnSuccessListener((OnSuccessListener<DocumentSnapshot>) documentSnapshot1 -> {
-                    if (documentSnapshot1.get("like") == null) {
-                        likeList.put("like", mRestaurantLike);
-                        UserHelper.createLikeList((String) currentUser.getUid(), placeDetails.getResult().getName(), likeList);
-
-                        Log.d("updateUiLike", "User ID: " + currentUser.getUid() + " Restaurant name: " + placeDetails.getResult().getName() + " Restaurant Like: " + mRestaurantLike);
-                    } else {
-                        Log.d("updateUiLike", "Else");
-                        mRestaurantLike = (Boolean) documentSnapshot1.get("like");
-                        mLikeDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_restaurant_black_24, null);
-                        if (mLikeDrawable != null) {
-                            mLikeDrawable = DrawableCompat.wrap(mLikeDrawable);
-                            DrawableCompat.setTint(mLikeDrawable, getResources().getColor(R.color.colorAccent));
-                        }
-                        mLikeButton.setCompoundDrawablesWithIntrinsicBounds(null, mLikeDrawable, null, null);
-                    }
-                });
+                updateLikeUi(currentUser);
             }
         });
     }
@@ -171,12 +157,12 @@ public class RestaurantActivity extends AppCompatActivity {
                 Log.d("LikeBtn", "OnClick");
                 if (mRestaurantLike) {
                     updateLikeButton();
-                    UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), placeDetails.getResult().getName(), false);
+                    UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), mPlaceId, false);
 
                     Log.d("LikeBtn", "Remove like");
                 } else {
                     updateLikeButton();
-                    UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), placeDetails.getResult().getName(), true);
+                    UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), mPlaceId, true);
 
                     Log.d("LikeBtn", "Add like");
                 }
@@ -184,7 +170,6 @@ public class RestaurantActivity extends AppCompatActivity {
         });
 
         mWebsiteButton.setOnClickListener(v -> {
-
             if (placeDetails.getResult().getWebsite() != null) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
@@ -196,28 +181,22 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
 
-        mLunchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
-
-                    User currentUser = documentSnapshot.toObject(User.class);
-                    if (currentUser != null) {
-                        if (currentUser.getUserRestaurantId() == null) {
-                            UserHelper.updateRestaurantId(mPlaceId, currentUser.getUid());
-                            mLunchButton.setImageResource(R.drawable.ic_baseline_remove_circle_24);
-                            Toast.makeText(RestaurantActivity.this.getApplicationContext(), RestaurantActivity.this.getText(R.string.select_lunch_btn), Toast.LENGTH_SHORT).show();
-                        } else {
-                            mLunchButton.setImageResource(R.drawable.ic_add_icon_24dp);
-                            UserHelper.updateRestaurantId(null, currentUser.getUid());
-                            currentUser.setUserRestaurantId(null);
-                            Toast.makeText(RestaurantActivity.this.getApplicationContext(), RestaurantActivity.this.getText(R.string.remove_lunch_btn), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                });
+        mLunchButton.setOnClickListener(v -> UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
+            User currentUser = documentSnapshot.toObject(User.class);
+            if (currentUser != null) {
+                if (currentUser.getUserRestaurantId() == null) {
+                    UserHelper.updateRestaurantId(mPlaceId, currentUser.getUid());
+                    mLunchButton.setImageResource(R.drawable.ic_baseline_remove_circle_24);
+                    Toast.makeText(RestaurantActivity.this.getApplicationContext(), RestaurantActivity.this.getText(R.string.select_lunch_btn), Toast.LENGTH_SHORT).show();
+                } else {
+                    mLunchButton.setImageResource(R.drawable.ic_add_icon_24dp);
+                    UserHelper.updateRestaurantId(null, currentUser.getUid());
+                    currentUser.setUserRestaurantId(null);
+                    Toast.makeText(RestaurantActivity.this.getApplicationContext(), RestaurantActivity.this.getText(R.string.remove_lunch_btn), Toast.LENGTH_SHORT).show();
+                }
             }
-        });
+
+        }));
 
     }
 
@@ -239,6 +218,7 @@ public class RestaurantActivity extends AppCompatActivity {
                     .load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=2000&maxheight=2000&photoreference="
                             + placeDetails.getResult().getPhotos().get(0)
                             .getPhotoReference() + "&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc")
+                    .apply(RequestOptions.centerCropTransform())
                     .into(mRestaurantPicture);
         }
     }
@@ -255,6 +235,29 @@ public class RestaurantActivity extends AppCompatActivity {
         mLikeDrawable = DrawableCompat.wrap(mLikeDrawable);
         DrawableCompat.setTint(mLikeDrawable, getResources().getColor(R.color.colorAccent));
         mLikeButton.setCompoundDrawablesWithIntrinsicBounds(null, mLikeDrawable, null, null);
+    }
+
+    private void updateLikeUi(User currentUser) {
+        Map<String, Object> likeList = new HashMap<>();
+        UserHelper.getLike(currentUser.getUid(), mPlaceId).addOnSuccessListener((OnSuccessListener<DocumentSnapshot>) documentSnapshot1 -> {
+            if (documentSnapshot1.get("like") == null) {
+                likeList.put("like", mRestaurantLike);
+                UserHelper.createLikeList((String) currentUser.getUid(), mPlaceId, likeList).addOnFailureListener((OnFailureListener) e -> {
+                    Toast.makeText(getApplicationContext(), R.string.error_unknown, Toast.LENGTH_SHORT).show();
+                });
+
+                Log.d("updateUiLike", "Create like doc");
+            } else {
+                Log.d("updateUiLike", "get like doc");
+                mRestaurantLike = (Boolean) documentSnapshot1.get("like");
+                mLikeDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_star_icon_24dp, null);
+                if (mLikeDrawable != null) {
+                    mLikeDrawable = DrawableCompat.wrap(mLikeDrawable);
+                    DrawableCompat.setTint(mLikeDrawable, getResources().getColor(R.color.colorAccent));
+                }
+                mLikeButton.setCompoundDrawablesWithIntrinsicBounds(null, mLikeDrawable, null, null);
+            }
+        });
     }
 
     public String getUrl() {

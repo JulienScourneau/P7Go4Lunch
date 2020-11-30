@@ -38,24 +38,24 @@ public class UserHelper {
         return UserHelper.getUsersCollection().document(uid).set(userToCreate);
     }
 
-    public static Task<Void> createLikeList(String uid, String restaurantName, Map<String, Object> like) {
-        return UserHelper.getLikeCollection(uid).document(restaurantName).set(like);
+    public static Task<Void> createLikeList(String uid, String restaurantId, Map<String, Object> like) {
+        return UserHelper.getLikeCollection(uid).document(restaurantId).set(like);
     }
 
     public static Task<DocumentSnapshot> getUser(String uid) {
         return UserHelper.getUsersCollection().document(uid).get();
     }
 
-    public static Task<DocumentSnapshot> getLike(String uid, String restaurantName) {
-        return UserHelper.getLikeCollection(uid).document(restaurantName).get();
+    public static Task<DocumentSnapshot> getLike(String uid, String restaurantId) {
+        return UserHelper.getLikeCollection(uid).document(restaurantId).get();
     }
 
-    public static Task<Void> updateRestaurantId(String restaurantName, String uid) {
-        return UserHelper.getUsersCollection().document(uid).update("userRestaurantId", restaurantName);
+    public static Task<Void> updateRestaurantId(String restaurantId, String uid) {
+        return UserHelper.getUsersCollection().document(uid).update("userRestaurantId", restaurantId);
     }
 
-    public static Task<Void> updateRestaurantLike(String uid, String restaurantName, Boolean restaurantLike) {
-        return UserHelper.getLikeCollection(uid).document(restaurantName).update("like",restaurantLike);
+    public static Task<Void> updateRestaurantLike(String uid, String restaurantId, Boolean restaurantLike) {
+        return UserHelper.getLikeCollection(uid).document(restaurantId).update("like",restaurantLike);
     }
 
     public static void deleteUser(String uid) {
