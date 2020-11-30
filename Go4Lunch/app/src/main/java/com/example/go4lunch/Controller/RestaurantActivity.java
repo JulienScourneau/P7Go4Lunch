@@ -23,7 +23,6 @@ import com.example.go4lunch.Models.Details.PlaceDetails;
 import com.example.go4lunch.Models.User;
 import com.example.go4lunch.Network.UserHelper;
 import com.example.go4lunch.R;
-import com.example.go4lunch.Utils.TestList;
 import com.example.go4lunch.View.Adapter.WorkmatesAdapter;
 import com.example.go4lunch.ViewModel.PlacesViewModel;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -124,11 +123,14 @@ public class RestaurantActivity extends AppCompatActivity {
 
                         Log.d("updateUiLike", "User ID: " + currentUser.getUid() + " Restaurant name: " + placeDetails.getResult().getName() + " Restaurant Like: " + mRestaurantLike);
                     } else {
+                        Log.d("updateUiLike", "Else");
                         mRestaurantLike = (Boolean) documentSnapshot1.get("like");
                         mLikeDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_restaurant_black_24, null);
-                        mLikeDrawable = DrawableCompat.wrap(mLikeDrawable);
-                        DrawableCompat.setTint(mLikeDrawable, getResources().getColor(R.color.colorAccent));
-                        mLikeButton.setCompoundDrawables(null, mLikeDrawable, null, null);
+                        if (mLikeDrawable != null) {
+                            mLikeDrawable = DrawableCompat.wrap(mLikeDrawable);
+                            DrawableCompat.setTint(mLikeDrawable, getResources().getColor(R.color.colorAccent));
+                        }
+                        mLikeButton.setCompoundDrawablesWithIntrinsicBounds(null, mLikeDrawable, null, null);
                     }
                 });
             }
@@ -168,18 +170,14 @@ public class RestaurantActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("LikeBtn", "OnClick");
                 if (mRestaurantLike) {
+                    updateLikeButton();
                     UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), placeDetails.getResult().getName(), false);
-                    Toast.makeText(RestaurantActivity.this.getApplicationContext(), "Remove like", Toast.LENGTH_SHORT).show();
-                    mRestaurantLike = false;
-                    mLikeDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.baseline_restaurant_black_24, null);
-                    mLikeDrawable = DrawableCompat.wrap(mLikeDrawable);
-                    DrawableCompat.setTint(mLikeDrawable, getResources().getColor(R.color.colorAccent));
-                    mLikeButton.setCompoundDrawablesWithIntrinsicBounds(null, mLikeDrawable, null, null);
+
                     Log.d("LikeBtn", "Remove like");
                 } else {
+                    updateLikeButton();
                     UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), placeDetails.getResult().getName(), true);
-                    Toast.makeText(RestaurantActivity.this.getApplicationContext(), "Add like", Toast.LENGTH_SHORT).show();
-                    mRestaurantLike = true;
+
                     Log.d("LikeBtn", "Add like");
                 }
             }
@@ -243,7 +241,20 @@ public class RestaurantActivity extends AppCompatActivity {
                             .getPhotoReference() + "&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc")
                     .into(mRestaurantPicture);
         }
+    }
 
+    private void updateLikeButton() {
+        if (mRestaurantLike) {
+            mLikeDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_baseline_star_border_24, null);
+            mRestaurantLike = false;
+        } else {
+            mLikeDrawable = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_star_icon_24dp, null);
+            mRestaurantLike = true;
+        }
+        assert mLikeDrawable != null;
+        mLikeDrawable = DrawableCompat.wrap(mLikeDrawable);
+        DrawableCompat.setTint(mLikeDrawable, getResources().getColor(R.color.colorAccent));
+        mLikeButton.setCompoundDrawablesWithIntrinsicBounds(null, mLikeDrawable, null, null);
     }
 
     public String getUrl() {
