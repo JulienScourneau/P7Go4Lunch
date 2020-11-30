@@ -108,29 +108,20 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
             markerOptions.position(latLng);
             markerOptions.title(placeName);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker());
-            UserHelper.getUserList(new OnSuccessListener<QuerySnapshot>() {
-                @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    Log.d("PlaceMarker", "OnSuccess");
+            UserHelper.getUserList(queryDocumentSnapshots -> {
+                Log.d("PlaceMarker", "OnSuccess");
 
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        mWorkmate = document.toObject(User.class);
-                        if (mWorkmate.getUserRestaurantId() != null)
-                            if (mWorkmate.getUserRestaurantId().equals(actualPlace.getPlaceId())) {
-                                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                                Log.d("PlaceMarker", "Green");
-                            }
-                        Log.d("PlaceMarker", "Workmate name: " + mWorkmate.getUserName() + " Workmate RestaurantId: " + mWorkmate.getUserRestaurantId() + " Place id: " + actualPlace.getPlaceId());
-
+                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                    mWorkmate = document.toObject(User.class);
+                    if (mWorkmate.getUserRestaurantId() != null && mWorkmate.getUserRestaurantId().equals(actualPlace.getPlaceId())) {
+                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                        Log.d("PlaceMarker", "Green");
                     }
-                    markerOptions.snippet(actualPlace.getPlaceId());
-                    mMap.addMarker(markerOptions);
-
-
+                    Log.d("PlaceMarker", "Workmate name: " + mWorkmate.getUserName() + " Workmate RestaurantId: " + mWorkmate.getUserRestaurantId() + " Place id: " + actualPlace.getPlaceId());
                 }
+                markerOptions.snippet(actualPlace.getPlaceId());
+                mMap.addMarker(markerOptions);
             });
-
-
         }
     }
 
