@@ -172,9 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private boolean checkMapServices() {
         if (isServicesOK()) {
-            if (isMapsEnabled()) {
-                return true;
-            }
+            return isMapsEnabled();
         }
         return false;
     }

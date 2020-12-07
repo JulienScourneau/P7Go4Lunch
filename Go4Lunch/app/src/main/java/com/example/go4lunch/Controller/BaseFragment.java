@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.go4lunch.BuildConfig;
 import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.ViewModel.PlacesViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -59,7 +60,8 @@ public abstract class BaseFragment extends Fragment {
         url.append(latLng.longitude);
         url.append("&radius=");
         url.append(mRadius);
-        url.append("&types=restaurant&sensor=true&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc");
+        url.append("&types=restaurant&sensor=true&key=");
+        url.append(BuildConfig.PLACE_API_KEY);
 
         Log.d("getUrlPlace", url.toString());
         Log.d("getlatLngPLace", "LatLong =" + latLng);

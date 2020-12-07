@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.go4lunch.BuildConfig;
 import com.example.go4lunch.Models.Details.PlaceDetails;
 import com.example.go4lunch.Models.User;
 import com.example.go4lunch.Network.UserHelper;
@@ -113,7 +114,7 @@ public class RestaurantActivity extends AppCompatActivity {
             User currentUser = documentSnapshot.toObject(User.class);
 
             if (currentUser != null) {
-                if (currentUser.getUserRestaurantId().equals(mPlaceId)) {
+                if (currentUser.getUserRestaurantId() != null && currentUser.getUserRestaurantId().equals(mPlaceId)) {
                     mLunchButton.setImageResource(R.drawable.ic_baseline_remove_circle_24);
                 } else {
                     mLunchButton.setImageResource(R.drawable.ic_add_icon_24dp);
@@ -148,13 +149,11 @@ public class RestaurantActivity extends AppCompatActivity {
             }
             Toast.makeText(getApplicationContext(), getResources().getText(R.string.call_btn_unavailable), Toast.LENGTH_SHORT).show();
             Log.d("CallBtn", "NoPhoneNumber");
-
         });
 
         mLikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("LikeBtn", "OnClick");
                 if (mRestaurantLike) {
                     updateLikeButton();
                     UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), mPlaceId, false);
@@ -195,9 +194,7 @@ public class RestaurantActivity extends AppCompatActivity {
                     Toast.makeText(RestaurantActivity.this.getApplicationContext(), RestaurantActivity.this.getText(R.string.remove_lunch_btn), Toast.LENGTH_SHORT).show();
                 }
             }
-
         }));
-
     }
 
     private void configureViewModel() {
@@ -217,7 +214,7 @@ public class RestaurantActivity extends AppCompatActivity {
             Glide.with(mRestaurantPicture.getContext())
                     .load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=2000&maxheight=2000&photoreference="
                             + placeDetails.getResult().getPhotos().get(0)
-                            .getPhotoReference() + "&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc")
+                            .getPhotoReference() + "&key=" + BuildConfig.PLACE_API_KEY)
                     .apply(RequestOptions.centerCropTransform())
                     .into(mRestaurantPicture);
         }
@@ -264,9 +261,10 @@ public class RestaurantActivity extends AppCompatActivity {
         StringBuilder url = new StringBuilder();
         url.append("details/json?place_id=");
         url.append(mPlaceId);
-        url.append("&key=AIzaSyD6y_8l1WeKKDk0dOHxxgL_ybA4Lmjc1Cc");
+        url.append("&key=");
+        url.append(BuildConfig.PLACE_API_KEY);
+        
         Log.d("getUrlDetails", url.toString());
-
         return url.toString();
     }
 }
