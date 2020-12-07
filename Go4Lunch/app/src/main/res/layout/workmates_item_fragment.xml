@@ -26,7 +26,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/user_fragment_picture"
-            android:text="@string/user_selection" />
+            android:text="@string/workmate_not_select_lunch" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

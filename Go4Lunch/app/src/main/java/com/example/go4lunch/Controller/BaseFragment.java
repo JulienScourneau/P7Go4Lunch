@@ -15,12 +15,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.go4lunch.BuildConfig;
 import com.example.go4lunch.Models.NearbySearch.MyPlaces;
+import com.example.go4lunch.R;
 import com.example.go4lunch.ViewModel.PlacesViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
 
 import java.util.Objects;
 
@@ -36,6 +38,7 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getActivity()));
+        Places.initialize(Objects.requireNonNull(getContext()), BuildConfig.PLACE_API_KEY);
         configureViewModel();
         getLocation();
     }
@@ -64,10 +67,8 @@ public abstract class BaseFragment extends Fragment {
         url.append(BuildConfig.PLACE_API_KEY);
 
         Log.d("getUrlPlace", url.toString());
-        Log.d("getlatLngPLace", "LatLong =" + latLng);
 
         return url.toString();
-
     }
 
     @Override
@@ -81,6 +82,7 @@ public abstract class BaseFragment extends Fragment {
     private void loadData() {
         SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
         mRadius = sharedPreferences.getInt("RadiusSetting", 50);
+        getMyPlace();
     }
 
     private void getLocation() {

@@ -67,8 +67,6 @@ public class RestaurantActivity extends AppCompatActivity {
         getPlaceDetails();
         setUpRecyclerView();
         initView();
-        setUpListener();
-
     }
 
     private void initView() {
@@ -76,6 +74,11 @@ public class RestaurantActivity extends AppCompatActivity {
         mRestaurantName = findViewById(R.id.restaurant_activity_name);
         mRestaurantLocation = findViewById(R.id.restaurant_activity_location);
         mRestaurantPicture = findViewById(R.id.restaurant_activity_picture);
+        mCallButton = findViewById(R.id.restaurant_call);
+        mLikeButton = findViewById(R.id.restaurant_like);
+        mWebsiteButton = findViewById(R.id.restaurant_website);
+        mLunchButton = findViewById(R.id.add_lunch_button);
+        setUpListener();
     }
 
     private void setUpRecyclerView() {
@@ -125,10 +128,6 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     private void setUpListener() {
-        mCallButton = findViewById(R.id.restaurant_call);
-        mLikeButton = findViewById(R.id.restaurant_like);
-        mWebsiteButton = findViewById(R.id.restaurant_website);
-        mLunchButton = findViewById(R.id.add_lunch_button);
 
         mCallButton.setOnClickListener(v -> {
 
@@ -151,20 +150,17 @@ public class RestaurantActivity extends AppCompatActivity {
             Log.d("CallBtn", "NoPhoneNumber");
         });
 
-        mLikeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mRestaurantLike) {
-                    updateLikeButton();
-                    UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), mPlaceId, false);
+        mLikeButton.setOnClickListener(v -> {
+            if (mRestaurantLike) {
+                updateLikeButton();
+                UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), mPlaceId, false);
 
-                    Log.d("LikeBtn", "Remove like");
-                } else {
-                    updateLikeButton();
-                    UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), mPlaceId, true);
+                Log.d("LikeBtn", "Remove like");
+            } else {
+                updateLikeButton();
+                UserHelper.updateRestaurantLike(UserHelper.getCurrentUser().getUid(), mPlaceId, true);
 
-                    Log.d("LikeBtn", "Add like");
-                }
+                Log.d("LikeBtn", "Add like");
             }
         });
 
@@ -263,7 +259,7 @@ public class RestaurantActivity extends AppCompatActivity {
         url.append(mPlaceId);
         url.append("&key=");
         url.append(BuildConfig.PLACE_API_KEY);
-        
+
         Log.d("getUrlDetails", url.toString());
         return url.toString();
     }

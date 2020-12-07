@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">Go4Lunch</string>
+
+    <!-- RESTAURANT ITEM FRAGMENT RESOURCES -->
+    <string name="restaurant_name">Nom du restaurant</string>
+    <string name="restaurant_location">Adresse du restaurant</string>
+    <string name="restaurant_schedule">ouvert jusqu\'a</string>
+    <string name="user_distance">000</string>
+    <string name="workmate_number">(0)</string>
+    <string name="restaurant_call">APPEL</string>
+    <string name="restaurant_like">J\'AIME</string>
+    <string name="restaurant_website">SITE WEB</string>
+
+    <!-- RESTAURANT ITEM FRAGMENT RESOURCES -->
+    <string name="workmate_select_lunch">a choisis un déjeuner</string>
+    <string name="workmate_not_select_lunch">n\'a pas encore choisis</string>
+
+    <!-- TOOLBAR ITEM RESOURCES -->
+    <string name="search">Recherche</string>
+    <string name="search_view_hint">Rechercher un restaurant</string>
+
+    <!-- NAVIGATION MENU RESOURCES -->
+    <string name="map_title">Map</string>
+    <string name="restaurant_list_title">List View</string>
+    <string name="workmates_title">Collègues</string>
+
+    <!-- DRAWER MENU RESOURCES -->
+    <string name="lunch_text">VOTRE DEJEUNER</string>
+    <string name="settings_text">PARAMÈTRE</string>
+    <string name="logout_text">DÉCONNEXION</string>
+    <string name="user_name_drawer">Nom d\'utilisateur</string>
+    <string name="user_mail_drawer">usermail@gmail.com</string>
+
+    <!-- NAVIGATION DRAWER RESOURCES -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- RESTAURANT ACTIVITY RESOURCES -->
+    <string name="call_btn_unavailable">Numéro de téléphone indisponible</string>
+    <string name="website_btn_unavailable">Site web indisponible</string>
+    <string name="select_lunch_btn">Déjeuner séléctionné</string>
+    <string name="remove_lunch_btn">Déjeuner supprimé</string>
+
+    <!-- SETTINGS MENU RESOURCES -->
+    <string name="notifications_setting">Notifications:</string>
+    <string name="distance_setting">Distance from your location:</string>
+    <string name="remove_setting">Supprimer votre compte</string>
+    <string name="delete_account_btn">Supprimer</string>
+    <string name="distance_txt">1 km</string>
+    <string name="distance_settings_activity_txt"> km</string>
+    <string name="delete_account_dialog_warning">Attention !</string>
+    <string name="delete_account_dialog_message">Êtes-vous sur de vouloir supprimer votre compte ?</string>
+    <string name="delete_account_dialog_yes_btn">Oui</string>
+    <string name="delete_account_dialog_no_btn">Non</string>
+
+    <!-- FACEBOOK RESOURCES -->
+    <string name="facebook_app_id">278485476780989</string>
+    <string name="fb_login_protocol_scheme">fb278485476780989</string>
+
+    <!-- ERROR RESOURCES -->
+    <string name="error_unknown">Une erreur inconnu s\'est produit</string>
+    <string name="error_authentication_canceled">Authentication annulé</string>
+    <string name="error_no_internet">Aucune connexion internet</string>
+
+    <!-- GOOGLE RESOURCES -->
+    <string name="title_activity_maps">Map</string>
+
+</resources>
