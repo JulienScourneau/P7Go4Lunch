@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.go4lunch.BuildConfig;
 import com.example.go4lunch.Models.NearbySearch.MyPlaces;
-import com.example.go4lunch.R;
 import com.example.go4lunch.ViewModel.PlacesViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;

@@ -54,13 +54,13 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
         userText.append(" ");
 
         if (currentUser.getUserRestaurantId() != null) {
-            userText.append(R.string.workmate_select_lunch);
+            userText.append(holder.itemView.getContext().getString(R.string.workmate_select_lunch));
             holder.mUserText.setHint("");
-            holder.mUserText.setText(userText);
+            holder.mUserText.setText(userText.toString());
             holder.itemView.setClickable(true);
-            Log.d("workmateAdapter","UserName: " + currentUser.getUserName());
+            Log.d("workmateAdapter", "UserName: " + currentUser.getUserName());
         } else {
-            userText.append(R.string.workmate_not_select_lunch);
+            userText.append(holder.itemView.getContext().getString(R.string.workmate_not_select_lunch));
             holder.mUserText.setText("");
             holder.mUserText.setHint(userText.toString());
             holder.itemView.setClickable(false);
