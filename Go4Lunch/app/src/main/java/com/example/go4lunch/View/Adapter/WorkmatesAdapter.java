@@ -80,7 +80,6 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.Work
                     .apply(RequestOptions.circleCropTransform())
                     .into(holder.mUserPicture);
         }
-
     }
 
     @Override

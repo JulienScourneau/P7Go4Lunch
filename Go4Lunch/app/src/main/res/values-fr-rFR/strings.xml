@@ -12,8 +12,8 @@
     <string name="restaurant_website">SITE WEB</string>
 
     <!-- RESTAURANT ITEM FRAGMENT RESOURCES -->
-    <string name="workmate_select_lunch">a choisis un déjeuner</string>
-    <string name="workmate_not_select_lunch">n\'a pas encore choisis</string>
+    <string name="workmate_select_lunch">a choisi un déjeuner</string>
+    <string name="workmate_not_select_lunch">n\'a pas encore choisi</string>
 
     <!-- TOOLBAR ITEM RESOURCES -->
     <string name="search">Recherche</string>
@@ -21,7 +21,7 @@
 
     <!-- NAVIGATION MENU RESOURCES -->
     <string name="map_title">Map</string>
-    <string name="restaurant_list_title">List View</string>
+    <string name="restaurant_list_title">Liste de restaurant</string>
     <string name="workmates_title">Collègues</string>
 
     <!-- DRAWER MENU RESOURCES -->
@@ -43,7 +43,7 @@
 
     <!-- SETTINGS MENU RESOURCES -->
     <string name="notifications_setting">Notifications:</string>
-    <string name="distance_setting">Distance from your location:</string>
+    <string name="distance_setting">Distance de recherche</string>
     <string name="remove_setting">Supprimer votre compte</string>
     <string name="delete_account_btn">Supprimer</string>
     <string name="distance_txt">1 km</string>

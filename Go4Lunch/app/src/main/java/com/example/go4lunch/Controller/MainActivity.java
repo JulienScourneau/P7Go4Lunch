@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView mUserPicture;
     private TextView mUserName;
     private TextView mUserMail;
+    private Fragment selectedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initView() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapViewFragment()).commit();
+        selectedFragment = new MapViewFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
         mBottomNav = findViewById(R.id.bottom_navigation_view);
         mBottomNav.setOnNavigationItemSelectedListener(navListener);
         mToolbar = findViewById(R.id.toolbar);
@@ -113,7 +115,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.d("searchView", "Text: " + newText);
+                if (selectedFragment != null && newText.length() >= 3) {
+                    BaseFragment fragment = (BaseFragment) selectedFragment;
+                    fragment.getSearchPlace(newText);
+                    Log.d("searchViewIfCondition", "Text: " + newText);
+                }
                 return false;
             }
         });
@@ -136,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             startActivity(restaurantIntent);
                         }
                     }
-
                 });
                 break;
             case R.id.drawer_settings_icon:
@@ -158,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
-                Fragment selectedFragment = new MapViewFragment();
+                selectedFragment = new MapViewFragment();
                 switch (item.getItemId()) {
                     case R.id.nav_map:
                         selectedFragment = new MapViewFragment();

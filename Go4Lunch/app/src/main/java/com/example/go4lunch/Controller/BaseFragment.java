@@ -8,7 +8,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,17 +18,23 @@ import com.example.go4lunch.ViewModel.PlacesViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.Objects;
+
+import static android.content.ContentValues.TAG;
 
 public abstract class BaseFragment extends Fragment {
 
     private PlacesViewModel viewModel;
     private int mRadius = 50;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+    private PlacesClient placesClient;
     protected LatLng latLng;
 
     @Override
@@ -37,7 +42,11 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getActivity()));
-        Places.initialize(Objects.requireNonNull(getContext()), BuildConfig.PLACE_API_KEY);
+        if (!Places.isInitialized()) {
+            Places.initialize(Objects.requireNonNull(getActivity().getApplicationContext()), BuildConfig.PLACE_API_KEY);
+
+        }
+        placesClient = Places.createClient(getActivity().getApplicationContext());
         configureViewModel();
         getLocation();
     }
@@ -54,16 +63,20 @@ public abstract class BaseFragment extends Fragment {
     public abstract void getNearbyPlaces(MyPlaces myPlaces);
 
     public String getUrl() {
+
         StringBuilder url = new StringBuilder();
-        url.append("nearbysearch/json?");
-        url.append("location=");
-        url.append(latLng.latitude);
-        url.append(",");
-        url.append(latLng.longitude);
-        url.append("&radius=");
-        url.append(mRadius);
-        url.append("&types=restaurant&sensor=true&key=");
-        url.append(BuildConfig.PLACE_API_KEY);
+        if (latLng != null) {
+            url.append("nearbysearch/json?");
+            url.append("location=");
+            url.append(latLng.latitude);
+            url.append(",");
+            url.append(latLng.longitude);
+            url.append("&radius=");
+            url.append(mRadius);
+            url.append("&types=restaurant&sensor=true&key=");
+            url.append(BuildConfig.PLACE_API_KEY);
+        }
+
 
         Log.d("getUrlPlace", url.toString());
 
@@ -75,13 +88,14 @@ public abstract class BaseFragment extends Fragment {
         super.onResume();
         Log.d("OnResume", "Enter on resume method");
 
-        //loadData();
+        loadData();
     }
 
     private void loadData() {
         SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
         mRadius = sharedPreferences.getInt("RadiusSetting", 50);
         getMyPlace();
+        Log.d("loadSharedPref", "Radius: " + mRadius);
     }
 
     private void getLocation() {
@@ -91,16 +105,39 @@ public abstract class BaseFragment extends Fragment {
             return;
         }
 
-        mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                Location location = task.getResult();
-                if (location != null) {
-                    latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    Log.d("Location", "LatLong" + latLng);
-                    getMyPlace();
-                }
+        mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(task -> {
+            Location location = task.getResult();
+            if (location != null) {
+                latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                Log.d("Location", "LatLong" + latLng);
+                getMyPlace();
             }
         });
+    }
+
+    public void getSearchPlace(String search) {
+        if (!Places.isInitialized()) {
+            Places.initialize(Objects.requireNonNull(getActivity().getApplicationContext()), BuildConfig.PLACE_API_KEY);
+            Log.d("getSearchPlace", "Initialise Place");
+        }
+
+        AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
+        Log.d("getSearchPlace", "Get Token");
+
+        FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                .setCountries("FR", "BE")
+                .setSessionToken(token)
+                .setQuery(search)
+                .build();
+
+        placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
+            for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
+
+                Log.i(TAG, prediction.getPlaceId());
+                Log.i(TAG, prediction.getPrimaryText(null).toString());
+            }
+        });
+
+        Log.d("getSearchPlace", "Search: " + search);
     }
 }
