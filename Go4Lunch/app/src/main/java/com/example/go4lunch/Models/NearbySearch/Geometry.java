@@ -8,17 +8,17 @@ public class Geometry {
 
     @SerializedName("location")
     @Expose
-    private Location location;
+    private Locations locations;
     @SerializedName("viewport")
     @Expose
     private Viewport viewport;
 
-    public Location getLocation() {
-        return location;
+    public Locations getLocations() {
+        return locations;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocations(Locations locations) {
+        this.locations = locations;
     }
 
     public Viewport getViewport() {

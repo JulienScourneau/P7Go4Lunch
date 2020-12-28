@@ -21,9 +21,7 @@ import com.example.go4lunch.Models.User;
 import com.example.go4lunch.Network.UserHelper;
 import com.example.go4lunch.R;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -77,7 +75,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.mRestaurantLocation.setText(currentRestaurant.getVicinity());
         holder.mRestaurantSchedule.setText(currentRestaurant.getName());
 
-        Location.distanceBetween(mCurrentPosition.latitude, mCurrentPosition.longitude, currentRestaurant.getGeometry().getLocation().getLat(), currentRestaurant.getGeometry().getLocation().getLng(), result);
+        Location.distanceBetween(mCurrentPosition.latitude, mCurrentPosition.longitude, currentRestaurant.getGeometry().getLocations().getLat(), currentRestaurant.getGeometry().getLocations().getLng(), result);
         int distance = (int) result[0];
         String currentDistance = distance + "m";
         holder.mRestaurantDistance.setText(currentDistance);

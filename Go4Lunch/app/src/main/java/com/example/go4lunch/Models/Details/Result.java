@@ -2,6 +2,7 @@ package com.example.go4lunch.Models.Details;
 
 import java.util.List;
 
+import com.example.go4lunch.Models.NearbySearch.Photo;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -39,7 +40,7 @@ public class Result {
     private OpeningHours openingHours;
     @SerializedName("photos")
     @Expose
-    private List<Photo> photos = null;
+    private List<com.example.go4lunch.Models.NearbySearch.Photo> photos = null;
     @SerializedName("place_id")
     @Expose
     private String placeId;
@@ -157,11 +158,11 @@ public class Result {
         this.openingHours = openingHours;
     }
 
-    public List<Photo> getPhotos() {
+    public List<com.example.go4lunch.Models.NearbySearch.Photo> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<Photo> photos) {
+    public void setPhotos(List<com.example.go4lunch.Models.NearbySearch.Photo> photos) {
         this.photos = photos;
     }
 

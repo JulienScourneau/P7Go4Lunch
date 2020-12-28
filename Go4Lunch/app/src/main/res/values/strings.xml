@@ -43,7 +43,7 @@
 
     <!-- SETTINGS MENU RESOURCES -->
     <string name="notifications_setting">Notifications:</string>
-    <string name="distance_setting">Distance from your location:</string>
+    <string name="distance_setting">Distance from your locations:</string>
     <string name="remove_setting">Remove your account</string>
     <string name="delete_account_btn">Delete</string>
     <string name="distance_txt">1 km</string>

@@ -31,9 +31,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -87,10 +85,10 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
     public void getNearbyPlaces(MyPlaces myPlaces) {
         myPlaceList.clear();
         myPlaceList.addAll(myPlaces.getResults());
-        placeMarker();
+        placeMarker(myPlaceList);
     }
 
-    private void placeMarker() {
+    private void placeMarker(ArrayList<Result> placeList) {
 
         if (mMap != null) {
             mMap.clear();
@@ -98,11 +96,11 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
             mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
         }
 
-        for (int i = 0; i < myPlaceList.size(); i++) {
+        for (int i = 0; i < placeList.size(); i++) {
             MarkerOptions markerOptions = new MarkerOptions();
-            Result actualPlace = myPlaceList.get(i);
-            double lat = actualPlace.getGeometry().getLocation().getLat();
-            double lng = actualPlace.getGeometry().getLocation().getLng();
+            Result actualPlace = placeList.get(i);
+            double lat = actualPlace.getGeometry().getLocations().getLat();
+            double lng = actualPlace.getGeometry().getLocations().getLng();
             LatLng latLng = new LatLng(lat, lng);
             String placeName = actualPlace.getName();
             markerOptions.position(latLng);
@@ -135,7 +133,6 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_CODE);
-
                             }
                         }).create().show();
 

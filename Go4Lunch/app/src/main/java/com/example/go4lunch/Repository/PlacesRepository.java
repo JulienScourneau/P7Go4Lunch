@@ -15,7 +15,7 @@ import retrofit2.Response;
 
 public class PlacesRepository {
     private MutableLiveData<MyPlaces> mNearbyPlaceMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<PlaceDetails> mDetailsPlaceMutableLiveData = new MutableLiveData<>();
+
 
     public MutableLiveData<MyPlaces> getNearbyPlaceMutableLiveData(String url) {
         GoogleAPIService apiService = RetrofitInstance.getApiService();
@@ -40,6 +40,7 @@ public class PlacesRepository {
 
     public MutableLiveData<PlaceDetails> getDetailsMutableLiveData(String url) {
         GoogleAPIService apiService = RetrofitInstance.getApiService();
+        MutableLiveData<PlaceDetails> mDetailsPlaceMutableLiveData = new MutableLiveData<>();
 
         Call<PlaceDetails> call = apiService.getPlacesDetails(url);
         call.enqueue(new Callback<PlaceDetails>() {
