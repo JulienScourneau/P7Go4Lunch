@@ -25,7 +25,7 @@ public class Result {
     private String formattedPhoneNumber;
     @SerializedName("geometry")
     @Expose
-    private Geometry geometry;
+    private com.example.go4lunch.Models.NearbySearch.Geometry geometry;
     @SerializedName("icon")
     @Expose
     private String icon;
@@ -118,11 +118,11 @@ public class Result {
         this.formattedPhoneNumber = formattedPhoneNumber;
     }
 
-    public Geometry getGeometry() {
+    public com.example.go4lunch.Models.NearbySearch.Geometry getGeometry() {
         return geometry;
     }
 
-    public void setGeometry(Geometry geometry) {
+    public void setGeometry(com.example.go4lunch.Models.NearbySearch.Geometry geometry) {
         this.geometry = geometry;
     }
 

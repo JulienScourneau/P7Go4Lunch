@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.go4lunch.Controller.BaseFragment;
 import com.example.go4lunch.Controller.RestaurantActivity;
+import com.example.go4lunch.Models.Details.PlaceDetails;
 import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.Models.NearbySearch.Result;
 import com.example.go4lunch.Models.User;
@@ -85,7 +86,22 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
     public void getNearbyPlaces(MyPlaces myPlaces) {
         myPlaceList.clear();
         myPlaceList.addAll(myPlaces.getResults());
-        placeMarker(myPlaceList);
+        getPlaceToDisplay();
+    }
+
+    public void getPlacesDetails(PlaceDetails placeDetails) {
+        mResultPlaceList.add(changeDetailsResult(placeDetails));
+        getPlaceToDisplay();
+    }
+
+    public void getPlaceToDisplay(){
+        if (mResultPlaceList.isEmpty()) {
+            placeMarker(myPlaceList);
+            Log.d("getPlaceToDisplay", "get nearby place");
+        } else {
+            placeMarker(mResultPlaceList);
+            Log.d("getPlaceToDisplay", "get search place");
+        }
     }
 
     private void placeMarker(ArrayList<Result> placeList) {

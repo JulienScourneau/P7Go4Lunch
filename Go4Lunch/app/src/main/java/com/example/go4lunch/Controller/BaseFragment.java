@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,25 +14,19 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.go4lunch.BuildConfig;
 import com.example.go4lunch.Models.Details.PlaceDetails;
-import com.example.go4lunch.Models.NearbySearch.Geometry;
-import com.example.go4lunch.Models.NearbySearch.Locations;
 import com.example.go4lunch.Models.NearbySearch.MyPlaces;
-import com.example.go4lunch.Models.NearbySearch.Photo;
 import com.example.go4lunch.Models.NearbySearch.Result;
 import com.example.go4lunch.ViewModel.PlacesViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
-import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public abstract class BaseFragment extends Fragment {
@@ -43,9 +36,7 @@ public abstract class BaseFragment extends Fragment {
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private PlacesClient placesClient;
     protected LatLng latLng;
-    protected ArrayList<String> searchPlaceId = new ArrayList<>();
-    private ArrayList<PlaceDetails> mSearchPlaceList = new ArrayList<>();
-    private ArrayList<Result> mResultPlaceList = new ArrayList<>();
+    protected ArrayList<Result> mResultPlaceList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,15 +62,12 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void getSearchPlace(String searchId) {
-        Log.d("getSearchDetails","SearchPlace");
+        mResultPlaceList.clear();
         this.viewModel.getDetailPlaces(getSearchPlaceUrl(searchId)).observe(this, this::getPlacesDetails);
 
     }
 
-    public void getPlacesDetails(PlaceDetails placeDetails) {
-        mSearchPlaceList.add(placeDetails);
-        Log.d("PlacesDetailsList", "List size: " + mSearchPlaceList.size() + " place name: " + placeDetails.getResult().getName());
-    }
+    public abstract void getPlacesDetails(PlaceDetails placeDetails);
 
     public abstract void getNearbyPlaces(MyPlaces myPlaces);
 
@@ -137,7 +125,7 @@ public abstract class BaseFragment extends Fragment {
     public void getSearchPlaceWithAutoComplete(String search) {
         if (!Places.isInitialized()) {
             Places.initialize(Objects.requireNonNull(Objects.requireNonNull(getActivity()).getApplicationContext()), BuildConfig.PLACE_API_KEY);
-            Log.d("getSearchPlace", "Initialise Place");
+            Log.d("Place", "Initialise Place");
         }
 
         AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
@@ -149,14 +137,16 @@ public abstract class BaseFragment extends Fragment {
                 .setQuery(search)
                 .build();
 
+        //mResultPlaceList.clear();
         placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
             Log.d("getSearchPlace", "searchPlaceId");
             for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
                 getSearchPlace(prediction.getPlaceId());
-            }
-            Log.d("getSearchPlace", "searchPlaceId in autocomplete: " + searchPlaceId.size());
 
+                Log.d("getSearchPlace", "searchPlaceId in autocomplete: " + prediction.getPlaceId() + " name: " + prediction.getPrimaryText(null));
+            }
         });
+        Log.d("getSearchPlace", "if search is empty");
     }
 
 
@@ -171,24 +161,15 @@ public abstract class BaseFragment extends Fragment {
         return url.toString();
     }
 
-    private void changeDetailsResult(ArrayList<PlaceDetails> searchPlaceList) {
+    protected Result changeDetailsResult(PlaceDetails searchPlace) {
         Result placeResult = new Result();
-        for (int i = 0; i < searchPlaceList.size(); i++) {
-            PlaceDetails placeDetails = searchPlaceList.get(i);
-            Geometry geometry = new Geometry();
-            Locations locations = new Locations();
+        placeResult.setPlaceId(searchPlace.getResult().getPlaceId());
+        placeResult.setName(searchPlace.getResult().getName());
+        placeResult.setPhotos(searchPlace.getResult().getPhotos());
+        placeResult.setVicinity(searchPlace.getResult().getVicinity());
+        placeResult.setGeometry(searchPlace.getResult().getGeometry());
+        placeResult.setRating(searchPlace.getResult().getRating());
 
-            locations.setLat(placeDetails.getResult().getGeometry().getLocation().getLat());
-            locations.setLng(placeDetails.getResult().getGeometry().getLocation().getLng());
-            geometry.setLocations(locations);
-
-            placeResult.setPlaceId(placeDetails.getResult().getPlaceId());
-            placeResult.setName(placeDetails.getResult().getName());
-            placeResult.setPhotos(placeDetails.getResult().getPhotos());
-            placeResult.setVicinity(placeDetails.getResult().getVicinity());
-            placeResult.setGeometry(geometry);
-
-            mResultPlaceList.add(placeResult);
-        }
+        return placeResult;
     }
 }

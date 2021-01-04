@@ -80,8 +80,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         String currentDistance = distance + "m";
         holder.mRestaurantDistance.setText(currentDistance);
 
-        float mRating = (float) (currentRestaurant.getRating() / 5) * 3;
-        holder.mRestaurantRatingBar.setRating(mRating);
+        if (currentRestaurant.getRating() != null) {
+            float mRating = (float) (currentRestaurant.getRating() / 5) * 3;
+            holder.mRestaurantRatingBar.setRating(mRating);
+        }
 
         if (currentRestaurant.getPhotos() != null && currentRestaurant.getPhotos().size() > 0) {
             Glide.with(holder.mRestaurantPictures.getContext())

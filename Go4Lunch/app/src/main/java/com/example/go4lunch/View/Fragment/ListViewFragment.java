@@ -39,11 +39,24 @@ public class ListViewFragment extends BaseFragment {
     public void getNearbyPlaces(MyPlaces myPlaces) {
         myPlaceList.clear();
         myPlaceList.addAll(myPlaces.getResults());
-        updatePlaceList();
+        getPlaceToDisplay();
     }
 
-    private void updatePlaceList() {
-        restaurantAdapter.updatePlace(myPlaceList, latLng);
+    public void getPlacesDetails(PlaceDetails placeDetails) {
+        mResultPlaceList.add(changeDetailsResult(placeDetails));
+        getPlaceToDisplay();
+    }
+
+    private void getPlaceToDisplay() {
+        if (mResultPlaceList.isEmpty()) {
+            updatePlaceList(myPlaceList);
+        } else {
+            updatePlaceList(mResultPlaceList);
+        }
+    }
+
+    private void updatePlaceList(ArrayList<Result> placeList) {
+        restaurantAdapter.updatePlace(placeList, latLng);
     }
 
     private void setUpRecyclerView() {

@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
+
         searchView.setQueryHint(getString(R.string.search_view_hint));
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     fragment.getSearchPlaceWithAutoComplete(newText);
                     Log.d("searchViewIfCondition", "Text: " + newText);
                 }
+                Log.d("searchViewIfCondition", "Text: " + newText);
                 return false;
             }
         });
@@ -175,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         selectedFragment = new WorkmatesFragment();
                         break;
                 }
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                 return true;
             };
