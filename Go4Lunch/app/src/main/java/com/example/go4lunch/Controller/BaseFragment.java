@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
@@ -35,8 +36,9 @@ public abstract class BaseFragment extends Fragment {
     private int mRadius = 50;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private PlacesClient placesClient;
-    protected LatLng latLng;
+    protected LatLng location;
     protected ArrayList<Result> mResultPlaceList = new ArrayList<>();
+    protected ArrayList<Result> myPlaceList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,19 +69,26 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-    public abstract void getPlacesDetails(PlaceDetails placeDetails);
+    private void getPlacesDetails(PlaceDetails placeDetails) {
+        mResultPlaceList.add(changeDetailsResult(placeDetails));
+        getPlaceToDisplay();
+    }
 
-    public abstract void getNearbyPlaces(MyPlaces myPlaces);
+    public void getNearbyPlaces(MyPlaces myPlaces) {
+        myPlaceList.clear();
+        myPlaceList.addAll(myPlaces.getResults());
+        getPlaceToDisplay();
+    }
 
     public String getUrl() {
         StringBuilder url = new StringBuilder();
 
-        if (latLng != null) {
+        if (location != null) {
             url.append("nearbysearch/json?");
             url.append("location=");
-            url.append(latLng.latitude);
+            url.append(location.latitude);
             url.append(",");
-            url.append(latLng.longitude);
+            url.append(location.longitude);
             url.append("&radius=");
             url.append(mRadius);
             url.append("&types=restaurant&sensor=true&key=");
@@ -115,8 +124,8 @@ public abstract class BaseFragment extends Fragment {
         mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(task -> {
             Location location = task.getResult();
             if (location != null) {
-                latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                Log.d("Location", "LatLong" + latLng);
+                this.location = new LatLng(location.getLatitude(), location.getLongitude());
+                Log.d("Location", "LatLong" + this.location);
                 getMyPlace();
             }
         });
@@ -131,13 +140,17 @@ public abstract class BaseFragment extends Fragment {
         AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
         Log.d("getSearchPlace", "Get Token");
 
+        RectangularBounds bounds = RectangularBounds.newInstance(
+                new LatLng(location.latitude - 0.01, location.longitude + 0.01),
+                new LatLng(location.latitude + 0.01, location.longitude - 0.01));
+
         FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                .setLocationBias(bounds)
                 .setCountries("FR", "BE")
                 .setSessionToken(token)
                 .setQuery(search)
                 .build();
 
-        //mResultPlaceList.clear();
         placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
             Log.d("getSearchPlace", "searchPlaceId");
             for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
@@ -172,4 +185,11 @@ public abstract class BaseFragment extends Fragment {
 
         return placeResult;
     }
+
+    public void clearSearchList() {
+        mResultPlaceList.clear();
+        getPlaceToDisplay();
+    }
+
+    public abstract void getPlaceToDisplay();
 }

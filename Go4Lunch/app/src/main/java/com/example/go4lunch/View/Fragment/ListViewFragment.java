@@ -42,12 +42,7 @@ public class ListViewFragment extends BaseFragment {
         getPlaceToDisplay();
     }
 
-    public void getPlacesDetails(PlaceDetails placeDetails) {
-        mResultPlaceList.add(changeDetailsResult(placeDetails));
-        getPlaceToDisplay();
-    }
-
-    private void getPlaceToDisplay() {
+    public void getPlaceToDisplay() {
         if (mResultPlaceList.isEmpty()) {
             updatePlaceList(myPlaceList);
         } else {
@@ -56,7 +51,7 @@ public class ListViewFragment extends BaseFragment {
     }
 
     private void updatePlaceList(ArrayList<Result> placeList) {
-        restaurantAdapter.updatePlace(placeList, latLng);
+        restaurantAdapter.updatePlace(placeList, location);
     }
 
     private void setUpRecyclerView() {

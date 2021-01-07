@@ -116,12 +116,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                BaseFragment fragment = (BaseFragment) selectedFragment;
                 if (selectedFragment != null && newText.length() >= 3) {
-                    BaseFragment fragment = (BaseFragment) selectedFragment;
                     fragment.getSearchPlaceWithAutoComplete(newText);
                     Log.d("searchViewIfCondition", "Text: " + newText);
+                } else {
+                    fragment.clearSearchList();
+                    Log.d("searchViewElseCondition", "Text: " + newText + "");
                 }
-                Log.d("searchViewIfCondition", "Text: " + newText);
                 return false;
             }
         });

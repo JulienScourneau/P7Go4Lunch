@@ -41,7 +41,6 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
 
     private static final int MY_PERMISSION_CODE = 1000;
     private GoogleMap mMap;
-    private ArrayList<Result> myPlaceList = new ArrayList<>();
     private User mWorkmate = new User();
 
     @Nullable
@@ -83,24 +82,11 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
         }
     }
 
-    public void getNearbyPlaces(MyPlaces myPlaces) {
-        myPlaceList.clear();
-        myPlaceList.addAll(myPlaces.getResults());
-        getPlaceToDisplay();
-    }
-
-    public void getPlacesDetails(PlaceDetails placeDetails) {
-        mResultPlaceList.add(changeDetailsResult(placeDetails));
-        getPlaceToDisplay();
-    }
-
-    public void getPlaceToDisplay(){
+    public void getPlaceToDisplay() {
         if (mResultPlaceList.isEmpty()) {
             placeMarker(myPlaceList);
-            Log.d("getPlaceToDisplay", "get nearby place");
         } else {
             placeMarker(mResultPlaceList);
-            Log.d("getPlaceToDisplay", "get search place");
         }
     }
 
@@ -108,7 +94,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
 
         if (mMap != null) {
             mMap.clear();
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
         }
 
