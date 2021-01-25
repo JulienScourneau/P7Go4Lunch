@@ -75,10 +75,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.mRestaurantLocation.setText(currentRestaurant.getVicinity());
         holder.mRestaurantSchedule.setText(currentRestaurant.getName());
 
-        Location.distanceBetween(mCurrentPosition.latitude, mCurrentPosition.longitude, currentRestaurant.getGeometry().getLocations().getLat(), currentRestaurant.getGeometry().getLocations().getLng(), result);
-        int distance = (int) result[0];
-        String currentDistance = distance + "m";
-        holder.mRestaurantDistance.setText(currentDistance);
+        if (mCurrentPosition != null) {
+            Location.distanceBetween(mCurrentPosition.latitude, mCurrentPosition.longitude, currentRestaurant.getGeometry().getLocations().getLat(), currentRestaurant.getGeometry().getLocations().getLng(), result);
+
+            int distance = (int) result[0];
+            String currentDistance = distance + "m";
+            holder.mRestaurantDistance.setText(currentDistance);
+        }
 
         if (currentRestaurant.getRating() != null) {
             float mRating = (float) (currentRestaurant.getRating() / 5) * 3;

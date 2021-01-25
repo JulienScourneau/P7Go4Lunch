@@ -23,7 +23,6 @@ public class ListViewFragment extends BaseFragment {
 
     private RestaurantAdapter restaurantAdapter;
     private RecyclerView mRecyclerView;
-    private ArrayList<Result> myPlaceList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -32,14 +31,7 @@ public class ListViewFragment extends BaseFragment {
         mRecyclerView = view.findViewById(R.id.restaurant_recyclerview);
 
         setUpRecyclerView();
-
         return view;
-    }
-
-    public void getNearbyPlaces(MyPlaces myPlaces) {
-        myPlaceList.clear();
-        myPlaceList.addAll(myPlaces.getResults());
-        getPlaceToDisplay();
     }
 
     public void getPlaceToDisplay() {
@@ -51,7 +43,7 @@ public class ListViewFragment extends BaseFragment {
     }
 
     private void updatePlaceList(ArrayList<Result> placeList) {
-        restaurantAdapter.updatePlace(placeList, location);
+        restaurantAdapter.updatePlace(placeList, userLocation);
     }
 
     private void setUpRecyclerView() {

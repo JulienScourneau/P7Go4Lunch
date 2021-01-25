@@ -36,7 +36,7 @@ public abstract class BaseFragment extends Fragment {
     private int mRadius = 50;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private PlacesClient placesClient;
-    protected LatLng location;
+    protected LatLng userLocation;
     protected ArrayList<Result> mResultPlaceList = new ArrayList<>();
     protected ArrayList<Result> myPlaceList = new ArrayList<>();
 
@@ -83,12 +83,12 @@ public abstract class BaseFragment extends Fragment {
     public String getUrl() {
         StringBuilder url = new StringBuilder();
 
-        if (location != null) {
+        if (userLocation != null) {
             url.append("nearbysearch/json?");
             url.append("location=");
-            url.append(location.latitude);
+            url.append(userLocation.latitude);
             url.append(",");
-            url.append(location.longitude);
+            url.append(userLocation.longitude);
             url.append("&radius=");
             url.append(mRadius);
             url.append("&types=restaurant&sensor=true&key=");
@@ -104,12 +104,12 @@ public abstract class BaseFragment extends Fragment {
         super.onResume();
         Log.d("OnResume", "Enter on resume method");
 
-        //loadData();
+        loadData();
     }
 
     private void loadData() {
-        SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
-        mRadius = sharedPreferences.getInt("RadiusSetting", 50);
+        //SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
+        //mRadius = sharedPreferences.getInt("RadiusSetting", 50);
         getMyPlace();
         Log.d("loadSharedPref", "Radius: " + mRadius);
     }
@@ -124,8 +124,8 @@ public abstract class BaseFragment extends Fragment {
         mFusedLocationProviderClient.getLastLocation().addOnCompleteListener(task -> {
             Location location = task.getResult();
             if (location != null) {
-                this.location = new LatLng(location.getLatitude(), location.getLongitude());
-                Log.d("Location", "LatLong" + this.location);
+                this.userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                Log.d("Location", "LatLong" + this.userLocation);
                 getMyPlace();
             }
         });
@@ -141,11 +141,12 @@ public abstract class BaseFragment extends Fragment {
         Log.d("getSearchPlace", "Get Token");
 
         RectangularBounds bounds = RectangularBounds.newInstance(
-                new LatLng(location.latitude - 0.01, location.longitude + 0.01),
-                new LatLng(location.latitude + 0.01, location.longitude - 0.01));
+                new LatLng(userLocation.latitude - 0.01, userLocation.longitude - 0.01),
+                new LatLng(userLocation.latitude + 0.01, userLocation.longitude + 0.01));
+
 
         FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
-                .setLocationBias(bounds)
+                .setLocationRestriction(bounds)
                 .setCountries("FR", "BE")
                 .setSessionToken(token)
                 .setQuery(search)

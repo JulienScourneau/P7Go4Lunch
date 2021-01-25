@@ -28,6 +28,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -57,6 +58,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView mUserPicture;
     private TextView mUserName;
     private TextView mUserMail;
+    private MenuItem searchItem;
+    private SearchView searchView;
+    private String search;
+    private BaseFragment fragment;
+    private FragmentManager fm = getSupportFragmentManager();
+    private final Fragment mapFragment = new MapViewFragment();
+    private final Fragment viewFragment = new ListViewFragment();
+    private final Fragment workmatesFragment = new WorkmatesFragment();
     private Fragment selectedFragment;
 
     @Override
@@ -69,8 +78,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initView() {
-        selectedFragment = new MapViewFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
         mBottomNav = findViewById(R.id.bottom_navigation_view);
         mBottomNav.setOnNavigationItemSelectedListener(navListener);
         mToolbar = findViewById(R.id.toolbar);
@@ -85,6 +92,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mUserName = headerLayout.findViewById(R.id.user_name_drawer);
         mUserMail = headerLayout.findViewById(R.id.user_mail_drawer);
         mUserPicture = headerLayout.findViewById(R.id.user_picture_drawer);
+
+        selectedFragment = mapFragment;
+        fm.beginTransaction().add(R.id.fragment_container, workmatesFragment, "3").hide(workmatesFragment).commit();
+        fm.beginTransaction().add(R.id.fragment_container, viewFragment, "2").hide(viewFragment).commit();
+        fm.beginTransaction().add(R.id.fragment_container, mapFragment, "1").commit();
 
     }
 
@@ -102,9 +114,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-
+        searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) searchItem.getActionView();
 
         searchView.setQueryHint(getString(R.string.search_view_hint));
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -116,8 +127,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                BaseFragment fragment = (BaseFragment) selectedFragment;
+                search = newText;
+                fragment = (BaseFragment) selectedFragment;
                 if (selectedFragment != null && newText.length() >= 3) {
+
                     fragment.getSearchPlaceWithAutoComplete(newText);
                     Log.d("searchViewIfCondition", "Text: " + newText);
                 } else {
@@ -167,20 +180,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
-                selectedFragment = new MapViewFragment();
+
                 switch (item.getItemId()) {
                     case R.id.nav_map:
-                        selectedFragment = new MapViewFragment();
+
+                        fm.beginTransaction().hide(selectedFragment).show(mapFragment).commit();
+                        selectedFragment = mapFragment;
+                        fragment.clearSearchList();
+                        if (search != null && search.length() >= 3) {
+                            fragment = (BaseFragment) selectedFragment;
+                            fragment.getSearchPlaceWithAutoComplete(search);
+                            Log.d("mapFragment", "get IF conditions");
+                        }
+                        searchItem.setVisible(true);
                         break;
                     case R.id.nav_restaurant_list:
-                        selectedFragment = new ListViewFragment();
+
+                        fm.beginTransaction().hide(selectedFragment).show(viewFragment).commit();
+                        selectedFragment = viewFragment;
+                        fragment.clearSearchList();
+                        if (search != null && search.length() >= 3) {
+                            fragment = (BaseFragment) selectedFragment;
+                            fragment.getSearchPlaceWithAutoComplete(search);
+                            Log.d("mapFragment", "get IF conditions");
+                        }
+                        searchItem.setVisible(true);
                         break;
+
                     case R.id.nav_workmates_list:
-                        selectedFragment = new WorkmatesFragment();
+                        fm.beginTransaction().hide(selectedFragment).show(workmatesFragment).commit();
+                        searchItem.collapseActionView();
+                        searchItem.setVisible(false);
+                        selectedFragment = workmatesFragment;
                         break;
                 }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                 return true;
             };
 

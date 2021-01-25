@@ -94,7 +94,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
 
         if (mMap != null) {
             mMap.clear();
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
         }
 
