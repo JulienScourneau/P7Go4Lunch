@@ -183,6 +183,7 @@ public abstract class BaseFragment extends Fragment {
         placeResult.setVicinity(searchPlace.getResult().getVicinity());
         placeResult.setGeometry(searchPlace.getResult().getGeometry());
         placeResult.setRating(searchPlace.getResult().getRating());
+        placeResult.setOpeningHours(searchPlace.getResult().getOpeningHours());
 
         return placeResult;
     }

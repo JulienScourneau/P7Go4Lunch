@@ -73,7 +73,16 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         holder.mRestaurantName.setText(currentRestaurant.getName());
         holder.mRestaurantLocation.setText(currentRestaurant.getVicinity());
-        holder.mRestaurantSchedule.setText(currentRestaurant.getName());
+
+        holder.mRestaurantSchedule.setText("");
+        if (currentRestaurant.getOpeningHours() != null) {
+            if (currentRestaurant.getOpeningHours().getOpenNow()) {
+                holder.mRestaurantSchedule.setText(R.string.restaurant_opening_open);
+            } else {
+                holder.mRestaurantSchedule.setText(R.string.restaurant_opening_close);
+            }
+        }
+        Log.d("openHours","restaurant: " + currentRestaurant.getOpeningHours().getOpenNow());
 
         if (mCurrentPosition != null) {
             Location.distanceBetween(mCurrentPosition.latitude, mCurrentPosition.longitude, currentRestaurant.getGeometry().getLocations().getLat(), currentRestaurant.getGeometry().getLocations().getLng(), result);
@@ -100,20 +109,27 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             int i = 0;
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                 User mWorkmate = document.toObject(User.class);
-                Log.d("userNumber", "workmate: " + mWorkmate.getUserName() + " id: " + mWorkmate.getUserRestaurantId());
+                Log.d("workmate", "workmate: " + mWorkmate.getUserName() + " id: " + mWorkmate.getUserRestaurantId());
 
                 if (mWorkmate.getUserRestaurantId() != null && mWorkmate.getUserRestaurantId().equals(currentRestaurant.getPlaceId()))
                     i++;
+
             }
+            Log.d("userNumber", "workmate number: " + i);
             if (i > 0) {
-                holder.mWorkmateNumber.setText(String.valueOf(i));
+
                 holder.mWorkmateDisplay.setVisibility(View.VISIBLE);
+                holder.mWorkmateNumber.setVisibility(View.VISIBLE);
+                holder.mWorkmateNumber.setText(String.valueOf(i));
+                Log.d("userNumber", "If conditions");
             } else {
                 holder.mWorkmateNumber.setVisibility(View.INVISIBLE);
                 holder.mWorkmateDisplay.setVisibility(View.INVISIBLE);
+                Log.d("userNumber", "Else conditions");
             }
 
         });
+
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), RestaurantActivity.class);

@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     if (currentUser != null) {
                         if (currentUser.getUserRestaurantId() == null) {
-                            Toast.makeText(getApplicationContext(), "Select your lunch", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), R.string.user_lunch_select, Toast.LENGTH_SHORT).show();
                         } else {
                             Intent restaurantIntent = new Intent(getApplicationContext(), RestaurantActivity.class);
                             restaurantIntent.putExtra("PLACE_ID", currentUser.getUserRestaurantId());
@@ -186,8 +186,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         fm.beginTransaction().hide(selectedFragment).show(mapFragment).commit();
                         selectedFragment = mapFragment;
-                        fragment.clearSearchList();
+
                         if (search != null && search.length() >= 3) {
+                            fragment.clearSearchList();
                             fragment = (BaseFragment) selectedFragment;
                             fragment.getSearchPlaceWithAutoComplete(search);
                             Log.d("mapFragment", "get IF conditions");
@@ -198,8 +199,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         fm.beginTransaction().hide(selectedFragment).show(viewFragment).commit();
                         selectedFragment = viewFragment;
-                        fragment.clearSearchList();
+
                         if (search != null && search.length() >= 3) {
+                            fragment.clearSearchList();
                             fragment = (BaseFragment) selectedFragment;
                             fragment.getSearchPlaceWithAutoComplete(search);
                             Log.d("mapFragment", "get IF conditions");

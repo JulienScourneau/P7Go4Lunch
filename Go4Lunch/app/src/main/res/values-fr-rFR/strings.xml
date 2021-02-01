@@ -10,6 +10,9 @@
     <string name="restaurant_call">APPEL</string>
     <string name="restaurant_like">J\'AIME</string>
     <string name="restaurant_website">SITE WEB</string>
+    <string name="restaurant_opening_open">Ouvert</string>
+    <string name="restaurant_opening_close">Fermé</string>
+    <string name="restaurant_opening_unavailable">Indisponible</string>
 
     <!-- RESTAURANT ITEM FRAGMENT RESOURCES -->
     <string name="workmate_select_lunch">a choisi un déjeuner</string>
@@ -30,6 +33,7 @@
     <string name="logout_text">DÉCONNEXION</string>
     <string name="user_name_drawer">Nom d\'utilisateur</string>
     <string name="user_mail_drawer">usermail@gmail.com</string>
+    <string name="user_lunch_select">Selectioner un déjeuner</string>
 
     <!-- NAVIGATION DRAWER RESOURCES -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -64,5 +68,9 @@
 
     <!-- GOOGLE RESOURCES -->
     <string name="title_activity_maps">Map</string>
+
+    <!-- NOTIFICATIONS RESOURCES -->
+    <string name="title_notifications">Votre déjeuner Go4Lunch</string>
+    <string name="body_notifications">Your lunch</string>
 
 </resources>

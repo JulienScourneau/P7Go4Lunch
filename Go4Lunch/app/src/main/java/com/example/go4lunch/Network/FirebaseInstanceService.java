@@ -54,8 +54,8 @@ public class FirebaseInstanceService extends FirebaseMessagingService {
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(title)
-                .setContentText(body)
+                .setContentTitle(getString(R.string.title_notifications))
+                .setContentText("body")
                 .setContentInfo("Info");
 
         if (notificationManager != null)
@@ -79,12 +79,18 @@ public class FirebaseInstanceService extends FirebaseMessagingService {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
 
+        StringBuilder bodyNot = new StringBuilder();
+        bodyNot.append("Votre déjeuner sera à");
+        bodyNot.append(" Resto");
+        bodyNot.append(" avec");
+        bodyNot.append(" Workmate");
+
         notificationBuilder.setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(title)
-                .setContentText(body)
+                .setContentTitle(getString(R.string.title_notifications))
+                .setContentText(bodyNot)
                 .setContentInfo("Info");
 
         if (notificationManager != null)

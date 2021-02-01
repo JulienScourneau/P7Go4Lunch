@@ -2,6 +2,8 @@ package com.example.go4lunch.Models.Details;
 
 import java.util.List;
 
+import com.example.go4lunch.Models.NearbySearch.Geometry;
+import com.example.go4lunch.Models.NearbySearch.OpeningHours;
 import com.example.go4lunch.Models.NearbySearch.Photo;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -25,7 +27,7 @@ public class Result {
     private String formattedPhoneNumber;
     @SerializedName("geometry")
     @Expose
-    private com.example.go4lunch.Models.NearbySearch.Geometry geometry;
+    private Geometry geometry;
     @SerializedName("icon")
     @Expose
     private String icon;
@@ -40,7 +42,7 @@ public class Result {
     private OpeningHours openingHours;
     @SerializedName("photos")
     @Expose
-    private List<com.example.go4lunch.Models.NearbySearch.Photo> photos = null;
+    private List<Photo> photos = null;
     @SerializedName("place_id")
     @Expose
     private String placeId;
@@ -118,11 +120,11 @@ public class Result {
         this.formattedPhoneNumber = formattedPhoneNumber;
     }
 
-    public com.example.go4lunch.Models.NearbySearch.Geometry getGeometry() {
+    public Geometry getGeometry() {
         return geometry;
     }
 
-    public void setGeometry(com.example.go4lunch.Models.NearbySearch.Geometry geometry) {
+    public void setGeometry(Geometry geometry) {
         this.geometry = geometry;
     }
 

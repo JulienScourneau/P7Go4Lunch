@@ -10,6 +10,9 @@
     <string name="restaurant_call">CALL</string>
     <string name="restaurant_like">LIKE</string>
     <string name="restaurant_website">WEBSITE</string>
+    <string name="restaurant_opening_open">Open</string>
+    <string name="restaurant_opening_close">Close</string>
+    <string name="restaurant_opening_unavailable">Unavailable</string>
 
     <!-- RESTAURANT ITEM FRAGMENT RESOURCES -->
     <string name="workmate_select_lunch"> is eating</string>
@@ -30,6 +33,7 @@
     <string name="logout_text">LOGOUT</string>
     <string name="user_name_drawer">User NAME</string>
     <string name="user_mail_drawer">usermail@gmail.com</string>
+    <string name="user_lunch_select">Select your lunch</string>
 
     <!-- NAVIGATION DRAWER RESOURCES -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -64,5 +68,9 @@
 
     <!-- GOOGLE RESOURCES -->
     <string name="title_activity_maps">Map</string>
+
+    <!-- NOTIFICATIONS RESOURCES -->
+    <string name="title_notifications">Your lunch Go4Lunch</string>
+    <string name="body_notifications">Your lunch</string>
 
 </resources>
