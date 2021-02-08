@@ -54,6 +54,10 @@ public class UserHelper {
         return UserHelper.getUsersCollection().document(uid).update("userRestaurantId", restaurantId);
     }
 
+    public static Task<Void> updateRestaurantName(String restaurantName, String uid) {
+        return  UserHelper.getUsersCollection().document(uid).update("userRestaurantName", restaurantName);
+    }
+
     public static Task<Void> updateRestaurantLike(String uid, String restaurantId, Boolean restaurantLike) {
         return UserHelper.getLikeCollection(uid).document(restaurantId).update("like",restaurantLike);
     }

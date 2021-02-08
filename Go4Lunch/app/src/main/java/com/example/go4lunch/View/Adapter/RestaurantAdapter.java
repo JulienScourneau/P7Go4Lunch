@@ -81,8 +81,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             } else {
                 holder.mRestaurantSchedule.setText(R.string.restaurant_opening_close);
             }
+            Log.d("openHours","restaurant: " + currentRestaurant.getOpeningHours().getOpenNow());
         }
-        Log.d("openHours","restaurant: " + currentRestaurant.getOpeningHours().getOpenNow());
+
 
         if (mCurrentPosition != null) {
             Location.distanceBetween(mCurrentPosition.latitude, mCurrentPosition.longitude, currentRestaurant.getGeometry().getLocations().getLat(), currentRestaurant.getGeometry().getLocations().getLng(), result);

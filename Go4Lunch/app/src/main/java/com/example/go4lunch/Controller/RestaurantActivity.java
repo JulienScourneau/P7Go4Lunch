@@ -179,11 +179,13 @@ public class RestaurantActivity extends AppCompatActivity {
             if (currentUser != null) {
                 if (currentUser.getUserRestaurantId() == null) {
                     UserHelper.updateRestaurantId(mPlaceId, currentUser.getUid());
+                    UserHelper.updateRestaurantName(placeDetails.getResult().getName(),currentUser.getUid());
                     mLunchButton.setImageResource(R.drawable.ic_baseline_remove_circle_24);
                     Toast.makeText(RestaurantActivity.this.getApplicationContext(), RestaurantActivity.this.getText(R.string.select_lunch_btn), Toast.LENGTH_SHORT).show();
                 } else {
                     mLunchButton.setImageResource(R.drawable.ic_add_icon_24dp);
                     UserHelper.updateRestaurantId(null, currentUser.getUid());
+                    UserHelper.updateRestaurantName(null,currentUser.getUid());
                     currentUser.setUserRestaurantId(null);
                     Toast.makeText(RestaurantActivity.this.getApplicationContext(), RestaurantActivity.this.getText(R.string.remove_lunch_btn), Toast.LENGTH_SHORT).show();
                 }
