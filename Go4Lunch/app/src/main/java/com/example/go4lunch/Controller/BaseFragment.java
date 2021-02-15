@@ -108,8 +108,8 @@ public abstract class BaseFragment extends Fragment {
     }
 
     private void loadData() {
-        //SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
-        //mRadius = sharedPreferences.getInt("RadiusSetting", 50);
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
+        mRadius = sharedPreferences.getInt("RadiusSetting", 500);
         getMyPlace();
         Log.d("loadSharedPref", "Radius: " + mRadius);
     }

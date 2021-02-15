@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Go4Lunch</string>
+    <string name="app_name" translatable="false">Go4Lunch</string>
 
     <!-- RESTAURANT ITEM FRAGMENT RESOURCES -->
     <string name="restaurant_name">Restaurant name</string>
@@ -50,7 +50,7 @@
     <string name="distance_setting">Distance from your locations:</string>
     <string name="remove_setting">Remove your account</string>
     <string name="delete_account_btn">Delete</string>
-    <string name="distance_txt">1 km</string>
+    <string name="distance_txt">500 m</string>
     <string name="distance_settings_activity_txt"> km</string>
     <string name="delete_account_dialog_warning">Warning !</string>
     <string name="delete_account_dialog_message">Are you sure to want delete your account ?</string>
@@ -58,8 +58,8 @@
     <string name="delete_account_dialog_no_btn">No</string>
 
     <!-- FACEBOOK RESOURCES -->
-    <string name="facebook_app_id">278485476780989</string>
-    <string name="fb_login_protocol_scheme">fb278485476780989</string>
+    <string name="facebook_app_id" translatable="false">278485476780989</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb278485476780989</string>
 
     <!-- ERROR RESOURCES -->
     <string name="error_unknown">An unknown error has occurred</string>
@@ -71,6 +71,7 @@
 
     <!-- NOTIFICATIONS RESOURCES -->
     <string name="title_notifications">Your lunch Go4Lunch</string>
-    <string name="body_notifications">Your lunch</string>
+    <string name="body_notifications">Your lunch will be at </string>
+    <string name="with_notifications"> with </string>
 
 </resources>

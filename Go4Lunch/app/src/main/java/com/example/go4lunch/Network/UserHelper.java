@@ -50,16 +50,16 @@ public class UserHelper {
         return UserHelper.getLikeCollection(uid).document(restaurantId).get();
     }
 
-    public static Task<Void> updateRestaurantId(String restaurantId, String uid) {
-        return UserHelper.getUsersCollection().document(uid).update("userRestaurantId", restaurantId);
+    public static void updateRestaurantId(String restaurantId, String uid) {
+        UserHelper.getUsersCollection().document(uid).update("userRestaurantId", restaurantId);
     }
 
-    public static Task<Void> updateRestaurantName(String restaurantName, String uid) {
-        return  UserHelper.getUsersCollection().document(uid).update("userRestaurantName", restaurantName);
+    public static void updateRestaurantName(String restaurantName, String uid) {
+        UserHelper.getUsersCollection().document(uid).update("userRestaurantName", restaurantName);
     }
 
-    public static Task<Void> updateRestaurantLike(String uid, String restaurantId, Boolean restaurantLike) {
-        return UserHelper.getLikeCollection(uid).document(restaurantId).update("like",restaurantLike);
+    public static void updateRestaurantLike(String uid, String restaurantId, Boolean restaurantLike) {
+        UserHelper.getLikeCollection(uid).document(restaurantId).update("like", restaurantLike);
     }
 
     public static void deleteUser(String uid) {
@@ -69,4 +69,9 @@ public class UserHelper {
     public static void getUserList(OnSuccessListener<QuerySnapshot> listener) {
         getUsersCollection().get().addOnSuccessListener(listener);
     }
+
+    public static void getUserRestaurantList(OnSuccessListener<QuerySnapshot> listener, String restaurantId) {
+        getUsersCollection().whereEqualTo("userRestaurantId", restaurantId).get().addOnSuccessListener(listener);
+    }
+
 }

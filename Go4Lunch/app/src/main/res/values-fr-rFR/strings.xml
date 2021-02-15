@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Go4Lunch</string>
+
 
     <!-- RESTAURANT ITEM FRAGMENT RESOURCES -->
     <string name="restaurant_name">Nom du restaurant</string>
@@ -50,16 +50,12 @@
     <string name="distance_setting">Distance de recherche</string>
     <string name="remove_setting">Supprimer votre compte</string>
     <string name="delete_account_btn">Supprimer</string>
-    <string name="distance_txt">1 km</string>
+    <string name="distance_txt">500 m</string>
     <string name="distance_settings_activity_txt"> km</string>
     <string name="delete_account_dialog_warning">Attention !</string>
     <string name="delete_account_dialog_message">Êtes-vous sur de vouloir supprimer votre compte ?</string>
     <string name="delete_account_dialog_yes_btn">Oui</string>
     <string name="delete_account_dialog_no_btn">Non</string>
-
-    <!-- FACEBOOK RESOURCES -->
-    <string name="facebook_app_id">278485476780989</string>
-    <string name="fb_login_protocol_scheme">fb278485476780989</string>
 
     <!-- ERROR RESOURCES -->
     <string name="error_unknown">Une erreur inconnu s\'est produit</string>
@@ -71,6 +67,7 @@
 
     <!-- NOTIFICATIONS RESOURCES -->
     <string name="title_notifications">Votre déjeuner Go4Lunch</string>
-    <string name="body_notifications">Your lunch</string>
+    <string name="body_notifications">Votre déjeuner sera à </string>
+    <string name="with_notifications"> avec </string>
 
 </resources>

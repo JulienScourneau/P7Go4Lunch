@@ -41,8 +41,10 @@ import com.example.go4lunch.View.Fragment.WorkmatesFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import static com.example.go4lunch.Utils.Constants.ERROR_DIALOG_REQUEST;
 import static com.example.go4lunch.Utils.Constants.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private final Fragment viewFragment = new ListViewFragment();
     private final Fragment workmatesFragment = new WorkmatesFragment();
     private Fragment selectedFragment;
+    private User currentUser = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initView();
         updateUI();
+        getWorkmateList();
+    }
+
+    private void getWorkmateList() {
+
+        UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(
+                documentSnapshot -> currentUser = documentSnapshot.toObject(User.class));
+
+        UserHelper.getUserList(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (int i = 0; i <= queryDocumentSnapshots.getDocuments().size(); i++) {
+                    queryDocumentSnapshots.getQuery();
+
+                    Log.d("document", "document: " + queryDocumentSnapshots.getDocuments().size() + " size of i: " + i);
+                }
+            }
+        });
     }
 
     private void initView() {
