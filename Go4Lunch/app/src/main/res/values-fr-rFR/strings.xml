@@ -67,7 +67,8 @@
 
     <!-- NOTIFICATIONS RESOURCES -->
     <string name="title_notifications">Votre déjeuner Go4Lunch</string>
-    <string name="body_notifications">Votre déjeuner sera à </string>
-    <string name="with_notifications"> avec </string>
+    <string name="body_notifications">Votre déjeuner sera à\u0020</string>
+    <string name="with_notifications"> \u0020avec\u0020 </string>
+    <string name="nobody_notifications">personne</string>
 
 </resources>

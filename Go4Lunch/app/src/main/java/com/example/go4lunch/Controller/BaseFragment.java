@@ -163,7 +163,6 @@ public abstract class BaseFragment extends Fragment {
         Log.d("getSearchPlace", "if search is empty");
     }
 
-
     public String getSearchPlaceUrl(String placeId) {
         StringBuilder url = new StringBuilder();
         url.append("details/json?place_id=");

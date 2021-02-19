@@ -71,8 +71,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void setUpSeekBar() {
 
-
-
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

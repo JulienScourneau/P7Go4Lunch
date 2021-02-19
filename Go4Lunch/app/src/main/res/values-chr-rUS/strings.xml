@@ -68,5 +68,6 @@
     <string name="title_notifications">Your lunch Go4Lunch</string>
     <string name="body_notifications">Your lunch will be at </string>
     <string name="with_notifications"> with </string>
+    <string name="nobody_notifications">nobody</string>
 
 </resources>

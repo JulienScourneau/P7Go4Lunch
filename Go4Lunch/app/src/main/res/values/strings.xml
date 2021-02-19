@@ -14,7 +14,7 @@
     <string name="restaurant_opening_close">Close</string>
     <string name="restaurant_opening_unavailable">Unavailable</string>
 
-    <!-- RESTAURANT ITEM FRAGMENT RESOURCES -->
+    <!-- WORKMATE ITEM FRAGMENT RESOURCES -->
     <string name="workmate_select_lunch"> is eating</string>
     <string name="workmate_not_select_lunch"> hasn\'t decide yet</string>
 
@@ -26,6 +26,9 @@
     <string name="map_title">Map View</string>
     <string name="restaurant_list_title">List View</string>
     <string name="workmates_title">Workmates</string>
+
+    <!-- SPLASHSCREEN RESOURCES -->
+    <string name="splashscreen_text" translatable="false">Find a nice restaurant and invite your co-worker for lunch!</string>
 
     <!-- DRAWER MENU RESOURCES -->
     <string name="lunch_text">YOUR LUNCH</string>
@@ -73,5 +76,6 @@
     <string name="title_notifications">Your lunch Go4Lunch</string>
     <string name="body_notifications">Your lunch will be at </string>
     <string name="with_notifications"> with </string>
+    <string name="nobody_notifications">nobody</string>
 
 </resources>

@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
@@ -14,24 +15,26 @@ import androidx.core.app.NotificationCompat;
 import com.example.go4lunch.Models.User;
 import com.example.go4lunch.R;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class FirebaseInstanceService extends FirebaseMessagingService {
     private User currentUser = null;
-    private String userListNotifications;
-    private ArrayList<User> userList = new ArrayList<>();
+    private Boolean notificationSettings = null;
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+        loadData();
         super.onMessageReceived(remoteMessage);
-        if (remoteMessage.getData().isEmpty())
-            getWorkmateList();
+        if (notificationSettings){
+            if (remoteMessage.getData().isEmpty())
+                getWorkmateList();
+        }
+
 
     }
 
@@ -59,7 +62,7 @@ public class FirebaseInstanceService extends FirebaseMessagingService {
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(getString(R.string.title_notifications))
-                .setContentText(body)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                 .setContentInfo("Info");
 
         if (notificationManager != null)
@@ -74,6 +77,8 @@ public class FirebaseInstanceService extends FirebaseMessagingService {
     }
 
     private void getWorkmateList() {
+        Log.d("getWorkmateList", "getWorkmateList");
+        StringBuilder userList = new StringBuilder();
 
         UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
             currentUser = documentSnapshot.toObject(User.class);
@@ -81,14 +86,28 @@ public class FirebaseInstanceService extends FirebaseMessagingService {
             UserHelper.getUserRestaurantList(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    Log.d("getWorkmateList", "Enter onSuccess");
                     for (int i = 0; i < queryDocumentSnapshots.getDocuments().size(); i++) {
-                        queryDocumentSnapshots.getDocuments().get(i).get("userName");
+                        Log.d("getWorkmateList", "Enter For");
+
+                        if (queryDocumentSnapshots.getDocuments().isEmpty()) {
+                            userList.append(getString(R.string.nobody_notifications));
+                        } else {
+                            if (!Objects.equals(queryDocumentSnapshots.getDocuments().get(i).get("uid"), currentUser.getUid())) {
+                                Log.d("getWorkmateList", "currentUser: " + currentUser.getUid());
+                                if (i == queryDocumentSnapshots.size() - 1) {
+                                    userList.append(queryDocumentSnapshots.getDocuments().get(i).get("userName"));
+                                } else {
+                                    userList.append(queryDocumentSnapshots.getDocuments().get(i).get("userName"));
+                                    userList.append(", ");
+                                }
+                            }
+                        }
                     }
-
-
+                    Log.d("getWorkmateList", "userList: " + userList.toString());
                     String body = getString(R.string.body_notifications) +
                             currentUser.getUserRestaurantName() +
-                            getString(R.string.with_notifications) + "userListNotifications";
+                            getString(R.string.with_notifications) + userList;
 
                     showNotification(body);
                 }
@@ -96,43 +115,10 @@ public class FirebaseInstanceService extends FirebaseMessagingService {
         });
     }
 
-    //UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
-    //    User currentUser = documentSnapshot.toObject(User.class);
+    private void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
+        notificationSettings = sharedPreferences.getBoolean("NotificationSetting",true);
 
-    //    UserHelper.getUserList(queryDocumentSnapshots -> {
-    //        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-    //            if (currentUser != null)
-    //                if (Objects.equals(document.get("userRestaurantId"), currentUser.getUserRestaurantId())) {
+    }
 
-    //                    workmateList.append(document.get("userName"));
-    //                    if (queryDocumentSnapshots.iterator().hasNext()) {
-    //                        workmateList.append(", ");
-    //                        workmateList.append(document.get("userName"));
-    //                    }
-    //                    Log.d("getUserList","userName: " + document.get("userName"));
-
-    //if (currentUser != null) {
-    //    bodyNotification.append(getString(R.string.body_notifications));
-    //    bodyNotification.append("currentUser.getUserRestaurantName()");
-    //    bodyNotification.append(getString(R.string.with_notifications));
-    //    bodyNotification.append(workmateList.toString());
-    //    Log.d("bodyNotifications", bodyNotification.toString());
-    //}
-
-
-    //UserHelper.getUserList(new OnSuccessListener<QuerySnapshot>() {
-    //    @Override
-    //    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-    //        for (int i = 0; i < queryDocumentSnapshots.getDocuments().size(); i++) {
-    //            queryDocumentSnapshots.getDocuments().get(i).toObject()
-    //            Log.d("document", "document: " + queryDocumentSnapshots.getDocuments().size() + " size of i: " + i);
-    //        }
-
-    //        String body = getString(R.string.body_notifications) +
-    //                " currentUser.getUserRestaurantName() " +
-    //                getString(R.string.with_notifications) + userList;
-    //        showNotification(body);
-    //    }
-
-    //});
 }
