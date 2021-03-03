@@ -14,8 +14,6 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.go4lunch.Models.User;
 import com.example.go4lunch.R;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -30,12 +28,10 @@ public class FirebaseInstanceService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         loadData();
         super.onMessageReceived(remoteMessage);
-        if (notificationSettings){
+        if (notificationSettings) {
             if (remoteMessage.getData().isEmpty())
                 getWorkmateList();
         }
-
-
     }
 
     private void showNotification(String body) {
@@ -83,41 +79,37 @@ public class FirebaseInstanceService extends FirebaseMessagingService {
         UserHelper.getUser(UserHelper.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
             currentUser = documentSnapshot.toObject(User.class);
 
-            UserHelper.getUserRestaurantList(new OnSuccessListener<QuerySnapshot>() {
-                @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    Log.d("getWorkmateList", "Enter onSuccess");
-                    for (int i = 0; i < queryDocumentSnapshots.getDocuments().size(); i++) {
-                        Log.d("getWorkmateList", "Enter For");
+            UserHelper.getUserRestaurantList(queryDocumentSnapshots -> {
+                for (int i = 0; i < queryDocumentSnapshots.getDocuments().size(); i++) {
 
-                        if (queryDocumentSnapshots.getDocuments().isEmpty()) {
-                            userList.append(getString(R.string.nobody_notifications));
-                        } else {
-                            if (!Objects.equals(queryDocumentSnapshots.getDocuments().get(i).get("uid"), currentUser.getUid())) {
-                                Log.d("getWorkmateList", "currentUser: " + currentUser.getUid());
-                                if (i == queryDocumentSnapshots.size() - 1) {
-                                    userList.append(queryDocumentSnapshots.getDocuments().get(i).get("userName"));
-                                } else {
-                                    userList.append(queryDocumentSnapshots.getDocuments().get(i).get("userName"));
-                                    userList.append(", ");
-                                }
+                    if (queryDocumentSnapshots.getDocuments().size() == 1) {
+                        userList.append(getString(R.string.nobody_notifications));
+
+                    } else {
+                        if (!Objects.equals(queryDocumentSnapshots.getDocuments().get(i).get("uid"), currentUser.getUid())) {
+                            Log.d("getWorkmateList", "currentUser: " + currentUser.getUid());
+                            if (i == queryDocumentSnapshots.size() - 1) {
+                                userList.append(queryDocumentSnapshots.getDocuments().get(i).get("userName"));
+                            } else {
+                                userList.append(queryDocumentSnapshots.getDocuments().get(i).get("userName"));
+                                userList.append(", ");
                             }
                         }
                     }
-                    Log.d("getWorkmateList", "userList: " + userList.toString());
-                    String body = getString(R.string.body_notifications) +
-                            currentUser.getUserRestaurantName() +
-                            getString(R.string.with_notifications) + userList;
-
-                    showNotification(body);
                 }
+                Log.d("getWorkmateList", "userList: " + userList.toString());
+                String body = getString(R.string.body_notifications) +
+                        currentUser.getUserRestaurantName() +
+                        getString(R.string.with_notifications) + userList;
+
+                showNotification(body);
             }, currentUser.getUserRestaurantId());
         });
     }
 
     private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
-        notificationSettings = sharedPreferences.getBoolean("NotificationSetting",true);
+        notificationSettings = sharedPreferences.getBoolean("NotificationSetting", true);
 
     }
 

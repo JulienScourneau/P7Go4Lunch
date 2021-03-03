@@ -16,6 +16,7 @@ import com.example.go4lunch.BuildConfig;
 import com.example.go4lunch.Models.Details.PlaceDetails;
 import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.Models.NearbySearch.Result;
+import com.example.go4lunch.Utils.Utils;
 import com.example.go4lunch.ViewModel.PlacesViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -56,21 +57,21 @@ public abstract class BaseFragment extends Fragment {
 
     private void configureViewModel() {
         this.viewModel = new ViewModelProvider(this).get(PlacesViewModel.class);
-
     }
 
     public void getMyPlace() {
-        this.viewModel.getNearbyPlaces(getUrl()).observe(this, this::getNearbyPlaces);
+        if (userLocation != null)
+            this.viewModel.getNearbyPlaces(Utils.getNearbyPlaceUrl(userLocation, mRadius)).observe(this, this::getNearbyPlaces);
     }
 
     public void getSearchPlace(String searchId) {
         mResultPlaceList.clear();
-        this.viewModel.getDetailPlaces(getSearchPlaceUrl(searchId)).observe(this, this::getPlacesDetails);
+        this.viewModel.getDetailPlaces(Utils.getPlaceDetailsUrl(searchId)).observe(this, this::getPlacesDetails);
 
     }
 
     private void getPlacesDetails(PlaceDetails placeDetails) {
-        mResultPlaceList.add(changeDetailsResult(placeDetails));
+        mResultPlaceList.add(Utils.changeDetailsResult(placeDetails));
         getPlaceToDisplay();
     }
 
@@ -78,25 +79,6 @@ public abstract class BaseFragment extends Fragment {
         myPlaceList.clear();
         myPlaceList.addAll(myPlaces.getResults());
         getPlaceToDisplay();
-    }
-
-    public String getUrl() {
-        StringBuilder url = new StringBuilder();
-
-        if (userLocation != null) {
-            url.append("nearbysearch/json?");
-            url.append("location=");
-            url.append(userLocation.latitude);
-            url.append(",");
-            url.append(userLocation.longitude);
-            url.append("&radius=");
-            url.append(mRadius);
-            url.append("&types=restaurant&sensor=true&key=");
-            url.append(BuildConfig.PLACE_API_KEY);
-        }
-
-        Log.d("getUrlPlace", url.toString());
-        return url.toString();
     }
 
     @Override
@@ -161,30 +143,6 @@ public abstract class BaseFragment extends Fragment {
             }
         });
         Log.d("getSearchPlace", "if search is empty");
-    }
-
-    public String getSearchPlaceUrl(String placeId) {
-        StringBuilder url = new StringBuilder();
-        url.append("details/json?place_id=");
-        url.append(placeId);
-        url.append("&key=");
-        url.append(BuildConfig.PLACE_API_KEY);
-
-        Log.d("getUrlDetails", url.toString());
-        return url.toString();
-    }
-
-    protected Result changeDetailsResult(PlaceDetails searchPlace) {
-        Result placeResult = new Result();
-        placeResult.setPlaceId(searchPlace.getResult().getPlaceId());
-        placeResult.setName(searchPlace.getResult().getName());
-        placeResult.setPhotos(searchPlace.getResult().getPhotos());
-        placeResult.setVicinity(searchPlace.getResult().getVicinity());
-        placeResult.setGeometry(searchPlace.getResult().getGeometry());
-        placeResult.setRating(searchPlace.getResult().getRating());
-        placeResult.setOpeningHours(searchPlace.getResult().getOpeningHours());
-
-        return placeResult;
     }
 
     public void clearSearchList() {

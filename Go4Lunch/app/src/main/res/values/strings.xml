@@ -64,6 +64,10 @@
     <string name="facebook_app_id" translatable="false">278485476780989</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb278485476780989</string>
 
+    <!-- TWITTER RESOURCES -->
+    <string name="twitter_consumer_key" translatable="false">REnGruTg0ExCpfq9tZdOUCGIg</string>
+    <string name="twitter_consumer_secret" translatable="false">6K5oRjLTySkEsXHFtm51qVLUq39XiFHakb6g4D2Fd9Vzk45ZRf</string>
+
     <!-- ERROR RESOURCES -->
     <string name="error_unknown">An unknown error has occurred</string>
     <string name="error_authentication_canceled">Authentication canceled</string>

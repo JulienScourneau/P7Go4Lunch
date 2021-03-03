@@ -95,8 +95,18 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
         if (mMap != null) {
             mMap.clear();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
+            Log.d("userLocation", "location:" + userLocation);
         }
+        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                Log.d("userLocation", "location:" + userLocation);
+                return false;
+            }
+        });
 
         for (int i = 0; i < placeList.size(); i++) {
             MarkerOptions markerOptions = new MarkerOptions();
@@ -104,6 +114,8 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
             double lat = actualPlace.getGeometry().getLocations().getLat();
             double lng = actualPlace.getGeometry().getLocations().getLng();
             LatLng latLng = new LatLng(lat, lng);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
             String placeName = actualPlace.getName();
             markerOptions.position(latLng);
             markerOptions.title(placeName);
@@ -139,10 +151,5 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback 
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_CODE);
             }
         }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

@@ -86,7 +86,8 @@ public class SplashscreenActivity extends AppCompatActivity {
                         .setLogo(R.drawable.go4lunch_icon)
                         .setAvailableProviders(Arrays.asList(
                                 new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
-                                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
+                                new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
+                                new AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build()))
                         .setIsSmartLockEnabled(false, true)
                         .build(),
                 RC_SIGN_IN);

@@ -20,6 +20,7 @@ import com.example.go4lunch.Models.NearbySearch.Result;
 import com.example.go4lunch.Models.User;
 import com.example.go4lunch.Network.UserHelper;
 import com.example.go4lunch.R;
+import com.example.go4lunch.Utils.Utils;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -94,8 +95,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         }
 
         if (currentRestaurant.getRating() != null) {
-            float mRating = (float) (currentRestaurant.getRating() / 5) * 3;
-            holder.mRestaurantRatingBar.setRating(mRating);
+
+            holder.mRestaurantRatingBar.setRating(Utils.getRating(currentRestaurant.getRating()));
         }
 
         if (currentRestaurant.getPhotos() != null && currentRestaurant.getPhotos().size() > 0) {
