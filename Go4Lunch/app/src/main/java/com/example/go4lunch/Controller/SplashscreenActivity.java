@@ -5,14 +5,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.go4lunch.R;
 import com.example.go4lunch.Network.UserHelper;
+import com.example.go4lunch.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
@@ -44,7 +43,7 @@ public class SplashscreenActivity extends AppCompatActivity {
                     Log.d("SplashScreenException", "SplashScreen exception catch");
 
                 } finally {
-                    //setContentView(R.layout.background);
+
                     if (UserHelper.isCurrentUserLogged()) {
                         startMainActivity();
                     } else {

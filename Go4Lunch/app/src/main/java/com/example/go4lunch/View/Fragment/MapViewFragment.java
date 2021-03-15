@@ -1,7 +1,6 @@
 package com.example.go4lunch.View.Fragment;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -19,8 +18,6 @@ import androidx.core.content.ContextCompat;
 
 import com.example.go4lunch.Controller.BaseFragment;
 import com.example.go4lunch.Controller.RestaurantActivity;
-import com.example.go4lunch.Models.Details.PlaceDetails;
-import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.Models.NearbySearch.Result;
 import com.example.go4lunch.Models.User;
 import com.example.go4lunch.Network.UserHelper;

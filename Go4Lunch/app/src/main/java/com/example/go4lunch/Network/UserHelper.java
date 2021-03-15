@@ -12,8 +12,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Map;
 
+import static com.example.go4lunch.Utils.Constants.ID_RESTAURANT_COLLECTION;
 import static com.example.go4lunch.Utils.Constants.LIKE_COLLECTION;
+import static com.example.go4lunch.Utils.Constants.LIKE_FIELD;
 import static com.example.go4lunch.Utils.Constants.USERS_COLLECTION;
+import static com.example.go4lunch.Utils.Constants.USER_RESTAURANT_COLLECTION;
 
 public class UserHelper {
 
@@ -51,15 +54,15 @@ public class UserHelper {
     }
 
     public static void updateRestaurantId(String restaurantId, String uid) {
-        UserHelper.getUsersCollection().document(uid).update("userRestaurantId", restaurantId);
+        UserHelper.getUsersCollection().document(uid).update(ID_RESTAURANT_COLLECTION, restaurantId);
     }
 
     public static void updateRestaurantName(String restaurantName, String uid) {
-        UserHelper.getUsersCollection().document(uid).update("userRestaurantName", restaurantName);
+        UserHelper.getUsersCollection().document(uid).update(USER_RESTAURANT_COLLECTION, restaurantName);
     }
 
     public static void updateRestaurantLike(String uid, String restaurantId, Boolean restaurantLike) {
-        UserHelper.getLikeCollection(uid).document(restaurantId).update("like", restaurantLike);
+        UserHelper.getLikeCollection(uid).document(restaurantId).update(LIKE_FIELD, restaurantLike);
     }
 
     public static void deleteUser(String uid) {
@@ -71,7 +74,7 @@ public class UserHelper {
     }
 
     public static void getUserRestaurantList(OnSuccessListener<QuerySnapshot> listener, String restaurantId) {
-        getUsersCollection().whereEqualTo("userRestaurantId", restaurantId).get().addOnSuccessListener(listener);
+        getUsersCollection().whereEqualTo(ID_RESTAURANT_COLLECTION, restaurantId).get().addOnSuccessListener(listener);
     }
 
 }

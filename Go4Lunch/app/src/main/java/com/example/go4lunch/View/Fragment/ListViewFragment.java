@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.go4lunch.Controller.BaseFragment;
-import com.example.go4lunch.Models.Details.PlaceDetails;
-import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.Models.NearbySearch.Result;
 import com.example.go4lunch.R;
 import com.example.go4lunch.View.Adapter.RestaurantAdapter;

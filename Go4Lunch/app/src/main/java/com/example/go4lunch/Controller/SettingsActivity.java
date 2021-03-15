@@ -1,5 +1,6 @@
 package com.example.go4lunch.Controller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,8 +23,8 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView mDistanceSettings;
     private SeekBar mSeekBar;
     private Button mDeleteBtn;
-    private int mRadius = 50;
-    private final int MIN = 50, MAX = 200, STEP = 10;
+    private int mRadius = 100;
+    private int mProgress = 0;
     private static final String SHARED_PREF = "SharedPrefs";
     private boolean mNotification = true;
 
@@ -32,6 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
+        loadData();
         initView();
         setUpSeekBar();
         setUpListener();
@@ -47,6 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setUpListener() {
+
         mDeleteBtn.setOnClickListener(v -> {
             deleteUserAccountDialog();
             Log.d("deleteAccount", "Delete account listener");
@@ -77,64 +80,74 @@ public class SettingsActivity extends AppCompatActivity {
                 switch (progress) {
 
                     case 0:
+                        mProgress = 0;
                         mRadius = 100;
-                        radiusSettings = "500" + " " + "m";
+                        radiusSettings = "100" + " " + "m";
                         mDistanceSettings.setText(radiusSettings);
-                        Log.d("SeekBar","case: 0");
+                        Log.d("SeekBar", "case: 0");
                         break;
                     case 1:
+                        mProgress = 1;
+                        mRadius = 500;
+                        radiusSettings = "500" + " " + "m";
+                        mDistanceSettings.setText(radiusSettings);
+                        Log.d("SeekBar", "case: 1");
+                        break;
+                    case 2:
+                        mProgress = 2;
                         mRadius = 1000;
                         radiusSettings = "1" + " " + "km";
                         mDistanceSettings.setText(radiusSettings);
-                        Log.d("SeekBar","case: 1");
+                        Log.d("SeekBar", "case: 2");
                         break;
-                    case 2:
+                    case 3:
+                        mProgress = 3;
                         mRadius = 2000;
                         radiusSettings = "2" + " " + "km";
                         mDistanceSettings.setText(radiusSettings);
-                        Log.d("SeekBar","case: 2");
-                        break;
-                    case 3:
-                        mRadius = 3000;
-                        radiusSettings = "3" + " " + "km";
-                        mDistanceSettings.setText(radiusSettings);
-                        Log.d("SeekBar","case: 3");
+                        Log.d("SeekBar", "case: 3");
                         break;
                     case 4:
+                        mProgress = 5;
                         mRadius = 4000;
                         radiusSettings = "4" + " " + "km";
                         mDistanceSettings.setText(radiusSettings);
-                        Log.d("SeekBar","case: 4");
+                        Log.d("SeekBar", "case: 4");
                         break;
                     case 5:
+                        mProgress = 5;
                         mRadius = 5000;
                         radiusSettings = "5" + " " + "km";
                         mDistanceSettings.setText(radiusSettings);
-                        Log.d("SeekBar","case: 5");
+                        Log.d("SeekBar", "case: 5");
                         break;
                     case 6:
+                        mProgress = 6;
                         mRadius = 10000;
                         radiusSettings = "10" + " " + "km";
                         mDistanceSettings.setText(radiusSettings);
-                        Log.d("SeekBar","case: 6");
+                        Log.d("SeekBar", "case: 6");
                         break;
                     case 7:
+                        mProgress = 7;
                         mRadius = 15000;
                         radiusSettings = "15" + " " + "km";
                         mDistanceSettings.setText(radiusSettings);
-                        Log.d("SeekBar","case: 7");
+                        Log.d("SeekBar", "case: 7");
                         break;
                     case 8:
+                        mProgress = 8;
                         mRadius = 20000;
                         radiusSettings = "20" + " " + "km";
                         mDistanceSettings.setText(radiusSettings);
-                        Log.d("SeekBar","case: 8");
+                        Log.d("SeekBar", "case: 8");
                         break;
                     case 9:
+                        mProgress = 9;
                         mRadius = 25000;
                         radiusSettings = "25" + " " + "km";
                         mDistanceSettings.setText(radiusSettings);
-                        Log.d("SeekBar","case: 9");
+                        Log.d("SeekBar", "case: 9");
                         break;
                 }
             }
@@ -160,7 +173,6 @@ public class SettingsActivity extends AppCompatActivity {
 
                     Log.d("deleteAccount", "positiveBtn delete account");
                     deleteUserAccount();
-
                 })
                 .setNegativeButton(R.string.delete_account_dialog_no_btn, (dialog, which) -> {
                 })
@@ -170,11 +182,20 @@ public class SettingsActivity extends AppCompatActivity {
     public void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("ProgressSetting", mProgress);
         editor.putInt("RadiusSetting", mRadius);
         editor.putBoolean("NotificationSetting", mNotification);
         editor.apply();
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
-        Log.d("saveData","Radius: " + mRadius + " Notifications: " + mNotification);
+        Log.d("saveData", "Radius: " + mRadius + " Notifications: " + mNotification);
+    }
+
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
+        mProgress = sharedPreferences.getInt("ProgressSetting", 0);
+        mRadius = sharedPreferences.getInt("RadiusSetting", 100);
+        Log.d("loadSharedPref", "Radius: " + mRadius + " Progress: " + mProgress);
+
     }
 
     public void deleteUserAccount() {

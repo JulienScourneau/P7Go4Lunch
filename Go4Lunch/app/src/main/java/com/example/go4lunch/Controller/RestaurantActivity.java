@@ -27,10 +27,7 @@ import com.example.go4lunch.R;
 import com.example.go4lunch.Utils.Utils;
 import com.example.go4lunch.View.Adapter.WorkmatesAdapter;
 import com.example.go4lunch.ViewModel.PlacesViewModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;

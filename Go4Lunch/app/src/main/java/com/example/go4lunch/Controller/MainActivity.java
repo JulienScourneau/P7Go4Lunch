@@ -2,7 +2,6 @@ package com.example.go4lunch.Controller;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -41,10 +40,8 @@ import com.example.go4lunch.View.Fragment.WorkmatesFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import static com.example.go4lunch.Utils.Constants.ERROR_DIALOG_REQUEST;
 import static com.example.go4lunch.Utils.Constants.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
@@ -53,15 +50,11 @@ import static com.example.go4lunch.Utils.Constants.PERMISSIONS_REQUEST_ENABLE_GP
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawer;
-    private Toolbar mToolbar;
-    private BottomNavigationView mBottomNav;
-    private NavigationView mNavigationView;
     private boolean mLocationPermissionGranted = false;
     private ImageView mUserPicture;
     private TextView mUserName;
     private TextView mUserMail;
     private MenuItem searchItem;
-    private SearchView searchView;
     private String search;
     private BaseFragment fragment;
     private FragmentManager fm = getSupportFragmentManager();
@@ -80,15 +73,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initView() {
-        mBottomNav = findViewById(R.id.bottom_navigation_view);
+        BottomNavigationView mBottomNav = findViewById(R.id.bottom_navigation_view);
         mBottomNav.setOnNavigationItemSelectedListener(navListener);
-        mToolbar = findViewById(R.id.toolbar);
+        Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mDrawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
-        mNavigationView = findViewById(R.id.nav_view);
+        NavigationView mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
         final View headerLayout = mNavigationView.getHeaderView(0);
         mUserName = headerLayout.findViewById(R.id.user_name_drawer);
@@ -117,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         inflater.inflate(R.menu.toolbar_menu, menu);
 
         searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) searchItem.getActionView();
+        SearchView searchView = (SearchView) searchItem.getActionView();
 
         searchView.setQueryHint(getString(R.string.search_view_hint));
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);

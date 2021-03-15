@@ -12,19 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.go4lunch.Controller.BaseFragment;
-import com.example.go4lunch.Models.NearbySearch.MyPlaces;
 import com.example.go4lunch.Models.User;
 import com.example.go4lunch.Network.UserHelper;
 import com.example.go4lunch.R;
-import com.example.go4lunch.Utils.TestList;
-import com.example.go4lunch.View.Adapter.RestaurantAdapter;
 import com.example.go4lunch.View.Adapter.WorkmatesAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Objects;
