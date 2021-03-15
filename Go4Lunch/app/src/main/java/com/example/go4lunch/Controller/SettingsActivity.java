@@ -46,7 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
         mNotificationSwitch = findViewById(R.id.notification_switch);
         mDistanceSettings = findViewById(R.id.distance_settings_number);
         mDeleteBtn = findViewById(R.id.delete_account_btn);
-        loadData();
+
     }
 
     private void updateView() {
@@ -59,6 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         mDistanceSettings.setText(radiusSetting);
         mSeekBar.setProgress(mProgress);
+        mNotificationSwitch.setChecked(mNotification);
     }
 
     private void setUpListener() {
@@ -196,9 +197,8 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("ProgressSetting", mProgress);
         editor.putInt("RadiusSetting", mRadius);
-        editor.putBoolean("NotificationSetting", mNotification);
+        editor.putBoolean("NotificationSetting", mNotificationSwitch.isChecked());
         editor.apply();
-        Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
         Log.d("saveData", "Radius: " + mRadius + " Notifications: " + mNotification);
     }
 
@@ -206,7 +206,8 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
         mProgress = sharedPreferences.getInt("ProgressSetting", 0);
         mRadius = sharedPreferences.getInt("RadiusSetting", 100);
-        Log.d("loadSharedPref", "Radius: " + mRadius + " Progress: " + mProgress);
+        mNotification = sharedPreferences.getBoolean("NotificationSetting", true);
+        Log.d("loadSharedPref", "Radius: " + mRadius + " Progress: " + mProgress + " notifications: " + mNotification);
 
     }
 
