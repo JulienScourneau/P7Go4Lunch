@@ -33,10 +33,11 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
-        loadData();
         initView();
         setUpSeekBar();
         setUpListener();
+        loadData();
+        updateView();
 
     }
 
@@ -45,7 +46,19 @@ public class SettingsActivity extends AppCompatActivity {
         mNotificationSwitch = findViewById(R.id.notification_switch);
         mDistanceSettings = findViewById(R.id.distance_settings_number);
         mDeleteBtn = findViewById(R.id.delete_account_btn);
+        loadData();
+    }
 
+    private void updateView() {
+        String radiusSetting;
+        if (mProgress <= 2) {
+            radiusSetting = mRadius + " " + "m";
+        } else {
+            radiusSetting = mRadius + " " + "km";
+        }
+
+        mDistanceSettings.setText(radiusSetting);
+        mSeekBar.setProgress(mProgress);
     }
 
     private void setUpListener() {
@@ -78,7 +91,6 @@ public class SettingsActivity extends AppCompatActivity {
                 String radiusSettings;
 
                 switch (progress) {
-
                     case 0:
                         mProgress = 0;
                         mRadius = 100;
@@ -191,7 +203,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
         mProgress = sharedPreferences.getInt("ProgressSetting", 0);
         mRadius = sharedPreferences.getInt("RadiusSetting", 100);
         Log.d("loadSharedPref", "Radius: " + mRadius + " Progress: " + mProgress);

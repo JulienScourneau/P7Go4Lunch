@@ -53,7 +53,7 @@
     <string name="distance_setting">Distance from your locations:</string>
     <string name="remove_setting">Remove your account</string>
     <string name="delete_account_btn">Delete</string>
-    <string name="distance_txt">500 m</string>
+    <string name="distance_txt">100 m</string>
     <string name="distance_settings_activity_txt"> km</string>
     <string name="delete_account_dialog_warning">Warning !</string>
     <string name="delete_account_dialog_message">Are you sure to want delete your account ?</string>

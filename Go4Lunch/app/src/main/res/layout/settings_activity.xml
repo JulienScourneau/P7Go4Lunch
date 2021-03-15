@@ -44,8 +44,7 @@
         android:layout_below="@+id/distance_settings_text"
         android:layout_margin="6dp"
         android:indeterminate="false"
-        android:max="9"
-        />
+        android:max="9" />
 
     <View
         android:id="@+id/divider_line"
